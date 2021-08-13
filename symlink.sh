@@ -9,4 +9,5 @@ case "$HOME" in
     *) HOME="$(echo "$BD" | grep -o "/home/\w*")" ;;
 esac
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
+[ ! -d "$XDG_CONFIG_HOME" ] && mkdir -p "$XDG_CONFIG_HOME" # fix: in case parent dirs does not exist
 ln -rs "$BD" "$XDG_CONFIG_HOME" # create relative symlink to dir
