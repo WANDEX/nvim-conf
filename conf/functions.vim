@@ -147,9 +147,9 @@ fu! InstallVimPlug()
         else
             let PlugVimPath = glob('~/.local/share/nvim/site/autoload/plug.vim')
         endif
-        if empty(PlugVimPath) " silently install vim-plug if file does not exist
-            execute 'silent !curl -fL --create-dirs -o ' . PlugVimPath . \
-            ' https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+        if !filereadable(PlugVimPath) " silently install vim-plug if file or parent dirs does not exist
+            execute 'silent !curl -fL --create-dirs -o ' . PlugVimPath .
+            \ ' https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
         endif
     endif
 endf
