@@ -6,6 +6,20 @@
 if !exists('autocommands_loaded')
     let autocommands_loaded = 1
 
+    aug VimPlugAutoInstall
+        if expand("$HOME") =~ '/home/' " to make sure that we are regular user (not root)
+            if exists("$XDG_DATA_HOME")
+                let PlugVimPath = $XDG_DATA_HOME . '/nvim/site/autoload/plug.vim'
+            else
+                let PlugVimPath = glob('~/.local/share/nvim/site/autoload/plug.vim')
+            endif
+            if empty(PlugVimPath) " silently install vim-plug if file does not exist
+                execute 'silent !curl -fL --create-dirs -o ' . PlugVimPath . \
+                ' https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+            endif
+        endif
+    aug END
+
     aug HelpPages
         au!
         au FileType help nested call ILikeHelpToTheRight()
