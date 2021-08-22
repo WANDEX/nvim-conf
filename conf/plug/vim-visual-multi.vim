@@ -16,21 +16,25 @@ let VM_user_operators = [
 let g:VM_custom_motions = {
 \   'h': 'l',
 \   'i': 'l',
+\   'l': 'e',
+\   'L': 'E',
 \   }
 
 " remap preserving original function
 let g:VM_custom_remaps = {
-\   'l': 'f',
-\   'L': 'F',
 \   '<M-S-I>': '<M-S-Right>',
 \   '<M-S-H>': '<M-S-Left>',
 \   }
 
-let g:VM_maps["i"] = 'k' " insert
+let g:VM_maps["i"] = 'K' " insert
+let g:VM_maps["Exit"] = '<C-l>' " leave/exit mode
 
 " enable undo/redo
 let g:VM_maps["Undo"] = 'u'
 let g:VM_maps["Redo"] = '<C-r>'
+
+let g:VM_maps["Find Next"] = '<Enter>'
+let g:VM_maps["Find Prev"] = '<BS>'
 
 let g:VM_maps['Find Under']          = '<C-j>' " replace C-n
 let g:VM_maps['Find Subword Under']  = '<C-j>' " replace visual C-n
