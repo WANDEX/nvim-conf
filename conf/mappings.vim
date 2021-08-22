@@ -6,21 +6,17 @@
 "" hnei i.e. left/down/up/right
 
 " insert mode and modifier inside
-"nnoremap k i|onoremap k i|vnoremap k i|xnoremap k i
-nnoremap k i|onoremap k i|xnoremap k i
+nnoremap k i|xnoremap k i|onoremap k i|vnoremap k i
+" nnoremap k i|onoremap k i|xnoremap k i
 
-" Screen bottom
-"nnoremap B L
+" go low
+nnoremap gl L
 
-" Look for next occurrence of {char}
-nnoremap l f|onoremap l f|vnoremap l f
-nnoremap L F|onoremap L F|vnoremap L F
-
-" Forward towards the end of a word
-"nnoremap W e|onoremap W e|vnoremap W e
-"vnoremap W e|onoremap W e|vnoremap W e
-"nnoremap f e|onoremap f e|vnoremap f e
-"nnoremap F E|onoremap F E|vnoremap F E
+" Forward towards the last letter of the word
+nnoremap l e|onoremap l e|vnoremap l e
+vnoremap l e|onoremap l e|vnoremap l e
+nnoremap L E|onoremap L E|vnoremap L E
+vnoremap L E|onoremap L E|vnoremap L E
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
@@ -46,8 +42,8 @@ nnoremap <C-W>i <C-W>l
 
 nnoremap n j|xnoremap n j|onoremap n j|vnoremap n j
 nnoremap e k|xnoremap e k|onoremap e k|vnoremap e k
-"nnoremap i l|xnoremap i l|onoremap i l|vnoremap i l
-nnoremap i l|xnoremap i l|onoremap i l
+nnoremap i l|xnoremap i l|onoremap i l|vnoremap i l
+" nnoremap i l|xnoremap i l|onoremap i l
 
 " popupmenu-keys
 inoremap <C-l> <Down>
