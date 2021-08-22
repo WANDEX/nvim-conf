@@ -60,6 +60,17 @@ inoremap <silent><expr> <Esc>      pumvisible() ? "<C-e><Esc>" : "<Esc>"
 inoremap <silent><expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
 inoremap <silent><expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
+"" leave from insert mode
+inoremap ll <Esc>
+inoremap <C-l> <Esc>
+"" leave from visual mode
+vnoremap <C-l> <Esc>
+
+" Use <C-L> to clear the highlighting of :set hlsearch.
+if maparg('<C-L>', 'n') ==# ''
+    nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
+endif
+
 "*****************************************************************************
 "" Extra Mappings
 "*****************************************************************************
@@ -94,11 +105,6 @@ xmap <C-k> <Plug>(neosnippet_expand_target)
 " deoplete + neosnippet + autopairs changes
 imap <expr><TAB> pumvisible() ? "\<C-n>" : (neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>")
 imap <expr><CR> pumvisible() ? deoplete#close_popup() : "\<CR>\<Plug>AutoPairsReturn"
-
-" Use <C-L> to clear the highlighting of :set hlsearch.
-if maparg('<C-L>', 'n') ==# ''
-    nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
-endif
 
 nnoremap <F3> :TagbarToggle<CR>
 
