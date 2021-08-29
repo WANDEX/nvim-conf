@@ -45,9 +45,6 @@ set wildmenu                    " Command line tab complete options as a menu.
 set wildmode=list,full          " Enable autocompletion
 set wildignore+=*.pyc,*_build/*,*/coverage/*,*.swp
 
-set completeopt=menuone         " Somehow it fixes flickering in autocomplete
-set completeopt+=noinsert
-
 set listchars=tab:>\ ,trail:~\,extends:>,precedes:<,nbsp:+
 set list                        " Show problematic characters.
 set nojoinspaces                " Use one space, not two, after punctuation.
