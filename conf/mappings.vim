@@ -45,17 +45,6 @@ nnoremap e k|xnoremap e k|onoremap e k|vnoremap e k
 nnoremap i l|xnoremap i l|onoremap i l|vnoremap i l
 " nnoremap i l|xnoremap i l|onoremap i l
 
-" popupmenu-keys
-inoremap <C-l> <Down>
-inoremap <C-u> <Up>
-
-inoremap <silent><expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
-inoremap <silent><expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <silent><expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-inoremap <silent><expr> <Esc>      pumvisible() ? "<C-e><Esc>" : "<Esc>"
-inoremap <silent><expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-inoremap <silent><expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-
 "" leave from insert mode
 inoremap ll <Esc>
 inoremap <C-l> <Esc>
