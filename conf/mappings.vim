@@ -93,15 +93,6 @@ nnoremap <silent>[l :lp<CR>
 nnoremap ]w :NextTrailingWhitespace<CR>
 nnoremap [w :PrevTrailingWhitespace<CR>
 
-" Neosnippet. It must be "imap" and "smap".
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-xmap <C-k> <Plug>(neosnippet_expand_target)
-
-" deoplete + neosnippet + autopairs changes
-imap <expr><TAB> pumvisible() ? "\<C-n>" : (neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>")
-imap <expr><CR> pumvisible() ? deoplete#close_popup() : "\<CR>\<Plug>AutoPairsReturn"
-
 nnoremap <F3> :TagbarToggle<CR>
 
 nnoremap <F4> :set relativenumber!<CR>
