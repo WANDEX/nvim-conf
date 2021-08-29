@@ -45,15 +45,17 @@ nnoremap e k|xnoremap e k|onoremap e k|vnoremap e k
 nnoremap i l|xnoremap i l|onoremap i l|vnoremap i l
 " nnoremap i l|xnoremap i l|onoremap i l
 
-"" leave from insert mode
-inoremap ll <Esc>
-inoremap <C-l> <Esc>
-"" leave from visual mode
-vnoremap <C-l> <Esc>
-
-" Use <C-L> to clear the highlighting of :set hlsearch.
+"" leave mappping to exit from all modes
+inoremap <silent> <C-l> <Esc>
+onoremap <silent> <C-l> <Esc>
+vnoremap <silent> <C-l> <Esc>
+xnoremap <silent> <C-l> <Esc>
+"" leave by canceling command
+cnoremap <silent> <C-l> <C-c>
+"" normal mode mapping
 if maparg('<C-L>', 'n') ==# ''
-    nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
+    " Use <C-L> to clear the highlighting of :set hlsearch.
+    nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 endif
 
 "*****************************************************************************
