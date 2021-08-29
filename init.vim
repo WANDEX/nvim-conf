@@ -7,6 +7,14 @@
 "______//__//////__//______//////__//////__////__//////______//__//////__///////
 "///////////////////////////////////////////////////////////////////////////////
 
+" source lua/ configs
+lua <<EOF
+require 'bootstrap' -- before all other!
+require 'plugins'
+require 'auto'
+require 'plug/cmp'
+EOF
+
 let $cfg   = expand('<sfile>:p')
 let $cfgd  = stdpath('config')
 let $data  = stdpath('data')
