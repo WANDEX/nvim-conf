@@ -65,27 +65,7 @@ Plug 'mg979/vim-visual-multi' " This is awesome!
 Plug 'farmergreg/vim-lastplace'
 Plug 'justinmk/vim-gtfo'
 
-Plug 'Shougo/denite.nvim'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/echodoc.vim'
-Plug 'Shougo/context_filetype.vim'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
-Plug 'Shougo/neoinclude.vim'
-
-"" Language Server Protocol support
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-
-"" completion
-Plug 'Shougo/neco-vim' " completions for Vim commands
-Plug 'deathlyfrantic/deoplete-spell' " for English word auto-completion
-Plug 'davidhalter/jedi-vim' " python3 completions
-Plug 'deoplete-plugins/deoplete-jedi'
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' } " javascript
-Plug 'dbeniamine/cheat.sh-vim'
+" Plug 'dbeniamine/cheat.sh-vim'
 
 "" python code folding
 Plug 'kalekundert/vim-coiled-snake'
