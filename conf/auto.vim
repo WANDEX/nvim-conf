@@ -25,13 +25,6 @@ if !exists('autocommands_loaded')
         au QuitPre * if empty(&buftype) | cclose | endif
     aug END
 
-    " hide status line if vim-which-key plugin pop-up is shown
-    aug WhichKeyHideStatusline
-        au! FileType which_key
-        au  FileType which_key set laststatus=0 noshowmode noruler
-        \| au BufLeave <buffer> set laststatus=2 showmode ruler
-    aug END
-
     " Disables automatic commenting on newline:
     au FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
