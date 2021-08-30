@@ -93,6 +93,10 @@ local luasnip = require 'luasnip'
 -- lazy loading so you only get in memory snippets of languages you use
 require("luasnip/loaders/from_vscode").lazy_load() -- takes snippets from "friendly-snippets"
 
+local t = function(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
 -- nvim-cmp setup
 local cmp = require 'cmp'
 cmp.setup {
@@ -117,18 +121,18 @@ cmp.setup {
     },
     ['<Tab>'] = function(fallback)
       if vim.fn.pumvisible() == 1 then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
+        vim.fn.feedkeys(t('<C-n>'), 'n')
       elseif luasnip.expand_or_jumpable() then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
+        vim.fn.feedkeys(t('<Plug>luasnip-expand-or-jump'), '')
       else
         fallback()
       end
     end,
     ['<S-Tab>'] = function(fallback)
       if vim.fn.pumvisible() == 1 then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-e>', true, true, true), 'n')
+        vim.fn.feedkeys(t('<C-e>'), 'n')
       elseif luasnip.jumpable(-1) then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
+        vim.fn.feedkeys(t('<Plug>luasnip-jump-prev'), '')
       else
         fallback()
       end
