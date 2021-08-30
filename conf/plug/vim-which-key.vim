@@ -43,42 +43,6 @@ let g:which_key_map.L = {
 \ 'L' : [':Limelight!!', 'Limelight!!'],
 \ }
 
-""" LanguageClient
-let g:which_key_map.l = {
-\ 'name' : '+lsp',
-\ 'c' : {
-    \ 'name': '+code',
-    \ 'l' : ['LanguageClient#textDocument_codeLens()'       , 'code lens']                  ,
-    \ 'a' : ['LanguageClient#handleCodeLensAction()'        , 'code lens action']           ,
-    \ 'A' : ['LanguageClient#textDocument_codeAction()'     , 'code action']                ,
-    \ },
-\ 'C' : ['LanguageClient#clearDocumentHighlight()'          , 'clear highlighting']         ,
-\ 'e' : ['LanguageClient#explainErrorAtPoint()'             , 'explain this error']         ,
-\ 'f' : {
-    \ 'name': '+format',
-    \ 'd' : ['LanguageClient#textDocument_formatting()'     , 'format document']            ,
-    \ 'l' : ['LanguageClient#textDocument_rangeFormatting()', 'format selected lines']      ,
-    \ },
-\ 'g' : {
-    \ 'name': '+goto',
-    \ 'd' : ['LanguageClient#textDocument_definition()'     , 'definition']                 ,
-    \ 'i' : ['LanguageClient#textDocument_implementation()' , 'implementation']             ,
-    \ 't' : ['LanguageClient#textDocument_typeDefinition()' , 'type-definition']            ,
-    \ },
-\ 'h' : ['LanguageClient#textDocument_hover()'              , 'hover']                      ,
-\ 'H' : ['LanguageClient#textDocument_documentHighlight()'  , 'highlight']                  ,
-\ 'm' : ['LanguageClient_contextMenu()'                     , 'menu']                       ,
-\ 'r' : ['LanguageClient#textDocument_references()'         , 'references']                 ,
-\ 'R' : ['LanguageClient#textDocument_rename()'             , 'rename']                     ,
-\ 's' : ['LanguageClient#textDocument_documentSymbol()'     , 'document-symbol']            ,
-\ 'w' : {
-    \ 'name': '+workspace',
-    \ 'e' : ['LanguageClient#workspace_applyEdit()'         , 'apply a workspace edit']     ,
-    \ 'c' : ['LanguageClient#workspace_executeCommand()'    , 'execute a workspace command'],
-    \ 's' : ['LanguageClient#workspace_symbol()'            , 'list of projects symbols']   ,
-    \ },
-\ }
-
 """ Magit
 let g:which_key_map.M = {
 \ 'name' : '+Magit',
