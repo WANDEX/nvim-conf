@@ -63,6 +63,8 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- luasnip setup
 local luasnip = require 'luasnip'
+-- lazy loading so you only get in memory snippets of languages you use
+require("luasnip/loaders/from_vscode").lazy_load() -- takes snippets from "friendly-snippets"
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
@@ -117,9 +119,9 @@ cmp.setup {
     end,
   },
   sources = {
+    { name = 'luasnip' },
     { name = 'nvim_lsp' },
     { name = 'nvim_lua' },
-    { name = 'luasnip' },
     { name = 'buffer' },
     { name = 'path' },
     { name = 'calc' },
