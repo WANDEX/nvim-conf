@@ -72,7 +72,6 @@ Plug 'kalekundert/vim-coiled-snake'
 Plug 'Konfekt/FastFold'
 
 "" at the end
-Plug 'liuchengxu/vim-which-key'
 Plug 'neomake/neomake'
 
 call plug#end()
