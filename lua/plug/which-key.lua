@@ -14,11 +14,19 @@ wk.register({ a = {
   [";"] = { "<cmd>norm $a;<CR>", "$a;" },
 }, }, { prefix = "<leader>" })
 
+wk.register({ c = {
+  name = "comment",
+}, }, { prefix = "<leader>" })
+
 -- delete
 wk.register({ d = {
   name = "delete/diff",
   d = { "<cmd>bd!<CR>", "buffer delete" },
   W = { "Whitespace strip" },
+}, }, { prefix = "<leader>" })
+
+wk.register({ h = {
+  name = "hunk",
 }, }, { prefix = "<leader>" })
 
 wk.register({ L = {
