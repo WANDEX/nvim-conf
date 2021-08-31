@@ -51,3 +51,12 @@ wk.register({ t = {
   ["!r"] = { "<cmd>normal V<CR> | :'<,'>TranslateR!<CR>", "replace line" },
 }, }, { prefix = "<leader>", mode = "n" })
 
+-- translate visual mode
+wk.register({ t = {
+  name = "trans",
+  ["w"]  = { ":'<,'>TranslateW<CR>",  "window" },
+  ["!w"] = { ":'<,'>TranslateW!<CR>", "window" },
+  ["r"]  = { ":'<,'>TranslateR<CR>",  "replace" },
+  ["!r"] = { ":'<,'>TranslateR!<CR>", "replace" },
+}, }, { prefix = "<leader>", mode = "v" })
+
