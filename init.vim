@@ -12,7 +12,7 @@ lua <<EOF
 require 'bootstrap' -- before all other!
 require 'plugins'
 require 'auto'
-require 'plug/cmp'
+require 'plug/cmp_lsp_snip'
 require 'plug/which_key'
 EOF
 
