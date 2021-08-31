@@ -16,8 +16,9 @@ wk.register({ a = {
 
 -- delete
 wk.register({ d = {
-  name = "delete",
+  name = "delete/diff",
   d = { "<cmd>bd!<CR>", "buffer delete" },
+  W = { "Whitespace strip" },
 }, }, { prefix = "<leader>" })
 
 wk.register({ L = {
