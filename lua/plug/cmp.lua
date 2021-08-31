@@ -1,27 +1,25 @@
 -- setup: lspconfig, snippets, nvim-cmp
 
 local use = require('packer').use
-require('packer').startup(function()
-  use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
-  use { -- Snippets engine
-    'L3MON4D3/LuaSnip',
-    requires = { -- Snippets collection
-      "rafamadriz/friendly-snippets",
-    },
-  }
-  use { -- Install nvim-cmp, and sources as a dependency
-    "hrsh7th/nvim-cmp", -- Autocompletion plugin
-    requires = { -- sources
-      'saadparwaiz1/cmp_luasnip', -- snippets
-      'hrsh7th/cmp-nvim-lsp',     -- LSP
-      "hrsh7th/cmp-nvim-lua",     -- neovim's Lua runtime API such vim.lsp.*
-      "hrsh7th/cmp-buffer",       -- buffer words
-      "hrsh7th/cmp-path",         -- filesystem paths
-      "hrsh7th/cmp-calc",         -- simple math calculation
-      "octaltree/cmp-look",       -- completing words in English $export WORDLIST="/usr/share/dict/dictname"
-    },
-  }
-end)
+use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
+use { -- Snippets engine
+  'L3MON4D3/LuaSnip',
+  requires = { -- Snippets collection
+    "rafamadriz/friendly-snippets",
+  },
+}
+use { -- Install nvim-cmp, and sources as a dependency
+  "hrsh7th/nvim-cmp", -- Autocompletion plugin
+  requires = { -- sources
+    'saadparwaiz1/cmp_luasnip', -- snippets
+    'hrsh7th/cmp-nvim-lsp',     -- LSP
+    "hrsh7th/cmp-nvim-lua",     -- neovim's Lua runtime API such vim.lsp.*
+    "hrsh7th/cmp-buffer",       -- buffer words
+    "hrsh7th/cmp-path",         -- filesystem paths
+    "hrsh7th/cmp-calc",         -- simple math calculation
+    "octaltree/cmp-look",       -- completing words in English $export WORDLIST="/usr/share/dict/dictname"
+  },
+}
 
 local nvim_lsp = require('lspconfig')
 
