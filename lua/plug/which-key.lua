@@ -8,6 +8,12 @@ local wk = require('which-key')
 -- wk.setup {
 -- }
 
+-- delete
+wk.register({ d = {
+  name = "delete",
+  d = { "<cmd>bd!<CR>", "buffer delete" },
+}, }, { prefix = "<leader>" })
+
 -- LSP - just a label. don't create any mappings
 wk.register({ ["gD"] = "[LSP] declaration" })
 wk.register({ ["gd"] = "[LSP] definition" })
