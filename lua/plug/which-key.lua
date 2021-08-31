@@ -8,6 +8,12 @@ local wk = require('which-key')
 -- wk.setup {
 -- }
 
+-- add
+wk.register({ a = {
+  name = "add",
+  [";"] = { "<cmd>norm $a;<CR>", "$a;" },
+}, }, { prefix = "<leader>" })
+
 -- delete
 wk.register({ d = {
   name = "delete",
