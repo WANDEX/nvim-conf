@@ -13,6 +13,7 @@ require 'bootstrap' -- before all other!
 require 'plugins'
 require 'auto'
 require 'plug/cmp'
+require 'plug/which-key'
 EOF
 
 let $cfg   = expand('<sfile>:p')
