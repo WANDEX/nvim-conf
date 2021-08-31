@@ -40,3 +40,14 @@ wk.register({ M = {
   v = { "<cmd>call magit#show_magit('v')<CR>", "vrt" },
 }, }, { prefix = "<leader>" })
 
+-- translate normal mode
+wk.register({ t = {
+  name = "trans",
+  ["w"]  = { "<cmd>TranslateW<CR>", "word" },
+  ["!w"] = { "<cmd>TranslateW!<CR>", "word" },
+  ["l"]  = { "<cmd>normal V<CR> | :'<,'>TranslateW<CR>",  "line" },
+  ["!l"] = { "<cmd>normal V<CR> | :'<,'>TranslateW!<CR>", "line" },
+  ["r"]  = { "<cmd>normal V<CR> | :'<,'>TranslateR<CR>",  "replace line" },
+  ["!r"] = { "<cmd>normal V<CR> | :'<,'>TranslateR!<CR>", "replace line" },
+}, }, { prefix = "<leader>", mode = "n" })
+
