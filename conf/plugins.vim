@@ -59,7 +59,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'preservim/tagbar'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'voldikss/vim-translator'
 Plug 'mg979/vim-visual-multi' " This is awesome!
 Plug 'farmergreg/vim-lastplace'

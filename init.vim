@@ -37,7 +37,6 @@ let g:nvim_config_files = [
     \ 'conf/plug/goyo.vim',
     \ 'conf/plug/highlightedyank.vim',
     \ 'conf/plug/indentLine.vim',
-    \ 'conf/plug/leaderF.vim',
     \ 'conf/plug/limelight.vim',
     \ 'conf/plug/listToggle.vim',
     \ 'conf/plug/magit.vim',
