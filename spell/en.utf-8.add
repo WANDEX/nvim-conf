@@ -83,3 +83,9 @@ biomechanical
 whitespaces
 shellcheck
 screensaver
+filesystem
+cwd
+cmd
+workspace
+lsp
+whitespace
