@@ -62,7 +62,7 @@ wk.register({ M = {
   name = "Magit",
   h = { "<cmd>call magit#show_magit('h')<CR>", "hrz" },
   o = { "<cmd>call magit#show_magit('c')<CR>", "only" },
-  v = { "<cmd>call magit#show_magit('v')<CR>", "vrt" },
+  v =  "vrt", -- magit cannot unbind def mapping
 }, }, { prefix = "<leader>" })
 
 wk.register({ T = {

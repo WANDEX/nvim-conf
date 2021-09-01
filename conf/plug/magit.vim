@@ -1,8 +1,7 @@
 """ vimagit
 " configuration for the plugin jreybert/vimagit
 
-" disable default magit mapping
-let g:magit_show_magit_mapping=''
+let g:magit_show_magit_mapping='<leader>Mv'
 " redefining E-edit -> O-open
 let g:magit_edit_mapping='O'
 let g:magit_jump_next_hunk='<C-N>'
