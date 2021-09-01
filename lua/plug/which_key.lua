@@ -65,6 +65,31 @@ wk.register({ M = {
   v = { "<cmd>call magit#show_magit('v')<CR>", "vrt" },
 }, }, { prefix = "<leader>" })
 
+wk.register({ T = {
+  name = "Telescope",
+  -- command! -nargs=? Tgrep lua require 'telescope.builtin'.grep_string({ search = vim.fn.input("Grep For > ")})
+  b = { "<cmd>lua require'telescope.builtin'.file_browser{}<CR>", "browse filesystem" },
+  c = { "<cmd>lua require'telescope.builtin'.grep_string{}<CR>", "grep under Cursor at cwd" },
+  d = { ":lua require'telescope.builtin'.live_grep({search_dirs={ '', }})<C-Left><C-Left><Right>", "grep in list of dirs" },
+  f = { "<cmd>lua require'telescope.builtin'.find_files{}<CR>", "find file at cwd" },
+  g = { "<cmd>lua require'telescope.builtin'.live_grep{}<CR>", "grep at cwd" },
+  o = { "<cmd>lua require'telescope.builtin'.live_grep{ grep_open_files=true }<CR>", "grep Opened files" },
+  v = {
+    name = "vim",
+    b = { "<cmd>lua require'telescope.builtin'.buffers{}<CR>", "buffers" },
+    C = { "<cmd>lua require'telescope.builtin'.colorscheme{}<CR>", "colorscheme" },
+    c = { "<cmd>lua require'telescope.builtin'.command_history{}<CR>", "command history" },
+    f = { "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find{}<CR>", "fuzzy find buf" },
+    h = { "<cmd>lua require'telescope.builtin'.help_tags{}<CR>", "help tags" },
+    m = { "<cmd>lua require'telescope.builtin'.man_pages{}<CR>", "man pages" },
+    o = { "<cmd>lua require'telescope.builtin'.vim_options{}<CR>", "options vim edit" },
+    p = { "<cmd>lua require'telescope.builtin'.oldfiles{}<CR>", "prev opened files" },
+    r = { "<cmd>lua require'telescope.builtin'.registers{}<CR>", "registers" },
+    s = { "<cmd>lua require'telescope.builtin'.search_history{}<CR>", "search history" },
+    t = { "<cmd>lua require'telescope.builtin'.current_buffer_tags{}<CR>", "tags buf" },
+  },
+}, }, { prefix = "<leader>" })
+
 -- translate normal mode
 wk.register({ t = {
   name = "trans",
