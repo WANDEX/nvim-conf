@@ -52,11 +52,8 @@ vnoremap <silent> <C-l> <Esc>
 xnoremap <silent> <C-l> <Esc>
 "" leave by canceling command
 cnoremap <silent> <C-l> <C-c>
-"" normal mode mapping
-if maparg('<C-L>', 'n') ==# ''
-    " Use <C-L> to clear the highlighting of :set hlsearch.
-    nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
-endif
+" clear the highlighting of :set hlsearch & cmd line
+nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 
 "*****************************************************************************
 "" Extra Mappings
