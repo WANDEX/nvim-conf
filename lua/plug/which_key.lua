@@ -68,15 +68,17 @@ wk.register({ M = {
 wk.register({ T = {
   name = "Telescope",
   -- command! -nargs=? Tgrep lua require 'telescope.builtin'.grep_string({ search = vim.fn.input("Grep For > ")})
-  b = { "<cmd>lua require'telescope.builtin'.file_browser{}<CR>", "browse filesystem" },
+  b = { "<cmd>Telescope buffers theme=get_dropdown previewer=false<CR>", "buffers" },
+  B = { "<cmd>lua require'telescope.builtin'.buffers{}<CR>", "buffers w preview" },
   c = { "<cmd>lua require'telescope.builtin'.grep_string{}<CR>", "grep under Cursor at cwd" },
   d = { ":lua require'telescope.builtin'.live_grep({search_dirs={ '', }})<C-Left><C-Left><Right>", "grep in list of dirs" },
   f = { "<cmd>lua require'telescope.builtin'.find_files{}<CR>", "find file at cwd" },
+  F = { "<cmd>lua require'telescope.builtin'.file_browser{}<CR>", "Filesystem" },
   g = { "<cmd>lua require'telescope.builtin'.live_grep{}<CR>", "grep at cwd" },
   o = { "<cmd>lua require'telescope.builtin'.live_grep{ grep_open_files=true }<CR>", "grep Opened files" },
+  t = { "<cmd>Telescope tele_tabby list theme=get_dropdown<CR>", "tabs" },
   v = {
     name = "vim",
-    b = { "<cmd>lua require'telescope.builtin'.buffers{}<CR>", "buffers" },
     C = { "<cmd>lua require'telescope.builtin'.colorscheme{}<CR>", "colorscheme" },
     c = { "<cmd>lua require'telescope.builtin'.command_history{}<CR>", "command history" },
     f = { "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find{}<CR>", "fuzzy find buf" },
@@ -86,7 +88,7 @@ wk.register({ T = {
     p = { "<cmd>lua require'telescope.builtin'.oldfiles{}<CR>", "prev opened files" },
     r = { "<cmd>lua require'telescope.builtin'.registers{}<CR>", "registers" },
     s = { "<cmd>lua require'telescope.builtin'.search_history{}<CR>", "search history" },
-    t = { "<cmd>lua require'telescope.builtin'.current_buffer_tags{}<CR>", "tags buf" },
+    T = { "<cmd>lua require'telescope.builtin'.current_buffer_tags{}<CR>", "tags buf" },
   },
 }, }, { prefix = "<leader>" })
 
