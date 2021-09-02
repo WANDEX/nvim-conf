@@ -10,7 +10,8 @@ local wk = require('which-key')
 
 -- add
 wk.register({ a = {
-  name = "add",
+  name = "add/alt",
+  t = { "<cmd>ToggleAlternate<CR>", "toggle alt bool" }, -- FIXME does not work for some reason...
   [";"] = { "<cmd>norm $a;<CR>", "$a;" },
 }, }, { prefix = "<leader>" })
 
