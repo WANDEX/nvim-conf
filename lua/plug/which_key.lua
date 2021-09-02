@@ -76,6 +76,7 @@ wk.register({ T = {
   F = { "<cmd>lua require'telescope.builtin'.file_browser{}<CR>", "Filesystem" },
   g = { "<cmd>lua require'telescope.builtin'.live_grep{}<CR>", "grep at cwd" },
   o = { "<cmd>lua require'telescope.builtin'.live_grep{ grep_open_files=true }<CR>", "grep Opened files" },
+  S = { "<cmd>SearchSession<CR>", "Session" },
   t = { "<cmd>Telescope tele_tabby list theme=get_dropdown<CR>", "tabs" },
   v = {
     name = "vim",

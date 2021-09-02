@@ -12,6 +12,7 @@ lua <<EOF
 require 'bootstrap' -- before all other!
 require 'plugins'
 require 'auto'
+require 'plug/auto_session'
 require 'plug/telescope_nvim'
 require 'plug/cmp_lsp_snip'
 require 'plug/which_key'
