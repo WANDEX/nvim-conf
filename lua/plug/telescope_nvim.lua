@@ -7,13 +7,14 @@ use {
     'nvim-lua/plenary.nvim',
     'kyazdani42/nvim-web-devicons',
     {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
+    'TC72/telescope-tele-tabby.nvim',
   },
 }
 
 local tel = require('telescope')
 local actions = require('telescope.actions')
 
-tel.setup{
+tel.setup {
   defaults = {
     mappings = { -- Global remapping
       i = {
@@ -36,6 +37,9 @@ tel.setup{
       override_file_sorter = true,     -- override the file sorter
       case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
       -- the default case_mode is "smart_case"
+    },
+    tele_tabby = {
+      use_highlighter = true,
     },
   },
 }
