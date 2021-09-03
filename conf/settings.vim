@@ -64,6 +64,14 @@ hi Normal guibg=NONE ctermbg=NONE
 " for whichkey & completions & etc.
 hi Pmenu ctermfg=15 guibg=NONE ctermbg=NONE
 
+" which-key.nvim colorscheme:
+hi WhichKey ctermfg=red ctermbg=NONE
+hi WhichKeyGroup ctermfg=white ctermbg=black
+hi WhichKeySeparator ctermfg=darkgray ctermbg=NONE
+hi WhichKeyDesc  ctermfg=gray ctermbg=black
+hi WhichKeyValue ctermfg=gray ctermbg=black
+hi WhichKeyFloat ctermfg=gray ctermbg=NONE
+
 " for neomake & etc.
 hi SignColumn ctermfg=14 guifg=Cyan ctermbg=NONE guibg=NONE
 
