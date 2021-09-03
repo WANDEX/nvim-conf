@@ -21,6 +21,21 @@ use { -- Install nvim-cmp, and sources as a dependency
   },
 }
 
+-- show function signature when you type ([XXX] till it's not available in cmp)
+-- FIXME with bind=true -> does not work in default cmp "INSERT COMPL" mode, only in "INSERT" mode
+use {'ray-x/lsp_signature.nvim', requires = {'hrsh7th/nvim-cmp'}}
+local sigf_lsp = require('lsp_signature')
+local sigf_opts = {
+  bind = false,
+  doc_lines = 5,
+  floating_window = true,
+  hint_enable = false,
+  handler_opts = {border = "single"},
+  extra_trigger_chars = {"(", ","},
+}
+-- require'lsp_signature'.setup(sigf_opts)
+-- require'lsp_signature'.on_attach(sigf_opts, bufnr)
+
 local nvim_lsp = require('lspconfig')
 
 -- Use an on_attach function to only map the following keys
@@ -51,6 +66,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '[d',          '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d',          '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 
+  sigf_lsp.on_attach(sigf_opts, bufnr) -- enable showing of function arguments while inside (|)
 end
 
 -- Add additional capabilities supported by nvim-cmp
