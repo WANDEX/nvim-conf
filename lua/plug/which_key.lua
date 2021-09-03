@@ -85,6 +85,7 @@ wk.register({ T = {
     c = { "<cmd>lua require'telescope.builtin'.command_history{}<CR>", "command history" },
     f = { "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find{}<CR>", "fuzzy find buf" },
     h = { "<cmd>lua require'telescope.builtin'.help_tags{}<CR>", "help tags" },
+    H = { "<cmd>lua require'telescope.builtin'.highlights{}<CR>", "Highlights" },
     m = { "<cmd>lua require'telescope.builtin'.man_pages{}<CR>", "man pages" },
     o = { "<cmd>lua require'telescope.builtin'.vim_options{}<CR>", "options vim edit" },
     p = { "<cmd>lua require'telescope.builtin'.oldfiles{}<CR>", "prev opened files" },
