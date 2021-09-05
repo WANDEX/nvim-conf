@@ -30,7 +30,6 @@ Plug 'kovetskiy/sxhkd-vim'
 Plug 'mboughaba/i3config.vim'
 Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' } " python
 
-Plug 'jiangmiao/auto-pairs'
 Plug 'Valloric/ListToggle'
 Plug 'metakirby5/codi.vim'
 

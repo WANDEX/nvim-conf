@@ -31,7 +31,6 @@ let g:nvim_config_files = [
     \ 'conf/mappings.vim',
     \ 'conf/auto.vim',
     \ 'conf/plug/airline.vim',
-    \ 'conf/plug/autoPairs.vim',
     \ 'conf/plug/cheat.vim',
     \ 'conf/plug/colorizer.vim',
     \ 'conf/plug/editorconfig.vim',
