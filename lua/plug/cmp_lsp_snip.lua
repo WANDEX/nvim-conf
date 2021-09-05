@@ -2,41 +2,54 @@
 
 local use = require('packer').use
 use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
-use { -- Snippets engine
-  'L3MON4D3/LuaSnip',
-  requires = { -- Snippets collection
-    "rafamadriz/friendly-snippets",
-  },
-}
+
 use { -- Install nvim-cmp, and sources as a dependency
-  "hrsh7th/nvim-cmp", -- Autocompletion plugin
-  requires = { -- sources
-    'saadparwaiz1/cmp_luasnip', -- snippets
-    'hrsh7th/cmp-nvim-lsp',     -- LSP
-    "hrsh7th/cmp-nvim-lua",     -- neovim's Lua runtime API such vim.lsp.*
-    "hrsh7th/cmp-buffer",       -- buffer words
-    "hrsh7th/cmp-path",         -- filesystem paths
-    "hrsh7th/cmp-calc",         -- simple math calculation
-    "octaltree/cmp-look",       -- completing words in English $export WORDLIST="/usr/share/dict/dictname"
+  -- sources
+  'hrsh7th/cmp-nvim-lsp',         -- LSP
+  "hrsh7th/cmp-nvim-lua",         -- neovim's Lua runtime API such vim.lsp.*
+  "hrsh7th/cmp-buffer",           -- buffer words
+  "hrsh7th/cmp-path",             -- filesystem paths
+  "hrsh7th/cmp-calc",             -- simple math calculation
+  "octaltree/cmp-look",           -- completing words in English $export WORDLIST="/usr/share/dict/dictname"
+  requires = {
+    "hrsh7th/nvim-cmp", -- Autocompletion plugin
   },
 }
 
--- show function signature when you type ([XXX] till it's not available in cmp)
--- FIXME with bind=true -> does not work in default cmp "INSERT COMPL" mode, only in "INSERT" mode
+-- snippets
+use 'rafamadriz/friendly-snippets' -- Snippets collection
+local snip_engine = 'luasnip' -- variable for swapping snippet engines (requires :PackerSync after changing)
+if ( snip_engine == 'luasnip' ) then
+  snip_source = 'luasnip'
+  use {
+    'L3MON4D3/LuaSnip', -- snippets engine
+    requires = {
+      'saadparwaiz1/cmp_luasnip', -- luasnip snippets cmp source
+    },
+  }
+  -- lazy loading so you only get in memory snippets of languages you use
+  require("luasnip/loaders/from_vscode").lazy_load() -- takes snippets from "friendly-snippets"
+else
+  snip_source = 'vsnip'
+  use {
+    'hrsh7th/vim-vsnip', -- snippets engine
+    requires = {
+      'hrsh7th/vim-vsnip-integ',  -- vsnip snippet completion/expansion
+      'hrsh7th/cmp-vsnip',        -- vsnip snippets cmp source
+    },
+  }
+end
+
+-- show function signature when you type inside (|)
 use {'ray-x/lsp_signature.nvim', requires = {'hrsh7th/nvim-cmp'}}
-local sigf_lsp = require('lsp_signature')
-local sigf_opts = {
-  bind = false,
+require'lsp_signature'.setup({
+  bind = true,
   doc_lines = 5,
   floating_window = true,
   hint_enable = false,
   handler_opts = {border = "single"},
   extra_trigger_chars = {"(", ","},
-}
--- require'lsp_signature'.setup(sigf_opts)
--- require'lsp_signature'.on_attach(sigf_opts, bufnr)
-
-local nvim_lsp = require('lspconfig')
+})
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -66,13 +79,12 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '[d',          '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d',          '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 
-  sigf_lsp.on_attach(sigf_opts, bufnr) -- enable showing of function arguments while inside (|)
 end
 
 -- Add additional capabilities supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.documentationFormat = { 'markdown', 'plaintext' }
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true -- error if true: clangd
 capabilities.textDocument.completion.completionItem.preselectSupport = true
 capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
 capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
@@ -90,7 +102,7 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
 local servers = { 'clangd', 'pyright', 'tsserver' }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
+  require('lspconfig')[lsp].setup {
     on_attach = on_attach,
     capabilities = capabilities,
     flags = {
@@ -102,11 +114,6 @@ end
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
--- luasnip setup
-local luasnip = require 'luasnip'
--- lazy loading so you only get in memory snippets of languages you use
-require("luasnip/loaders/from_vscode").lazy_load() -- takes snippets from "friendly-snippets"
-
 local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
@@ -116,6 +123,7 @@ local cmp = require 'cmp'
 cmp.setup {
   completion = {
     completeopt = 'menu,menuone,noinsert', -- preselect first result
+    keyword_length = 2,
   },
   mapping = {
     ['<C-e>'] = cmp.mapping.select_prev_item(),
@@ -134,19 +142,19 @@ cmp.setup {
       select = true,
     },
     ['<Tab>'] = function(fallback)
-      if vim.fn.pumvisible() == 1 then
-        vim.fn.feedkeys(t('<C-n>'), 'n')
-      elseif luasnip.expand_or_jumpable() then
+      if (snip_source == 'luasnip') and require'luasnip'.expand_or_jumpable() then
         vim.fn.feedkeys(t('<Plug>luasnip-expand-or-jump'), '')
+      elseif (snip_source == 'vsnip') and vim.fn['vsnip#available']() == 1 then
+        vim.fn.feedkeys(t('<Plug>(vsnip-expand-or-jump)'), '')
       else
         fallback()
       end
     end,
     ['<S-Tab>'] = function(fallback)
-      if vim.fn.pumvisible() == 1 then
-        vim.fn.feedkeys(t('<C-e>'), 'n')
-      elseif luasnip.jumpable(-1) then
+      if (snip_source == 'luasnip') and require'luasnip'.jumpable(-1) then
         vim.fn.feedkeys(t('<Plug>luasnip-jump-prev'), '')
+      elseif (snip_source == 'vsnip') and vim.fn['vsnip#available']() == 1 then
+        vim.fn.feedkeys(t('<Plug>(vsnip-jump-prev)'), '')
       else
         fallback()
       end
@@ -159,6 +167,7 @@ cmp.setup {
         nvim_lsp = "[L]",
         nvim_lua = "[nvimLua]",
         luasnip = "[S]",
+        vsnip = "[S]",
         buffer = "[B]",
         path = "[P]",
         calc = "[C]",
@@ -168,7 +177,7 @@ cmp.setup {
     end,
   },
   sources = {
-    { name = 'luasnip' },
+    { name = snip_source },
     { name = 'nvim_lsp' },
     { name = 'nvim_lua' },
     { name = 'buffer' },
