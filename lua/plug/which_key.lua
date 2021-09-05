@@ -5,8 +5,15 @@ use 'folke/which-key.nvim'
 
 local wk = require('which-key')
 
--- wk.setup {
--- }
+wk.setup {
+  plugins = {
+    spelling = {
+      enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
+      suggestions = 50, -- how many suggestions should be shown in the list?
+    },
+  },
+  -- ignore_missing = true, -- enable this to hide mappings for which you didn't specify a label
+}
 
 -- add
 wk.register({ a = {
