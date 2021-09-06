@@ -2,7 +2,7 @@
 vim.cmd [[packadd packer.nvim]]
 
 local use = require('packer').use
-require('packer').startup(function()
+require('packer').startup({function()
   -- Packer can manage itself
   use {'wbthomason/packer.nvim', opt = true}
   use 'rmagatti/alternate-toggler' -- toggle alternate "boolean" values
@@ -32,5 +32,13 @@ require('packer').startup(function()
 
   -- at the end
   use 'neomake/neomake'
-end)
+
+end,
+config = {
+  display = {
+    open_fn = function()
+      return require('packer.util').float({ border = 'single' })
+    end
+  },
+}})
 
