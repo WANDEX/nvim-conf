@@ -7,6 +7,13 @@ require('packer').startup({function()
   use {'wbthomason/packer.nvim', opt = true}
   use 'rmagatti/alternate-toggler' -- toggle alternate "boolean" values
 
+  use { -- visual
+    'jeffkreeftmeijer/vim-dim', -- (Xresources) consistent term colors w invers
+    {'junegunn/goyo.vim', cmd='Goyo'},
+    {'junegunn/limelight.vim', cmd='Limelight'},
+    -- {'RRethy/vim-hexokinase', run='make hexokinase'}, -- !Throws error without: set termguicolors
+  }
+
   use { -- format
     -- 'brooth/far.vim' -- " didn't tried yet
     'ntpeters/vim-better-whitespace',
