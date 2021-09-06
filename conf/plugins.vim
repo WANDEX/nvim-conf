@@ -16,16 +16,5 @@ Plug 'lilydjwg/colorizer'
 Plug 'kabbamine/vcoolor.vim'
 Plug 'machakann/vim-highlightedyank'
 
-Plug 'Valloric/ListToggle'
-Plug 'metakirby5/codi.vim'
-
-"" advanced (other)
-Plug 'preservim/tagbar'
-Plug 'voldikss/vim-translator'
-Plug 'mg979/vim-visual-multi' " This is awesome!
-Plug 'farmergreg/vim-lastplace'
-Plug 'justinmk/vim-gtfo'
-
-" Plug 'dbeniamine/cheat.sh-vim'
 
 call plug#end()

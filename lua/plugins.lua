@@ -50,6 +50,19 @@ require('packer').startup({function()
   -- use {'kalekundert/vim-coiled-snake', ft='python'} -- python code folding
   use 'Konfekt/FastFold'
 
+  use { -- other
+    'voldikss/vim-translator',
+    'Valloric/ListToggle',
+    'mg979/vim-visual-multi',
+    'preservim/tagbar',
+    'justinmk/vim-gtfo',
+    'farmergreg/vim-lastplace',
+  }
+
+  -- not sure (candidates for deletion):
+  -- use 'metakirby5/codi.vim'
+  -- use 'dbeniamine/cheat.sh-vim'
+
   -- at the end
   use 'neomake/neomake'
 
