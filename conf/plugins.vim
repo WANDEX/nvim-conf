@@ -40,15 +40,6 @@ Plug 'christoomey/vim-titlecase'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 
-"" new text objects | more info: 'https://github.com/kana/vim-textobj-user/wiki'
-Plug 'kana/vim-textobj-user'    " CORE
-Plug 'kana/vim-textobj-indent'  " ai/ii aI/iI
-Plug 'kana/vim-textobj-line'    " al/il
-Plug 'kana/vim-textobj-entire'  " ae/ie
-Plug 'glts/vim-textobj-comment' " ac/ic aC
-Plug 'kana/vim-textobj-diff'    " adh/idh
-Plug 'bps/vim-textobj-python'   " af/if ac/ic | [pf / ]pf [pc / ]pc
-
 "" git
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
