@@ -5,7 +5,6 @@ local use = require('packer').use
 require('packer').startup({function()
   -- Packer can manage itself
   use {'wbthomason/packer.nvim', opt = true}
-  use 'rmagatti/alternate-toggler' -- toggle alternate "boolean" values
 
   use { -- visual
     'jeffkreeftmeijer/vim-dim', -- (Xresources) consistent term colors w invers
@@ -65,6 +64,8 @@ require('packer').startup({function()
     'justinmk/vim-gtfo',
     'farmergreg/vim-lastplace',
   }
+
+  use {'rmagatti/alternate-toggler', cmd='ToggleAlternate'} -- toggle alternate "boolean" values FIXME
 
   -- not sure (candidates for deletion):
   -- use 'metakirby5/codi.vim'
