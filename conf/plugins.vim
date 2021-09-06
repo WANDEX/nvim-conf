@@ -16,10 +16,6 @@ Plug 'lilydjwg/colorizer'
 Plug 'kabbamine/vcoolor.vim'
 Plug 'machakann/vim-highlightedyank'
 
-"" syntax
-Plug 'kovetskiy/sxhkd-vim'
-Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' } " python
-
 Plug 'Valloric/ListToggle'
 Plug 'metakirby5/codi.vim'
 

@@ -40,6 +40,12 @@ require('packer').startup({function()
     'tpope/vim-repeat',
   }
 
+  use { -- syntax
+    'kovetskiy/sxhkd-vim',
+    -- (https://github.com/wbthomason/packer.nvim/issues/464) add when it will be fixed
+    {'numirias/semshi', run=':UpdateRemotePlugins'}, -- TODO ft='python'
+  }
+
   -- folding
   -- use {'kalekundert/vim-coiled-snake', ft='python'} -- python code folding
   use 'Konfekt/FastFold'
