@@ -16,6 +16,12 @@ require('packer').startup({function()
     {'iamcco/markdown-preview.nvim', run='cd app && yarn install', ft='markdown'},
   }
 
+  use { -- git
+    'airblade/vim-gitgutter',
+    'jreybert/vimagit',
+    'tpope/vim-fugitive',
+  }
+
   use { -- new text objects | more info: 'https://github.com/kana/vim-textobj-user/wiki'
     'kana/vim-textobj-user',    -- CORE (wont be installed with 'requires = ...')
     'kana/vim-textobj-indent',  -- ai/ii aI/iI

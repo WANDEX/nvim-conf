@@ -23,11 +23,6 @@ Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' } " python
 Plug 'Valloric/ListToggle'
 Plug 'metakirby5/codi.vim'
 
-"" git
-Plug 'tpope/vim-fugitive'
-Plug 'jreybert/vimagit'
-Plug 'airblade/vim-gitgutter'
-
 "" advanced (other)
 Plug 'preservim/tagbar'
 Plug 'voldikss/vim-translator'
