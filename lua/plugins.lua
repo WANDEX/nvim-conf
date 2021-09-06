@@ -13,7 +13,7 @@ require('packer').startup({function()
     'editorconfig/editorconfig-vim',
     'sbdchd/neoformat',
     'scrooloose/nerdcommenter',
-    {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'},
+    {'iamcco/markdown-preview.nvim', run='cd app && yarn install', ft='markdown'},
   }
 
   use { -- new text objects | more info: 'https://github.com/kana/vim-textobj-user/wiki'
@@ -23,11 +23,11 @@ require('packer').startup({function()
     'kana/vim-textobj-entire',  -- ae/ie
     'glts/vim-textobj-comment', -- ac/ic aC
     'kana/vim-textobj-diff',    -- adh/idh
-    'bps/vim-textobj-python',   -- af/if ac/ic | [pf / ]pf [pc / ]pc
+    {'bps/vim-textobj-python', ft='python'}, -- af/if ac/ic [pf/]pf [pc/]pc
   }
 
   -- folding
-  -- use 'kalekundert/vim-coiled-snake' -- python code folding
+  -- use {'kalekundert/vim-coiled-snake', ft='python'} -- python code folding
   use 'Konfekt/FastFold'
 
   -- at the end
