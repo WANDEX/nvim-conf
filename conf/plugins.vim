@@ -3,14 +3,6 @@
 "*****************************************************************************
 call plug#begin('~/.local/share/nvim/plugged')
 
-"" format
-"Plug 'brooth/far.vim' " didn't tried yet
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'sbdchd/neoformat'
-Plug 'scrooloose/nerdcommenter'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
-
 "" visual
 Plug 'jeffkreeftmeijer/vim-dim' " (Xresources) consistent term colors w invers
 Plug 'vim-airline/vim-airline'

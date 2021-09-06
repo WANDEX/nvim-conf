@@ -7,6 +7,15 @@ require('packer').startup(function()
   use {'wbthomason/packer.nvim', opt = true}
   use 'rmagatti/alternate-toggler' -- toggle alternate "boolean" values
 
+  use { -- format
+    -- 'brooth/far.vim' -- " didn't tried yet
+    'ntpeters/vim-better-whitespace',
+    'editorconfig/editorconfig-vim',
+    'sbdchd/neoformat',
+    'scrooloose/nerdcommenter',
+    {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'},
+  }
+
   use { -- new text objects | more info: 'https://github.com/kana/vim-textobj-user/wiki'
     'kana/vim-textobj-user',    -- CORE (wont be installed with 'requires = ...')
     'kana/vim-textobj-indent',  -- ai/ii aI/iI
