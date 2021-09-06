@@ -9,7 +9,6 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdcommenter'
-Plug 'junegunn/vim-easy-align'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
 
 "" visual

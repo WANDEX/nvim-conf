@@ -112,11 +112,6 @@ tnoremap <Esc> <C-\><C-n>
 vnoremap < <gv
 vnoremap > >gv
 
-" Easy align interactive
-vmap <Enter> <Plug>(EasyAlign)
-" Start interactive EasyAlign in normal/visual mode (e.g. vipga)
-nmap ga <Plug>(EasyAlign)| xmap ga <Plug>(EasyAlign)
-
 " Reload vim configuration
 nnoremap <localleader>rc :ReloadConfig<CR>
 
