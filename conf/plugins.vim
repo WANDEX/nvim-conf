@@ -11,8 +11,6 @@ Plug 'Yggdroot/indentLine'
 Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
-"Plug 'ap/vim-css-color'
-Plug 'lilydjwg/colorizer'
 Plug 'kabbamine/vcoolor.vim'
 Plug 'machakann/vim-highlightedyank'
 
