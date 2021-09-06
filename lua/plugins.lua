@@ -41,7 +41,7 @@ require('packer').startup({function()
   }
 
   use { -- syntax
-    'kovetskiy/sxhkd-vim',
+    {'kovetskiy/sxhkd-vim', ft='sxhkd'},
     -- (https://github.com/wbthomason/packer.nvim/issues/464) add when it will be fixed
     {'numirias/semshi', run=':UpdateRemotePlugins'}, -- TODO ft='python'
   }
