@@ -45,7 +45,6 @@ let g:nvim_config_files = [
     \ 'conf/plug/neoformat.vim',
     \ 'conf/plug/neomake.vim',
     \ 'conf/plug/nerdcommenter.vim',
-    \ 'conf/plug/nerdtree.vim',
     \ 'conf/plug/semshi.vim',
     \ 'conf/plug/translate.vim',
     \ 'conf/plug/vCoolor.vim',
