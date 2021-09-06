@@ -56,11 +56,4 @@ Plug 'justinmk/vim-gtfo'
 
 " Plug 'dbeniamine/cheat.sh-vim'
 
-"" python code folding
-Plug 'kalekundert/vim-coiled-snake'
-Plug 'Konfekt/FastFold'
-
-"" at the end
-Plug 'neomake/neomake'
-
 call plug#end()

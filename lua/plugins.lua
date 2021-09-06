@@ -17,5 +17,11 @@ require('packer').startup(function()
     'bps/vim-textobj-python',   -- af/if ac/ic | [pf / ]pf [pc / ]pc
   }
 
+  -- folding
+  -- use 'kalekundert/vim-coiled-snake' -- python code folding
+  use 'Konfekt/FastFold'
+
+  -- at the end
+  use 'neomake/neomake'
 end)
 
