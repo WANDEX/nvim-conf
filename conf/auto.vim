@@ -11,11 +11,6 @@ if !exists('autocommands_loaded')
         au FileType help nested call ILikeHelpToTheRight()
     aug END
 
-    aug i3config_ft_detection
-        au!
-        au BufNewFile,BufRead ~/.config/i3/config set filetype=i3config
-    aug END
-
     " close loclist/Quickfix - window when buffer is closed
     aug CloseLoclistWindowGroup
         au!

@@ -18,7 +18,6 @@ Plug 'machakann/vim-highlightedyank'
 
 "" syntax
 Plug 'kovetskiy/sxhkd-vim'
-Plug 'mboughaba/i3config.vim'
 Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' } " python
 
 Plug 'Valloric/ListToggle'
