@@ -26,6 +26,14 @@ require('packer').startup({function()
     {'bps/vim-textobj-python', ft='python'}, -- af/if ac/ic [pf/]pf [pc/]pc
   }
 
+  use { -- motion
+    'justinmk/vim-sneak',
+    'christoomey/vim-sort-motion',
+    'christoomey/vim-titlecase',
+    'tpope/vim-surround',
+    'tpope/vim-repeat',
+  }
+
   -- folding
   -- use {'kalekundert/vim-coiled-snake', ft='python'} -- python code folding
   use 'Konfekt/FastFold'

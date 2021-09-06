@@ -23,13 +23,6 @@ Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' } " python
 Plug 'Valloric/ListToggle'
 Plug 'metakirby5/codi.vim'
 
-"" motion
-Plug 'justinmk/vim-sneak'
-Plug 'christoomey/vim-sort-motion'
-Plug 'christoomey/vim-titlecase'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-
 "" git
 Plug 'tpope/vim-fugitive'
 Plug 'jreybert/vimagit'
