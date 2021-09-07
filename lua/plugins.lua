@@ -57,6 +57,7 @@ require('packer').startup({function()
   use 'Konfekt/FastFold'
 
   use { -- other
+    'airblade/vim-rooter', -- auto cwd to the project root
     'voldikss/vim-translator',
     'Valloric/ListToggle',
     'mg979/vim-visual-multi',
