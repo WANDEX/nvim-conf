@@ -11,8 +11,12 @@ require('packer').startup({function()
     'kyazdani42/nvim-web-devicons', -- lua
   }
 
+  use { -- themes TODO: lazy-load how?
+    {'jeffkreeftmeijer/vim-dim'}, -- (Xresources) consistent term colors w invers
+    {'EdenEast/nightfox.nvim'}, -- style :NightfoxLoad <fox>
+  }
+
   use { -- visual
-    'jeffkreeftmeijer/vim-dim', -- (Xresources) consistent term colors w invers
     {'junegunn/goyo.vim', cmd='Goyo'},
     {'junegunn/limelight.vim', cmd='Limelight'},
     -- {'RRethy/vim-hexokinase', run='make hexokinase'}, -- !Throws error without: set termguicolors
