@@ -6,6 +6,11 @@ require('packer').startup({function()
   -- Packer can manage itself
   use {'wbthomason/packer.nvim', opt = true}
 
+  use { -- icons
+    -- 'ryanoasis/vim-devicons', -- vim script
+    'kyazdani42/nvim-web-devicons', -- lua
+  }
+
   use { -- visual
     'jeffkreeftmeijer/vim-dim', -- (Xresources) consistent term colors w invers
     {'junegunn/goyo.vim', cmd='Goyo'},
