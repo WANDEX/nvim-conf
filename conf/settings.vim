@@ -81,6 +81,12 @@ hi NormalFloat ctermfg=gray ctermbg=NONE
 " for neomake & etc.
 hi SignColumn ctermfg=14 guifg=Cyan ctermbg=NONE guibg=NONE
 
+" diff & git signs
+hi DiffAdd    ctermbg=NONE guibg=NONE ctermfg=green guifg=green
+hi DiffChange ctermbg=NONE guibg=NONE ctermfg=white guifg=white
+hi DiffDelete ctermbg=NONE guibg=NONE ctermfg=red guifg=red
+hi DiffText   cterm=bold ctermfg=0 ctermbg=11 gui=bold guibg=Red
+
 let mapleader="\<SPACE>"
 let maplocalleader="\\"
 
