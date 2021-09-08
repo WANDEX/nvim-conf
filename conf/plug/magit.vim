@@ -14,3 +14,4 @@ let g:magit_folding_toggle_mapping=[ '<C-O>', '<C-Z>' ]
 let g:magit_commit_title_limit=69
 let g:magit_scrolloff=5
 let g:magit_refresh_gitgutter=0
+let g:magit_default_fold_level=1
