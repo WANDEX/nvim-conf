@@ -11,9 +11,9 @@ require('packer').startup({function()
     'kyazdani42/nvim-web-devicons', -- lua
   }
 
-  use { -- themes TODO: lazy-load how?
-    {'jeffkreeftmeijer/vim-dim'}, -- (Xresources) consistent term colors w invers
-    {'EdenEast/nightfox.nvim'}, -- style :NightfoxLoad <fox>
+  use { -- themes TODO: lazy-load how to do it properly for themes?
+    'jeffkreeftmeijer/vim-dim', -- (Xresources) consistent term colors w invers
+    {'EdenEast/nightfox.nvim', cmd={'NightfoxLoad'}}, -- style :NightfoxLoad <fox>
   }
 
   use { -- visual
