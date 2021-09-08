@@ -36,7 +36,6 @@ let g:nvim_config_files = [
     \ 'conf/plug/cheat.vim',
     \ 'conf/plug/editorconfig.vim',
     \ 'conf/plug/fastfold.vim',
-    \ 'conf/plug/goyo.vim',
     \ 'conf/plug/highlightedyank.vim',
     \ 'conf/plug/indentLine.vim',
     \ 'conf/plug/limelight.vim',

@@ -17,7 +17,7 @@ require('packer').startup({function()
   }
 
   use { -- visual
-    {'junegunn/goyo.vim', cmd='Goyo'},
+    {'Pocco81/TrueZen.nvim', cmd={'TZMinimalist', 'TZFocus', 'TZAtaraxis'}},
     {'junegunn/limelight.vim', cmd='Limelight'},
     -- {'RRethy/vim-hexokinase', run='make hexokinase'}, -- !Throws error without: set termguicolors
   }
