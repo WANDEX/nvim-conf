@@ -17,6 +17,7 @@ require 'plug/autopairs_conf'
 --require 'plug/colorizer_conf'
 require 'plug/git_conf'
 require 'plug/telescope_nvim'
+require 'plug/zen_conf'
 require 'plug/cmp_lsp_snip'
 require 'plug/which_key'
 EOF

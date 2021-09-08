@@ -18,10 +18,8 @@ require('packer').startup({function()
     'Pocco81/Catppuccino.nvim',
   }
 
-  use { -- visual
-    {'Pocco81/TrueZen.nvim', cmd={'TZMinimalist', 'TZFocus', 'TZAtaraxis'}},
-    {'junegunn/limelight.vim', cmd='Limelight'},
-  }
+  -- visual
+  use {'junegunn/limelight.vim', cmd='Limelight'}
 
   use { -- format
     -- 'brooth/far.vim' -- " didn't tried yet
