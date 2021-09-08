@@ -73,6 +73,15 @@ wk.register({ M = {
   v =  "vrt", -- magit cannot unbind def mapping
 }, }, { prefix = "<leader>" })
 
+wk.register({ N = {
+  name = "Neogit",
+  c = { "<cmd>lua require('neogit').open({ 'commit' })<CR>", "commit" },
+  s = { "<cmd>lua require('neogit').open({ kind = 'split' })<CR>", "split below" },
+  S = { "<cmd>lua require('neogit').open({ kind = 'split_above' })<CR>", "split above" },
+  t = { "<cmd>lua require('neogit').open({ kind = 'tab' })<CR>", "tab" },
+  v = { "<cmd>lua require('neogit').open({ kind = 'vsplit' })<CR>", "vsplit" },
+}, }, { prefix = "<leader>" })
+
 wk.register({ T = {
   name = "Telescope",
   -- command! -nargs=? Tgrep lua require 'telescope.builtin'.grep_string({ search = vim.fn.input("Grep For > ")})
