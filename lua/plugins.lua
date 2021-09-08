@@ -14,12 +14,13 @@ require('packer').startup({function()
   use { -- themes TODO: lazy-load how to do it properly for themes?
     'jeffkreeftmeijer/vim-dim', -- (Xresources) consistent term colors w invers
     {'EdenEast/nightfox.nvim', cmd={'NightfoxLoad'}}, -- style :NightfoxLoad <fox>
+    -- {'Pocco81/Catppuccino.nvim', cmd={''}},
+    'Pocco81/Catppuccino.nvim',
   }
 
   use { -- visual
     {'Pocco81/TrueZen.nvim', cmd={'TZMinimalist', 'TZFocus', 'TZAtaraxis'}},
     {'junegunn/limelight.vim', cmd='Limelight'},
-    -- {'RRethy/vim-hexokinase', run='make hexokinase'}, -- !Throws error without: set termguicolors
   }
 
   use { -- format
