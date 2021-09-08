@@ -7,12 +7,16 @@ use {
 }
 
 use {
-  {'TimUntersberger/neogit', disable=true}, -- FIXME throws error if enabled
   'lewis6991/gitsigns.nvim',
-  requires = {
-    'nvim-lua/plenary.nvim',
-  },
+  requires = {'nvim-lua/plenary.nvim'},
 }
+
+use {
+  'TimUntersberger/neogit',
+  disable = true, -- FIXME throws error if enabled & setup{}
+  requires = {'nvim-lua/plenary.nvim'},
+}
+-- require('neogit').setup{}
 
 require('gitsigns').setup{
   signs = {
@@ -28,4 +32,3 @@ require('gitsigns').setup{
   },
 }
 
--- require('neogit').setup{}
