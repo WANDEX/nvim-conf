@@ -133,8 +133,10 @@ wk.register({ t = {
 
 wk.register({ z = {
   name = "zen",
-  m = { "<cmd>TZMinimalist<CR>", "minimalist" },
+  A = { "<cmd>TZAtaraxis l10 r10 t3 b1<CR>", "Ataraxis wide" },
+  a = { "<cmd>TZAtaraxis<CR>", "ataraxis" },
+  -- c = { "<cmd>TZAtaraxis<CR>", "centered" }, -- TODO
   f = { "<cmd>TZFocus<CR>", "focus" },
-  a = { "<cmd>TZAtaraxis l10 r10 t3 b1<CR>", "ataraxis" },
+  m = { "<cmd>TZMinimalist<CR>", "minimalist" },
 }, }, { prefix = "<localleader>" })
 
