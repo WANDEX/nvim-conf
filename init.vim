@@ -11,6 +11,7 @@
 lua <<EOF
 require 'bootstrap' -- before all other!
 require 'plugins'
+require 'themes'
 require 'auto'
 require 'plug/auto_session'
 require 'plug/autopairs_conf'
