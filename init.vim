@@ -40,7 +40,6 @@ let g:nvim_config_files = [
     \ 'conf/plug/editorconfig.vim',
     \ 'conf/plug/fastfold.vim',
     \ 'conf/plug/highlightedyank.vim',
-    \ 'conf/plug/indentLine.vim',
     \ 'conf/plug/limelight.vim',
     \ 'conf/plug/listToggle.vim',
     \ 'conf/plug/magit.vim',

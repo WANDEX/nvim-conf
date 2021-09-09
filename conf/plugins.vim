@@ -7,7 +7,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 "" visual
-Plug 'Yggdroot/indentLine'
 Plug 'kabbamine/vcoolor.vim'
 Plug 'machakann/vim-highlightedyank'
 
