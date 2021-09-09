@@ -18,6 +18,22 @@ end
 
 use {
   'jeffkreeftmeijer/vim-dim', -- (Xresources) consistent term colors w invers
+  setup = add_pack('vim-dim'),
+  -- FIXME why notermguicolors not sets?
+
+  -- config = function()
+  --   vim.opt.termguicolors = false
+  --   -- vim.cmd('set notermguicolors')
+  -- end,
+  -- setup = add_pack('vim-dim'),
+
+  -- setup = function()
+  --   vim.opt.termguicolors = false
+  --   -- vim.cmd('set notermguicolors')
+  --   vim.cmd('packadd vim-dim')
+  -- end,
+
+  cmd={'colorscheme dim'},
 }
 
 use {
