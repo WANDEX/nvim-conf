@@ -6,6 +6,9 @@
 if !exists('autocommands_loaded')
     let autocommands_loaded = 1
 
+    " nvim builtin yank highlight :h lua-highlight
+    au TextYankPost * silent! lua vim.highlight.on_yank {timeout=1500}
+
     aug HelpPages
         au!
         au FileType help nested call ILikeHelpToTheRight()
