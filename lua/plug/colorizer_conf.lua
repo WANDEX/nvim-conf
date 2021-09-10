@@ -1,5 +1,7 @@
 -- configuration for the color plugin
 
+-- use 'kabbamine/vcoolor.vim' - color selector/picker (config in vColor.vim)
+
 local use = require('packer').use
 -- use {
   -- both !Throws error without: set termguicolors
