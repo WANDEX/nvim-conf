@@ -35,7 +35,6 @@ let g:nvim_config_files = [
     \ 'conf/functions.vim',
     \ 'conf/mappings.vim',
     \ 'conf/auto.vim',
-    \ 'conf/plug/airline.vim',
     \ 'conf/plug/cheat.vim',
     \ 'conf/plug/editorconfig.vim',
     \ 'conf/plug/fastfold.vim',
