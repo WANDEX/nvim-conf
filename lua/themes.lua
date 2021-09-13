@@ -17,7 +17,13 @@ local add_pack = function(package_name)
 end
 
 use {
-  'jeffkreeftmeijer/vim-dim', -- (Xresources) consistent term colors w invers
+  'nekonako/xresources-nvim',
+  setup = add_pack('xresources-nvim'),
+  cmd={'colorscheme xresources'},
+}
+
+use {
+  'jeffkreeftmeijer/vim-dim', -- OLD -> ONLY! notermguicolors (Xresources) consistent term colors w invers
   setup = add_pack('vim-dim'),
   -- FIXME why notermguicolors not sets?
 
