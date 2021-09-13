@@ -4,6 +4,9 @@ local use = require('packer').use
 use {
   'lukas-reineke/indent-blankline.nvim',
   config = function()
+    -- XXX(1): temp fix for bug only with set termguicolors, with notermguicolors all ok.
+    -- (https://github.com/lukas-reineke/indent-blankline.nvim/issues/59)
+    vim.wo.colorcolumn = "99999" -- XXX temp fix:(1) remove me later!
     require('indent_blankline').setup{
       -- exclude: TODO somehow exclude floating_windows
       -- bufname_exclude = {''},
