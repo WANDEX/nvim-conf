@@ -33,6 +33,5 @@ hi DiffChange ctermbg=NONE guibg=NONE ctermfg=white guifg=white
 hi DiffDelete ctermbg=NONE guibg=NONE ctermfg=red guifg=red
 hi DiffText   cterm=bold ctermfg=0 ctermbg=11 gui=bold guibg=Red
 
-hi IndentGuidesOdd  guifg=#282a36 ctermfg=238
-hi IndentGuidesEven guifg=#383a46 ctermfg=242
-
+hi IndentGuidesOdd  guifg=#282a36 ctermfg=238 gui=nocombine cterm=nocombine
+hi IndentGuidesEven guifg=#383a46 ctermfg=242 gui=nocombine cterm=nocombine
