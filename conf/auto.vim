@@ -34,7 +34,7 @@ if !exists('autocommands_loaded')
 
     aug OverrideHighlights
         au!
-        au ColorScheme * source ~/.config/nvim/conf/hi.vim
+        au ColorScheme * nested source ~/.config/nvim/conf/hi.vim
     aug END
 
     " update binds when sxhkdrc is updated.
