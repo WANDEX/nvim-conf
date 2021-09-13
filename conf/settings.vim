@@ -54,41 +54,11 @@ set timeoutlen=800 " used by vim-which-key as timeout before showing guide popup
 "*****************************************************************************
 "" Advanced
 "*****************************************************************************
+set lazyredraw " S P E E D ?
+" set termguicolors
+" colorscheme nightfox
 colorscheme dim
 set t_Co=256
-hi Normal guibg=NONE ctermbg=NONE
-
-" MEMO: :call Paste('hi') - to search in output of :hi command
-" also note: cterm=reverse gui=reverse
-
-" completion & etc.
-hi Pmenu ctermfg=white ctermbg=darkgray
-
-" which-key.nvim colorscheme:
-hi WhichKey ctermfg=red ctermbg=NONE
-hi WhichKeyGroup ctermfg=white ctermbg=black
-hi WhichKeySeparator ctermfg=darkgray ctermbg=NONE
-hi WhichKeyDesc  ctermfg=gray ctermbg=black
-hi WhichKeyValue ctermfg=gray ctermbg=black
-hi WhichKeyFloat ctermfg=gray ctermbg=NONE
-"
-hi CmpDocumentation cterm=reverse
-hi CmpDocumentationBorder ctermbg=black
-
-hi FloatBorder ctermfg=red ctermbg=NONE
-hi NormalFloat ctermfg=gray ctermbg=NONE
-
-" for neomake & etc.
-hi SignColumn ctermfg=14 guifg=Cyan ctermbg=NONE guibg=NONE
-
-" diff & git signs
-hi DiffAdd    ctermbg=NONE guibg=NONE ctermfg=green guifg=green
-hi DiffChange ctermbg=NONE guibg=NONE ctermfg=white guifg=white
-hi DiffDelete ctermbg=NONE guibg=NONE ctermfg=red guifg=red
-hi DiffText   cterm=bold ctermfg=0 ctermbg=11 gui=bold guibg=Red
-
-hi IndentGuidesOdd  guifg=#282a36 ctermfg=238
-hi IndentGuidesEven guifg=#383a46 ctermfg=242
 
 let mapleader="\<SPACE>"
 let maplocalleader="\\"

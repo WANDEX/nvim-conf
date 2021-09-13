@@ -32,6 +32,7 @@ let $cache = stdpath('cache')
 " DO NOT SORT LINES ABOVE PLUG RELATED FILES
 let g:nvim_config_files = [
     \ 'conf/settings.vim',
+    \ 'conf/hi.vim',
     \ 'conf/functions.vim',
     \ 'conf/mappings.vim',
     \ 'conf/auto.vim',
