@@ -55,9 +55,8 @@ set timeoutlen=800 " used by vim-which-key as timeout before showing guide popup
 "" Advanced
 "*****************************************************************************
 set lazyredraw " S P E E D ?
-" set termguicolors
-" colorscheme nightfox
-colorscheme dim
+set termguicolors
+colorscheme xresources
 set t_Co=256
 
 let mapleader="\<SPACE>"
