@@ -1,18 +1,26 @@
--- configuration for the color plugin
+-- configuration for the color related plugins
+
+vim.o.termguicolors = true -- wont work/throws error without: set termguicolors
 
 -- use 'kabbamine/vcoolor.vim' - color selector/picker (config in vColor.vim)
 
 local use = require('packer').use
--- use {
-  -- both !Throws error without: set termguicolors
-  -- 'norcalli/nvim-colorizer.lua',
-  -- or this
-  -- {'RRethy/vim-hexokinase', run='make hexokinase'},
--- }
+local plug = '!hexokinase' -- variable for swapping colorizers
+if ( plug == 'hexokinase' ) then
+  use {
+    'RRethy/vim-hexokinase', -- FIXME dunno why, but does not work!
+    run='make hexokinase',
+  }
+else
+  use {
+    'norcalli/nvim-colorizer.lua',
+    config = function()
+      require('colorizer').setup{
+        -- Exclusion Only makes sense if '*' is specified!
+        '*'; -- Highlight all files, but customize some others.
+        '!html'; -- Exclude from highlighting.
+      }
+    end,
+  }
+end
 
--- Exclude some filetypes from highlighting by using `!`
--- require('colorizer').setup{
---   '*'; -- Highlight all files, but customize some others.
---   '!html'; -- Exclude vim from highlighting.
---   -- Exclusion Only makes sense if '*' is specified!
--- }
