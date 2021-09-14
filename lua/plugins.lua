@@ -47,6 +47,12 @@ require('packer').startup({function()
     {'numirias/semshi', run=':UpdateRemotePlugins'}, -- TODO ft='python'
   }
 
+  use {
+      'nvim-treesitter/nvim-treesitter',
+      branch = '0.5-compat', -- specific branch for nvim 0.5
+      run = ':TSUpdate',
+  }
+
   -- folding
   -- use {'kalekundert/vim-coiled-snake', ft='python'} -- python code folding
   use 'Konfekt/FastFold'
