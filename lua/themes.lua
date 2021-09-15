@@ -53,3 +53,14 @@ use {
   setup = add_pack('nightfox.nvim'),
   cmd={'colorscheme nightfox', 'NightfoxLoad'}, -- style :NightfoxLoad <fox>
 }
+
+use {
+  'sainnhe/sonokai',
+  config = function()
+    -- FIXME why termguicolors not sets?
+    vim.o.termguicolors = true
+  end,
+  setup = add_pack('sonokai'),
+  cmd={'colorscheme sonokai'},
+}
+
