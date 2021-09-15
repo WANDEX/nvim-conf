@@ -46,6 +46,12 @@ use {
 }
 
 use {
+  'tanvirtin/monokai.nvim',
+  setup = add_pack('monokai.nvim'),
+  cmd={'colorscheme monokai', 'colorscheme monokai_pro', 'colorscheme monokai_soda'},
+}
+
+use {
   'EdenEast/nightfox.nvim',
   setup = add_pack('nightfox.nvim'),
   cmd={'colorscheme nightfox', 'NightfoxLoad'}, -- style :NightfoxLoad <fox>
