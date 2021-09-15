@@ -24,28 +24,25 @@ use {
 
 use {
   'jeffkreeftmeijer/vim-dim', -- OLD -> ONLY! notermguicolors (Xresources) consistent term colors w invers
+  config = function()
+    -- FIXME why notermguicolors not sets?
+    vim.o.termguicolors = false
+    vim.cmd('set notermguicolors')
+  end,
   setup = add_pack('vim-dim'),
-  -- FIXME why notermguicolors not sets?
-
-  -- config = function()
-  --   vim.opt.termguicolors = false
-  --   -- vim.cmd('set notermguicolors')
-  -- end,
-  -- setup = add_pack('vim-dim'),
-
-  -- setup = function()
-  --   vim.opt.termguicolors = false
-  --   -- vim.cmd('set notermguicolors')
-  --   vim.cmd('packadd vim-dim')
-  -- end,
-
   cmd={'colorscheme dim'},
 }
 
 use {
   'Pocco81/Catppuccino.nvim',
   setup = add_pack('Catppuccino.nvim'),
-  cmd={'colorscheme catppuccino', 'colorscheme dark_catppuccino'},
+  cmd={
+    'colorscheme catppuccino',
+    'colorscheme dark_catppuccino',
+    'colorscheme light_melya',
+    'colorscheme neon_latte',
+    'colorscheme soft_manilo',
+  },
 }
 
 use {
