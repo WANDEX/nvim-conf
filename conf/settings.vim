@@ -66,3 +66,8 @@ if has('conceal')
     set conceallevel=2 concealcursor=niv
 endif
 
+" fix: to be able to override formatoptions inherited from ftplugins
+" ':verbose set formatoptions?' - to check for current filetype
+" (https://github.com/neovim/neovim/issues/4684)
+filetype plugin indent on
+
