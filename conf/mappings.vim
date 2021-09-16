@@ -20,15 +20,8 @@ vnoremap L E|onoremap L E|vnoremap L E
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
-nnoremap <Enter> nzzzv
-nnoremap <BS> Nzzzv
-"nnoremap <M-n> nzzzv
-"nnoremap <M-e> Nzzzv
-"nnoremap <Esc>^[n nzzzv
-"nnoremap <Esc>^[e Nzzzv
-"nnoremap \e^[j nzzzv
-"nnoremap \e^[k Nzzzv
-
+nnoremap <M-n> nzzzv
+nnoremap <M-e> Nzzzv
 
 " Move screen one page
 nnoremap N <C-f>
