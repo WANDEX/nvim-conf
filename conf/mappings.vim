@@ -100,6 +100,7 @@ nnoremap <F12> gg=G''
 
 " easier terminal Esc
 tnoremap <Esc> <C-\><C-n>
+tnoremap <C-l> <C-\><C-n>
 
 " easier moving of code blocks, without losing of selection block
 vnoremap < <gv
