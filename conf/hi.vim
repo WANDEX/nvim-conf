@@ -33,7 +33,14 @@ hi DiffChange ctermbg=NONE guibg=NONE ctermfg=White guifg=White
 hi DiffDelete ctermbg=NONE guibg=NONE ctermfg=Red   guifg=Red
 hi DiffText   cterm=bold ctermfg=0 ctermbg=11 gui=bold guibg=Red
 
+" magit
+hi DiffLine ctermfg=Gray guifg=Gray
+
+" dunno from where it comes, so just in case
+hi diffChanged ctermfg=White guifg=White
+
 hi Folded ctermfg=Gray guifg=Gray
+hi Whitespace ctermfg=Gray guifg=Gray
 
 hi IndentGuidesOdd  guifg=#282a36 ctermfg=238 gui=nocombine cterm=nocombine
 hi IndentGuidesEven guifg=#383a46 ctermfg=242 gui=nocombine cterm=nocombine
