@@ -6,8 +6,22 @@
 if !exists('autocommands_loaded')
     let autocommands_loaded = 1
 
-    " nvim builtin yank highlight :h lua-highlight
-    au TextYankPost * silent! lua vim.highlight.on_yank {timeout=1500}
+    aug OverrideHighlights
+        au!
+        " nvim builtin yank highlight :h lua-highlight
+        au TextYankPost * silent! lua vim.highlight.on_yank {timeout=1500}
+
+        " XXX hack to override highlight in magit
+        au FileType magit source ~/.config/nvim/conf/hi.vim
+
+        " override highlights on every colorscheme change
+        au ColorScheme * nested source ~/.config/nvim/conf/hi.vim
+    aug END
+
+    aug MiscGroup
+        " Disables automatic commenting on newline:
+        au FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+    aug END
 
     aug HelpPages
         au!
@@ -23,27 +37,25 @@ if !exists('autocommands_loaded')
         au QuitPre * if empty(&buftype) | cclose | endif
     aug END
 
-    " Disables automatic commenting on newline:
-    au FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-
-    " run xrdb whenever Xresources are updated.
-    au BufWritePost \(*/.Xresources\|*/xres/*\) !xrdb ~/.Xresources
-
-    " run wal right after previous xrdb when this specific file is updated.
-    "au BufWritePost ~/.config/xres/core4w !wal -q -tn -i ~/.config/wallpaper.jpg
-
-    aug OverrideHighlights
+    aug AutoCompileGroup
         au!
-        au ColorScheme * nested source ~/.config/nvim/conf/hi.vim
+        " run xrdb whenever Xresources are updated.
+        au BufWritePost \(*/.Xresources\|*/xres/*\) !xrdb ~/.Xresources
+
+        " run wal right after previous xrdb when this specific file is updated.
+        "au BufWritePost ~/.config/xres/core4w !wal -q -tn -i ~/.config/wallpaper.jpg
+
+        " update binds when sxhkdrc is updated.
+        au BufWritePost *sxhkdrc !pkill -USR1 sxhkd
+
+        " Have dwmblocks automatically recompile and run when you edit this file in
+        au BufWritePost ~/source/projects/core/fork/dwmblocks/config.h !cd ~/source/projects/core/fork/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid dwmblocks & }
+
     aug END
 
-    " update binds when sxhkdrc is updated.
-    au BufWritePost *sxhkdrc !pkill -USR1 sxhkd
-
-    " Have dwmblocks automatically recompile and run when you edit this file in
-    au BufWritePost ~/source/projects/core/fork/dwmblocks/config.h !cd ~/source/projects/core/fork/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid dwmblocks & }
-
-    " fix in case of memory leak vim issue. Should be at the end.
-    au BufWinLeave * call clearmatches()
+    aug TheVeryLastGroup
+        " fix in case of memory leak vim issue. Should be at the end.
+        au BufWinLeave * call clearmatches()
+    aug END
 endif
 
