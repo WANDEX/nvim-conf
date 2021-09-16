@@ -10,6 +10,7 @@ let g:VM_custom_noremaps = {'==': '==', '<<': '<<', '>>': '>>'}
 " change surroundings is built in, so add other commands with motions & etc.
 let VM_user_operators = [
 \   {'cs': 2}, {'cS': 2}, {'ys': 3}, {'yS': 3}, {'ds': 1}, {'ca': 1}, {'ck': 1}, {'da': 1}, {'dk': 1},
+\   {'dz': 2}, {'dZ': 2},
 \   ]
 
 " remap for colemak layout
@@ -24,10 +25,13 @@ let g:VM_custom_motions = {
 let g:VM_custom_remaps = {
 \   '<M-S-I>': '<M-S-Right>',
 \   '<M-S-H>': '<M-S-Left>',
+\   '<C-l>': '<Esc>',
 \   }
 
-let g:VM_maps["i"] = 'K' " insert
-let g:VM_maps["Exit"] = '<C-l>' " leave/exit mode
+let g:VM_maps["i"] = 'k' " insert
+
+" TODO map some key to be able to move all cursors up like - j does!
+" let g:VM_maps["k"] = '<C-k>' "j/k move all cursors down/up
 
 " enable undo/redo
 let g:VM_maps["Undo"] = 'u'
