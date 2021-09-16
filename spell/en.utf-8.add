@@ -89,3 +89,5 @@ cmd
 workspace
 lsp
 whitespace
+colorscheme
+cterm
