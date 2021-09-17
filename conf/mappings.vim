@@ -39,14 +39,16 @@ nnoremap i l|xnoremap i l|onoremap i l|vnoremap i l
 " nnoremap i l|xnoremap i l|onoremap i l
 
 "" leave mappping to exit from all modes
-inoremap <silent> <C-l> <Esc>
-onoremap <silent> <C-l> <Esc>
-vnoremap <silent> <C-l> <Esc>
-xnoremap <silent> <C-l> <Esc>
+onoremap <silent><script> <C-L> <Esc>
+vnoremap <silent><script> <C-L> <Esc>
+xnoremap <silent><script> <C-L> <Esc>
 "" leave by canceling command
-cnoremap <silent> <C-l> <C-c>
+cnoremap <silent><script> <C-L> <C-c>
+" original CTRL-L - Clears and redraws the screen.
 " clear the highlighting of :set hlsearch & cmd line
-nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
+nnoremap <silent><script> <C-L> <cmd>nohlsearch<CR><C-L>
+" leave insert mode (+move cursor one char right)
+inoremap <silent><script> <C-L> <Esc><right>
 
 "*****************************************************************************
 "" Extra Mappings
