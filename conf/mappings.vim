@@ -54,6 +54,13 @@ inoremap <silent><script> <C-L> <Esc><right>
 "" Extra Mappings
 "*****************************************************************************
 
+" replace f/t with one-character Sneak,
+" use ;/, to move forth/back 'justinmk/vim-sneak':
+map f <Plug>Sneak_f
+map F <Plug>Sneak_F
+map t <Plug>Sneak_t
+map T <Plug>Sneak_T
+
 " Move to next/previous bufpage :bnext,:bprev
 nnoremap <silent>]b :bn<CR>
 nnoremap <silent>[b :bp<CR>
