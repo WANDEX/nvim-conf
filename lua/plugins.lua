@@ -69,6 +69,15 @@ require('packer').startup({function()
 
   use {'rmagatti/alternate-toggler', cmd='ToggleAlternate'} -- toggle alternate "boolean" values FIXME
 
+  use { -- wipe/delete buffers without closing windows or messing up layout.
+    'moll/vim-bbye',
+    config = function()
+      -- create new mappings with this plugin commands
+      vim.api.nvim_set_keymap('n', '<Leader>q', '<cmd>Bdelete<CR>',  {nowait=true, noremap=true})
+      vim.api.nvim_set_keymap('n', '<Leader>w', '<cmd>Bwipeout<CR>', {nowait=true, noremap=true})
+    end,
+  }
+
   -- not sure (candidates for deletion):
   -- use 'metakirby5/codi.vim'
   -- use 'dbeniamine/cheat.sh-vim'
