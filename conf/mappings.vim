@@ -6,26 +6,26 @@
 "" hnei i.e. left/down/up/right
 
 " insert mode and modifier inside
-nnoremap k i|xnoremap k i|onoremap k i|vnoremap k i
+nnoremap <silent> k i|xnoremap <silent> k i|onoremap <silent> k i|vnoremap <silent> k i
 " nnoremap k i|onoremap k i|xnoremap k i
 
 " go low
 nnoremap gl L
 
 " Forward towards the last letter of the word
-nnoremap l e|onoremap l e|vnoremap l e
-vnoremap l e|onoremap l e|vnoremap l e
-nnoremap L E|onoremap L E|vnoremap L E
-vnoremap L E|onoremap L E|vnoremap L E
+nnoremap <silent> l e|onoremap <silent> l e|vnoremap <silent> l e
+vnoremap <silent> l e|onoremap <silent> l e|vnoremap <silent> l e
+nnoremap <silent> L E|onoremap <silent> L E|vnoremap <silent> L E
+vnoremap <silent> L E|onoremap <silent> L E|vnoremap <silent> L E
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
-nnoremap <M-n> nzzzv
-nnoremap <M-e> Nzzzv
+nnoremap <silent> <M-n> nzzzv
+nnoremap <silent> <M-e> Nzzzv
 
 " Move screen one page
-nnoremap N <C-f>
-nnoremap E <C-b>
+nnoremap <silent> N <C-f>
+nnoremap <silent> E <C-b>
 
 " Move windows with C-Direction
 nnoremap <C-W>n <C-W>j
@@ -33,9 +33,9 @@ nnoremap <C-W>e <C-W>k
 nnoremap <C-W>h <C-W>h
 nnoremap <C-W>i <C-W>l
 
-nnoremap n j|xnoremap n j|onoremap n j|vnoremap n j
-nnoremap e k|xnoremap e k|onoremap e k|vnoremap e k
-nnoremap i l|xnoremap i l|onoremap i l|vnoremap i l
+nnoremap <silent> n j|xnoremap <silent> n j|onoremap <silent> n j|vnoremap <silent> n j
+nnoremap <silent> e k|xnoremap <silent> e k|onoremap <silent> e k|vnoremap <silent> e k
+nnoremap <silent> i l|xnoremap <silent> i l|onoremap <silent> i l|vnoremap <silent> i l
 " nnoremap i l|xnoremap i l|onoremap i l
 
 "" leave mappping to exit from all modes
