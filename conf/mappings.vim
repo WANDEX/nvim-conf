@@ -61,46 +61,47 @@ map F <Plug>Sneak_F
 map t <Plug>Sneak_t
 map T <Plug>Sneak_T
 
+" TODO dont go to next buf if next buf is empty
 " Move to next/previous bufpage :bnext,:bprev
-nnoremap <silent>]b :bn<CR>
-nnoremap <silent>[b :bp<CR>
+nnoremap <silent>]b <cmd>bn<CR>
+nnoremap <silent>[b <cmd>bp<CR>
 
 " Move to next/previous tab :tabNext,:tabprevious
-nnoremap <silent>]t :tabN<CR>
-nnoremap <silent>[t :tabp<CR>
+nnoremap <silent>]t <cmd>tabN<CR>
+nnoremap <silent>[t <cmd>tabp<CR>
 
 " create Qlist with word :vim bar %
 " Jump to next/previous Quickfix list item :cn,:cp
-nnoremap <silent>]q :cn<CR>
-nnoremap <silent>[q :cp<CR>
+nnoremap <silent>]q <cmd>cn<CR>
+nnoremap <silent>[q <cmd>cp<CR>
 
 " create Llist with word :lvim bar %
 " Jump to next/previous Location list item :lne,:lp
-nnoremap <silent>]l :lne<CR>
-nnoremap <silent>[l :lp<CR>
+nnoremap <silent>]l <cmd>lne<CR>
+nnoremap <silent>[l <cmd>lp<CR>
 
 " To navigate to the previous or next trailing whitespace
-nnoremap ]w :NextTrailingWhitespace<CR>
-nnoremap [w :PrevTrailingWhitespace<CR>
+nnoremap ]w <cmd>NextTrailingWhitespace<CR>
+nnoremap [w <cmd>PrevTrailingWhitespace<CR>
 
-nnoremap <F3> :TagbarToggle<CR>
+nnoremap <F3> <cmd>TagbarToggle<CR>
 
-nnoremap <F4> :set relativenumber!<CR>
+nnoremap <F4> <cmd>set relativenumber!<CR>
 
 " run current python buffer in nvim term
 "nnoremap <F5><F5> :vs <CR> :term python % <CR>
 "nnoremap <F5>h :15sp <CR> :term python % <CR>
 
 " toggle spell check
-nnoremap <F7> :setlocal spell! spelllang=en_us<CR>
+nnoremap <F7> <cmd>setlocal spell! spelllang=en_us<CR>
 
 " see encoding-values
-menu Encoding.utf-8         :e ++enc=utf-8<CR>
-menu Encoding.latin1        :e ++enc=latin1<CR>
-menu Encoding.default       :e ++enc=default<CR>
-menu Encoding.koi8-r        :e ++enc=koi8-r ++ff=unix<CR>
-menu Encoding.windows-1251  :e ++enc=cp1251 ++ff=dos<CR>
-menu Encoding.cp866         :e ++enc=cp866  ++ff=dos<CR>
+menu Encoding.utf-8         <cmd>e ++enc=utf-8<CR>
+menu Encoding.latin1        <cmd>e ++enc=latin1<CR>
+menu Encoding.default       <cmd>e ++enc=default<CR>
+menu Encoding.koi8-r        <cmd>e ++enc=koi8-r ++ff=unix<CR>
+menu Encoding.windows-1251  <cmd>e ++enc=cp1251 ++ff=dos<CR>
+menu Encoding.cp866         <cmd>e ++enc=cp866  ++ff=dos<CR>
 " use TAB to cycle between menu variants
 nnoremap <F8> :emenu Encoding.
 
@@ -116,19 +117,19 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Reload vim configuration
-nnoremap <localleader>rc :ReloadConfig<CR>
+nnoremap <localleader>rc <cmd>ReloadConfig<CR>
 
 " toggle between background transparency
-nnoremap <silent> <localleader>b :call BgToggle()<CR>
+nnoremap <silent> <localleader>b <cmd>call BgToggle()<CR>
 
 " Clear trailing whitespace
-nnoremap <localleader>cw :%s/\s\+$//g<CR>:nohlsearch<CR>
+nnoremap <localleader>cw <cmd>%s/\s\+$//g<CR><cmd>nohlsearch<CR>
 
 " Colorizer toggle color highlight
-nnoremap <localleader>Ct :ColorToggle<CR>
+nnoremap <localleader>Ct <cmd>ColorizerToggle<CR>
 
 " toggle colored column at lines which character length exceed N
-nnoremap <silent> <localleader>ct :call ColumnToggle()<CR>
+nnoremap <silent> <localleader>ct <cmd>call ColumnToggle()<CR>
 
 " execute command and paste output in current buffer
 nnoremap <silent> <localleader>P :call Paste('')<Left><Left>
