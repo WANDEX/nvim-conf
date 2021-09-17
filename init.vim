@@ -13,6 +13,7 @@ require 'bootstrap' -- before all other!
 require 'plugins'
 require 'themes'
 require 'auto'
+require 'plug/bufferline_conf'
 require 'plug/auto_session'
 require 'plug/autopairs_conf'
 require 'plug/indent_guides'
