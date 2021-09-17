@@ -131,7 +131,7 @@ cmp.setup {
     ['<C-j>'] = cmp.mapping.scroll_docs(-4),
     ['<C-h>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-l>'] = cmp.mapping.close(),
+    -- ['<C-l>'] = cmp.mapping.close(),
     ['<Esc>'] = cmp.mapping.abort(),
     ['<C-y>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
