@@ -1,7 +1,7 @@
 "*****************************************************************************
 "" Core Mappings For Colemak
 "*****************************************************************************
-"" MEMO: use :verbose map 'key or sequence' - to see if mapping is used
+"" MEMO: use :verbose map 'key or sequence' - (imap) to see if mapping is used
 "" hjkl remapped for colemak to
 "" hnei i.e. left/down/up/right
 
