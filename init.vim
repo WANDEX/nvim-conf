@@ -54,6 +54,7 @@ let g:nvim_config_files = [
     \ 'conf/plug/vim-gtfo.vim',
     \ 'conf/plug/vim-textobj-user.vim',
     \ 'conf/plug/vim-visual-multi.vim',
+    \ 'conf/plug/vim-xtabline.vim',
     \ ]
 
 function! s:cpath(...)
