@@ -131,6 +131,13 @@ wk.register({ t = {
   ["!r"] = { ":'<,'>TranslateR!<CR>", "replace" },
 }, }, { prefix = "<leader>", mode = "v" })
 
+wk.register({ x = {
+  name = "xtab",
+  t = { name = "tab" },
+  b = { name = "buf" },
+  s = { name = "ses" },
+}, }, { prefix = "<leader>" })
+
 wk.register({ z = {
   name = "zen",
   A = { "<cmd>TZAtaraxis l10 r10 t3 b1<CR>", "Ataraxis wide" },
@@ -138,4 +145,3 @@ wk.register({ z = {
   f = { "<cmd>TZFocus<CR>", "focus" },
   m = { "<cmd>TZMinimalist<CR>", "minimalist" },
 }, }, { prefix = "<localleader>" })
-
