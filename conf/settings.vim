@@ -40,6 +40,7 @@ set scrolloff=5                 " Show next 5 lines while scrolling.
 set sidescrolloff=5             " Show next 5 columns while side-scrolling.
 
 set showcmd                     " Display incomplete commands
+set showtabline=2               " Always show tabline
 set noshowmode
 set wildmenu                    " Command line tab complete options as a menu.
 set wildmode=list,full          " Enable autocompletion
