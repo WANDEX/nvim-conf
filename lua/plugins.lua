@@ -62,6 +62,7 @@ require('packer').startup({function()
     'voldikss/vim-translator',
     'Valloric/ListToggle',
     'mg979/vim-visual-multi',
+    'mg979/vim-xtabline',
     'preservim/tagbar',
     'justinmk/vim-gtfo',
     'farmergreg/vim-lastplace',
@@ -93,4 +94,3 @@ config = {
     end
   },
 }})
-
