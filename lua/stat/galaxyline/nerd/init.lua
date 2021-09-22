@@ -1,62 +1,62 @@
 local present1, gl = pcall(require, 'galaxyline')
 if not present1 then
-    print("galaxyline not found")
-    return
+  print("galaxyline not found")
+  return
 end
 
 local gls = gl.section
 
 gl.short_line_list = {
-    'LuaTree',
-    'vista',
-    'dbui',
-    'startify',
-    'term',
-    'nerdtree',
-    'fugitive',
-    'fugitiveblame',
-    'plug'
+  'LuaTree',
+  'vista',
+  'dbui',
+  'startify',
+  'term',
+  'nerdtree',
+  'fugitive',
+  'fugitiveblame',
+  'plug'
 }
 
 -- VistaPlugin = extension.vista_nearest
 
 local colors = {
-    bg       = '#5C687A',
-    line_bg  = '#16191D',
-    fg       = '#8FBCBB',
-    fg_green = '#65a380',
+  bg       = '#5C687A',
+  line_bg  = '#16191D',
+  fg       = '#8FBCBB',
+  fg_green = '#65a380',
 
-    yellow   = '#E5C07B',
-    cyan     = '#70C0BA',
-    darkblue = '#83A598',
-    green    = '#98C379',
-    orange   = '#FF8800',
-    purple   = '#C678DD',
-    magenta  = '#C858E9',
-    blue     = '#73BA9F',
-    red      = '#D54E53',
+  yellow   = '#E5C07B',
+  cyan     = '#70C0BA',
+  darkblue = '#83A598',
+  green    = '#98C379',
+  orange   = '#FF8800',
+  purple   = '#C678DD',
+  magenta  = '#C858E9',
+  blue     = '#73BA9F',
+  red      = '#D54E53',
 }
 
 local use_coc = false
 if vim.g.nerd_galaxyline_lsp == 'coc' then
-    use_coc = true
+  use_coc = true
 end
 
 local function lsp_status(status)
-    local shorter_stat = ''
-    for match in string.gmatch(status, "[^%s]+")  do
-        local err_warn = string.find(match, "^[WE]%d+", 0)
-        if not err_warn then
-            shorter_stat = shorter_stat .. ' ' .. match
-        end
+  local shorter_stat = ''
+  for match in string.gmatch(status, "[^%s]+")  do
+    local err_warn = string.find(match, "^[WE]%d+", 0)
+    if not err_warn then
+      shorter_stat = shorter_stat .. ' ' .. match
     end
-    return shorter_stat
+  end
+  return shorter_stat
 end
 
 local function get_coc_lsp()
   local status = vim.fn['coc#status']()
   if not status or status == '' then
-      return ''
+    return ''
   end
   return lsp_status(status)
 end
@@ -64,30 +64,30 @@ end
 local function get_diagnostic_info()
   if vim.fn.exists('*coc#rpc#start_server') == 1 then
     return get_coc_lsp()
-    end
+  end
   return ''
 end
 
 local function get_current_func()
   local has_func, func_name = pcall(vim.fn.nvim_buf_get_var,0,'coc_current_function')
   if not has_func then return end
-      return func_name
-  end
+  return func_name
+end
 
 local function get_function_info()
   if vim.fn.exists('*coc#rpc#start_server') == 1 then
     return get_current_func()
-    end
+  end
   return ''
 end
 
 local function trailing_whitespace()
-    local trail = vim.fn.search("\\s$", "nw")
-    if trail ~= 0 then
-        return ' '
-    else
-        return nil
-    end
+  local trail = vim.fn.search("\\s$", "nw")
+  if trail ~= 0 then
+    return ' '
+  else
+    return nil
+  end
 end
 
 CocStatus = get_diagnostic_info
@@ -95,11 +95,11 @@ CocFunc = get_function_info
 TrailingWhiteSpace = trailing_whitespace
 
 local function has_file_type()
-    local f_type = vim.bo.filetype
-    if not f_type or f_type == '' then
-        return false
-    end
-    return true
+  local f_type = vim.bo.filetype
+  if not f_type or f_type == '' then
+    return false
+  end
+  return true
 end
 
 local buffer_not_empty = function()
@@ -117,12 +117,12 @@ end
 -- insert_blank_line_at_left insert blank line with
 -- line_bg color.
 local function insert_blank_line_at_left()
-insert_left {
-  Space = {
-    provider = function () return ' ' end,
-    highlight = {colors.line_bg,colors.line_bg}
+  insert_left {
+    Space = {
+      provider = function () return ' ' end,
+      highlight = {colors.line_bg,colors.line_bg}
+    }
   }
-}
 end
 
 -- insert_right insert given item into galaxyline.right
@@ -133,12 +133,12 @@ end
 -- insert_blank_line_at_left insert blank line with
 -- line_bg color.
 local function insert_blank_line_at_right()
-insert_right {
-  Space = {
-    provider = function () return ' ' end,
-    highlight = {colors.line_bg,colors.line_bg}
+  insert_right {
+    Space = {
+      provider = function () return ' ' end,
+      highlight = {colors.line_bg,colors.line_bg}
+    }
   }
-}
 end
 
 -----------------------------------------------------
@@ -158,39 +158,39 @@ insert_blank_line_at_left()
 insert_left{
   ViMode = {
     icon = function()
-        local icons = {
-            n      = ' ',
-            i      = ' ',
-            c      = 'ﲵ ',
-            V      = ' ',
-            [''] = ' ',
-            v      = ' ',
-            C      = 'ﲵ ',
-            R      = '﯒ ',
-            t      = ' ',
-        }
-        return icons[vim.fn.mode()]
-      end,
+      local icons = {
+        n      = ' ',
+        i      = ' ',
+        c      = 'ﲵ ',
+        V      = ' ',
+        [''] = ' ',
+        v      = ' ',
+        C      = 'ﲵ ',
+        R      = '﯒ ',
+        t      = ' ',
+      }
+      return icons[vim.fn.mode()]
+    end,
     provider = function()
       -- auto change color according the vim mode
       local alias = {
-          n      = 'N',
-          i      = 'I',
-          c      = 'C',
-          V      = 'VL',
-          [''] = 'V',
-          v      = 'V',
-          C      = 'C',
-          ['r?'] = ':CONFIRM',
-          rm     = '--MORE',
-          R      = 'R',
-          Rv     = 'R&V',
-          s      = 'S',
-          S      = 'S',
-          ['r']  = 'HIT-ENTER',
-          [''] = 'SELECT',
-          t      = 'T',
-          ['!']  = 'SH',
+        n      = 'N',
+        i      = 'I',
+        c      = 'C',
+        V      = 'VL',
+        [''] = 'V',
+        v      = 'V',
+        C      = 'C',
+        ['r?'] = ':CONFIRM',
+        rm     = '--MORE',
+        R      = 'R',
+        Rv     = 'R&V',
+        s      = 'S',
+        S      = 'S',
+        ['r']  = 'HIT-ENTER',
+        [''] = 'SELECT',
+        t      = 'T',
+        ['!']  = 'SH',
       }
       local mode_color = {
         n = colors.yellow,      i = colors.green,   v=colors.blue,
@@ -303,11 +303,11 @@ insert_left {
 }
 
 insert_left {
-    TrailingWhiteSpace = {
-     provider = TrailingWhiteSpace,
-     icon = '  ',
-     highlight = {colors.yellow,colors.line_bg},
-    }
+  TrailingWhiteSpace = {
+    provider = TrailingWhiteSpace,
+    icon = '  ',
+    highlight = {colors.yellow,colors.line_bg},
+  }
 }
 
 insert_left {
@@ -327,21 +327,21 @@ insert_left {
 }
 
 insert_left {
-    CocStatus = {
-     provider = CocStatus,
-     highlight = {colors.green,colors.line_bg},
-     icon = '  ',
-     condition = use_coc,
-    }
+  CocStatus = {
+    provider = CocStatus,
+    highlight = {colors.green,colors.line_bg},
+    icon = '  ',
+    condition = use_coc,
+  }
 }
 
 insert_left {
-    CocStatus = {
-     provider = 'DiagnosticInfo',
-     highlight = {colors.green,colors.line_bg},
-     icon = '  ',
-     condition = function() return checkwidth() and not use_coc end,
-    }
+  CocStatus = {
+    provider = 'DiagnosticInfo',
+    highlight = {colors.green,colors.line_bg},
+    icon = '  ',
+    condition = function() return checkwidth() and not use_coc end,
+  }
 }
 
 insert_left {
@@ -354,12 +354,12 @@ insert_left {
 }
 
 insert_left {
-    DiagnosticHint = {
-     provider = 'DiagnosticHint',
-     condition = function() return checkwidth() and not use_coc end,
-     highlight = {colors.white,colors.line_bg},
-     icon = '  ',
-    }
+  DiagnosticHint = {
+    provider = 'DiagnosticHint',
+    condition = function() return checkwidth() and not use_coc end,
+    highlight = {colors.white,colors.line_bg},
+    icon = '  ',
+  }
 }
 
 insert_left{
