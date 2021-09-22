@@ -62,7 +62,7 @@ local trailing_whitespace = function()
   end
 end
 
-local function has_file_type()
+local has_file_type = function()
   local f_type = vim.bo.filetype
   if not f_type or f_type == '' then
     return false
@@ -225,7 +225,7 @@ insert_left{
     provider = function()
       return vim.fn.expand("%:F")
     end,
-    condition = function() return buffer_not_empty and has_file_type() end,
+    condition = function() return buffer_not_empty and has_file_type end,
     highlight = {colors.fg,colors.line_bg}
   }
 }
