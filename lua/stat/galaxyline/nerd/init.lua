@@ -80,6 +80,13 @@ local checkwidth = function()
   return false
 end
 
+local checkcond = function(condition)
+  if condition then
+    return true
+  end
+  return false
+end
+
 -- insert_left insert item at the left panel
 local function insert_left(element)
   table.insert(gls.left, element)
