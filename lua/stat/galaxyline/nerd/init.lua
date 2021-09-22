@@ -1,6 +1,6 @@
 local present1, gl = pcall(require, 'galaxyline')
 if not present1 then
-    print("galxyline not found")
+    print("galaxyline not found")
     return
 end
 
