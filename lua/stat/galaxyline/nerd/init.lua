@@ -37,6 +37,11 @@ local colors = {
   red      = '#D54E53',
 }
 
+-- return separator: left, right, blank
+local sepL = function() return ' ' end
+local sepR = function() return ' ' end
+local sepB = function() return ' ' end
+
 -- show current line percent of all lines
 local current_line_percent = function()
   return string.format(" %03d%% ", math.floor((vim.fn.line('.')/vim.fn.line('$'))*100))
@@ -102,7 +107,7 @@ end
 local function insert_blank_line_at_left()
   insert_left {
     Space = {
-      provider = function () return ' ' end,
+      provider = sepB,
       highlight = {colors.line_bg,colors.line_bg}
     }
   }
@@ -118,7 +123,7 @@ end
 local function insert_blank_line_at_right()
   insert_right {
     Space = {
-      provider = function () return ' ' end,
+      provider = sepB,
       highlight = {colors.line_bg,colors.line_bg}
     }
   }
@@ -131,7 +136,7 @@ end
 --{ mode panel start
 insert_left{
   Start = {
-    provider = function() return ' ' end,
+    provider = sepL,
     highlight = {colors.line_bg,}
   }
 }
@@ -197,7 +202,7 @@ insert_blank_line_at_left()
 
 insert_left{
   Separa = {
-    provider = function() return ' ' end,
+    provider = sepR,
     highlight = {colors.line_bg, },
   }
 }
@@ -207,7 +212,7 @@ insert_left{
 -- {information panel start
 insert_left{
   Start = {
-    provider = function() return ' ' end,
+    provider = sepL,
     highlight = {colors.line_bg,}
   }
 }
@@ -321,7 +326,7 @@ insert_left {
 
 insert_left{
   Separa = {
-    provider = function() return ' ' end,
+    provider = sepR,
     highlight = {colors.line_bg, },
   }
 }
@@ -329,7 +334,7 @@ insert_left{
 
 insert_right{
   Start = {
-    provider = function() return ' ' end,
+    provider = sepL,
     highlight = {colors.line_bg,}
   }
 }
@@ -391,7 +396,7 @@ insert_blank_line_at_right()
 
 insert_right{
   Separa = {
-    provider = function() return ' ' end,
+    provider = sepR,
     highlight = {colors.line_bg, },
   }
 }
