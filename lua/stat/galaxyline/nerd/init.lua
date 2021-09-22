@@ -357,6 +357,16 @@ insert_right{
 }
 
 insert_right{
+  BufferLinesTotal = {
+    provider = function()
+      return string.format("%03d ", vim.fn.line('$'))
+    end,
+    condition = buffer_not_empty,
+    highlight = {colors.cyan, colors.line_bg,'bold'},
+  }
+}
+
+insert_right{
   Encode = {
     provider = 'FileEncode',
     separator = '',
