@@ -17,8 +17,7 @@ use {
         "IndentGuidesEven",
       },
       show_trailing_blankline_indent = false,
-      show_current_context = true, -- requires treesitter!
+      -- show_current_context = true, -- requires treesitter!
     }
   end,
 }
-
