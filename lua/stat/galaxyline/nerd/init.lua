@@ -48,7 +48,7 @@ local function lsp_status(status)
   return shorter_stat
 end
 
-local function trailing_whitespace()
+local trailing_whitespace = function()
   local trail = vim.fn.search("\\s$", "nw")
   if trail ~= 0 then
     return ' '
@@ -56,8 +56,6 @@ local function trailing_whitespace()
     return nil
   end
 end
-
-TrailingWhiteSpace = trailing_whitespace
 
 local function has_file_type()
   local f_type = vim.bo.filetype
@@ -269,7 +267,7 @@ insert_left {
 
 insert_left {
   TrailingWhiteSpace = {
-    provider = TrailingWhiteSpace,
+    provider = trailing_whitespace,
     icon = '  ',
     highlight = {colors.yellow,colors.line_bg},
   }
