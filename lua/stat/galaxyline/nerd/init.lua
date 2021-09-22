@@ -37,6 +37,11 @@ local colors = {
   red      = '#D54E53',
 }
 
+-- show current line percent of all lines
+local current_line_percent = function()
+  return string.format(" %03d%% ", math.floor((vim.fn.line('.')/vim.fn.line('$'))*100))
+end
+
 local function lsp_status(status)
   local shorter_stat = ''
   for match in string.gmatch(status, "[^%s]+")  do
@@ -353,11 +358,12 @@ insert_right{
 
 insert_right{
   PerCent = {
-    provider = 'LinePercent',
+    provider = current_line_percent,
     separator = '',
     separator_highlight = {colors.blue,colors.line_bg},
     highlight = {colors.cyan, colors.line_bg,'bold'},
-    condition = checkwidth,
+    -- check: total number of buffer lines & width
+    condition = function() return checkcond(vim.fn.line('$') < 2048) and checkwidth end,
   }
 }
 
