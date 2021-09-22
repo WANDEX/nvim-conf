@@ -37,9 +37,12 @@ local colors = {
   red      = '#D54E53',
 }
 
+local sepl = ' '
+local sepr = ' '
+
 -- return separator: left, right, blank
-local sepL = function() return ' ' end
-local sepR = function() return ' ' end
+local sepL = function() return sepl end
+local sepR = function() return sepr end
 local sepB = function() return ' ' end
 
 -- show current line percent of all lines
