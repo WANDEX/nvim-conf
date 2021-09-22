@@ -72,6 +72,14 @@ local buffer_not_empty = function()
   return false
 end
 
+local checkwidth = function()
+  local squeeze_width  = vim.fn.winwidth(0) / 2
+  if squeeze_width > 40 then
+    return true
+  end
+  return false
+end
+
 -- insert_left insert item at the left panel
 local function insert_left(element)
   table.insert(gls.left, element)
@@ -230,14 +238,6 @@ insert_left {
 
 insert_blank_line_at_left()
 
-local checkwidth = function()
-  local squeeze_width  = vim.fn.winwidth(0) / 2
-  if squeeze_width > 40 then
-    return true
-  end
-  return false
-end
-
 insert_left {
   DiffAdd = {
     provider = 'DiffAdd',
@@ -292,16 +292,16 @@ insert_left {
 insert_left {
   DiagnosticInfo = {
     provider = 'DiagnosticInfo',
+    condition = checkwidth,
     highlight = {colors.green,colors.line_bg},
     icon = '  ',
-    condition = function() return checkwidth() end,
   }
 }
 
 insert_left {
   DiagnosticHint = {
     provider = 'DiagnosticHint',
-    condition = function() return checkwidth() end,
+    condition = checkwidth,
     highlight = {colors.white,colors.line_bg},
     icon = '  ',
   }
@@ -337,10 +337,10 @@ insert_blank_line_at_right()
 insert_right{
   LineInfo = {
     provider = 'LineColumn',
+    condition = checkwidth,
     separator = '',
     separator_highlight = {colors.green, colors.line_bg},
     highlight = {colors.fg,colors.line_bg},
-    condition = checkwidth,
   },
 }
 
@@ -367,10 +367,10 @@ insert_right{
 insert_right{
   Encode = {
     provider = 'FileEncode',
+    condition = checkwidth,
     separator = '',
     separator_highlight = {colors.blue,colors.line_bg},
     highlight = {colors.cyan, colors.line_bg,'bold'},
-    condition = checkwidth,
   }
 }
 
