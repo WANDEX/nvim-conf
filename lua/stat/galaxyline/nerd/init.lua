@@ -250,7 +250,7 @@ insert_left {
   GitBranch = {
     provider = 'GitBranch',
     condition = require('galaxyline.provider_vcs').check_git_workspace,
-    highlight = {'#8FBCBB', colors.line_bg, 'bold'},
+    highlight = {colors.fg, colors.line_bg, 'bold'},
   }
 }
 
