@@ -168,7 +168,7 @@ insert_left{
         n      = 'N',
         i      = 'I',
         c      = 'C',
-        V      = 'VL',
+        V      = 'L',
         [''] = 'V',
         v      = 'V',
         C      = 'C',
