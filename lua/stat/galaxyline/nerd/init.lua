@@ -347,7 +347,8 @@ insert_blank_line_at_right()
 insert_right{
   FileFormat = {
     provider = 'FileFormat',
-    condition = checkwidth,
+    -- check: width & show file format only if it's not unix
+    condition = function() return checkcond(vim.bo.fileformat ~= 'unix') and checkwidth end,
     highlight = {colors.fg,colors.line_bg,'bold'},
   }
 }
