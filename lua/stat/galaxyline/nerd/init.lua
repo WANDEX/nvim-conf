@@ -359,7 +359,6 @@ insert_right{
   LineInfo = {
     provider = 'LineColumn',
     condition = checkwidth,
-    icon = '',
     separator_highlight = {colors.green, colors.line_bg},
     highlight = {colors.fg,colors.line_bg},
   },
