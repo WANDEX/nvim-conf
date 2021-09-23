@@ -230,9 +230,7 @@ insert_left{
 
 insert_left{
   FileName = {
-    provider = function()
-      return vim.fn.expand("%:F")
-    end,
+    provider = function() return vim.fn.expand("%:F") end,
     condition = function() return buffer_not_empty and has_file_type end,
     highlight = {colors.fg, colors.line_bg},
   }
