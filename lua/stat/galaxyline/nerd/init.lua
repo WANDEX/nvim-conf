@@ -353,13 +353,12 @@ insert_right{
   }
 }
 
-insert_blank_line_at_right()
-
 insert_right{
   LineInfo = {
     provider = 'LineColumn',
     condition = checkwidth,
-    separator_highlight = {colors.green, colors.line_bg},
+    separator = ' ',
+    separator_highlight = {colors.fg,colors.line_bg},
     highlight = {colors.fg,colors.line_bg},
   },
 }
@@ -389,7 +388,6 @@ insert_right{
     -- check: width & show encoding only if it's not utf-8
     condition = function() return checkcond(vim.bo.fenc ~= 'utf-8') and checkwidth end,
     icon = '',
-    separator_highlight = {colors.blue,colors.line_bg},
     highlight = {colors.cyan, colors.line_bg,'bold'},
   }
 }
