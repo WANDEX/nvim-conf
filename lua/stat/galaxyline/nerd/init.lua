@@ -358,7 +358,7 @@ insert_right{
   LineInfo = {
     provider = 'LineColumn',
     condition = checkwidth,
-    separator = '',
+    icon = '',
     separator_highlight = {colors.green, colors.line_bg},
     highlight = {colors.fg,colors.line_bg},
   },
@@ -367,7 +367,7 @@ insert_right{
 insert_right{
   PerCent = {
     provider = current_line_percent,
-    separator = '',
+    icon = '',
     separator_highlight = {colors.blue,colors.line_bg},
     highlight = {colors.cyan, colors.line_bg,'bold'},
     -- check: total number of buffer lines & width
@@ -389,7 +389,7 @@ insert_right{
   Encode = {
     provider = 'FileEncode',
     condition = checkwidth,
-    separator = '',
+    icon = '',
     separator_highlight = {colors.blue,colors.line_bg},
     highlight = {colors.cyan, colors.line_bg,'bold'},
   }
