@@ -111,7 +111,7 @@ local function insert_blank_line_at_left()
   insert_left {
     Space = {
       provider = sepB,
-      highlight = {colors.line_bg,colors.line_bg}
+      highlight = {colors.line_bg, colors.line_bg},
     }
   }
 end
@@ -127,7 +127,7 @@ local function insert_blank_line_at_right()
   insert_right {
     Space = {
       provider = sepB,
-      highlight = {colors.line_bg,colors.line_bg}
+      highlight = {colors.line_bg, colors.line_bg},
     }
   }
 end
@@ -140,7 +140,7 @@ end
 insert_left{
   Start = {
     provider = sepL,
-    highlight = {colors.line_bg,}
+    highlight = {colors.line_bg},
   }
 }
 
@@ -206,7 +206,7 @@ insert_blank_line_at_left()
 insert_left{
   Separa = {
     provider = sepR,
-    highlight = {colors.line_bg, },
+    highlight = {colors.line_bg},
   }
 }
 
@@ -216,7 +216,7 @@ insert_left{
 insert_left{
   Start = {
     provider = sepL,
-    highlight = {colors.line_bg,}
+    highlight = {colors.line_bg},
   }
 }
 
@@ -224,7 +224,7 @@ insert_left{
   FileIcon = {
     provider = 'FileIcon',
     condition = buffer_not_empty,
-    highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color,colors.line_bg},
+    highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.line_bg},
   },
 }
 
@@ -234,7 +234,7 @@ insert_left{
       return vim.fn.expand("%:F")
     end,
     condition = function() return buffer_not_empty and has_file_type end,
-    highlight = {colors.fg,colors.line_bg}
+    highlight = {colors.fg, colors.line_bg},
   }
 }
 
@@ -244,7 +244,7 @@ insert_left {
   GitIcon = {
     provider = function() return '  ' end,
     condition = require('galaxyline.provider_vcs').check_git_workspace,
-    highlight = {colors.orange,colors.line_bg},
+    highlight = {colors.orange, colors.line_bg},
   }
 }
 
@@ -252,7 +252,7 @@ insert_left {
   GitBranch = {
     provider = 'GitBranch',
     condition = require('galaxyline.provider_vcs').check_git_workspace,
-    highlight = {'#8FBCBB',colors.line_bg,'bold'},
+    highlight = {'#8FBCBB', colors.line_bg, 'bold'},
   }
 }
 
@@ -263,7 +263,7 @@ insert_left {
     provider = 'DiffAdd',
     condition = checkwidth,
     icon = '  ',
-    highlight = {colors.green,colors.line_bg},
+    highlight = {colors.green, colors.line_bg},
   }
 }
 
@@ -272,7 +272,7 @@ insert_left {
     provider = 'DiffModified',
     condition = checkwidth,
     icon = '  ',
-    highlight = {colors.orange,colors.line_bg},
+    highlight = {colors.orange, colors.line_bg},
   }
 }
 
@@ -281,7 +281,7 @@ insert_left {
     provider = 'DiffRemove',
     condition = checkwidth,
     icon = '  ',
-    highlight = {colors.red,colors.line_bg},
+    highlight = {colors.red, colors.line_bg},
   }
 }
 
@@ -289,7 +289,7 @@ insert_left {
   TrailingWhiteSpace = {
     provider = trailing_whitespace,
     icon = '  ',
-    highlight = {colors.yellow,colors.line_bg},
+    highlight = {colors.yellow, colors.line_bg},
   }
 }
 
@@ -297,7 +297,7 @@ insert_left {
   DiagnosticError = {
     provider = 'DiagnosticError',
     icon = '  ',
-    highlight = {colors.red,colors.line_bg}
+    highlight = {colors.red, colors.line_bg},
   }
 }
 
@@ -305,7 +305,7 @@ insert_left {
   DiagnosticWarn = {
     provider = 'DiagnosticWarn',
     icon = '  ',
-    highlight = {colors.yellow,colors.line_bg},
+    highlight = {colors.yellow, colors.line_bg},
   }
 }
 
@@ -313,7 +313,7 @@ insert_left {
   DiagnosticInfo = {
     provider = 'DiagnosticInfo',
     condition = checkwidth,
-    highlight = {colors.green,colors.line_bg},
+    highlight = {colors.green, colors.line_bg},
     icon = '  ',
   }
 }
@@ -322,7 +322,7 @@ insert_left {
   DiagnosticHint = {
     provider = 'DiagnosticHint',
     condition = checkwidth,
-    highlight = {colors.white,colors.line_bg},
+    highlight = {colors.white, colors.line_bg},
     icon = '  ',
   }
 }
@@ -330,7 +330,7 @@ insert_left {
 insert_left{
   Separa = {
     provider = sepR,
-    highlight = {colors.line_bg, },
+    highlight = {colors.line_bg},
   }
 }
 -- left information panel end}
@@ -338,7 +338,7 @@ insert_left{
 insert_right{
   Start = {
     provider = sepL,
-    highlight = {colors.line_bg,}
+    highlight = {colors.line_bg},
   }
 }
 
@@ -349,7 +349,7 @@ insert_right{
     provider = 'FileFormat',
     -- check: width & show file format only if it's not unix
     condition = function() return checkcond(vim.bo.fileformat ~= 'unix') and checkwidth end,
-    highlight = {colors.fg,colors.line_bg,'bold'},
+    highlight = {colors.fg, colors.line_bg, 'bold'},
   }
 }
 
@@ -358,8 +358,8 @@ insert_right{
     provider = 'LineColumn',
     condition = checkwidth,
     separator = ' ',
-    separator_highlight = {colors.fg,colors.line_bg},
-    highlight = {colors.fg,colors.line_bg},
+    separator_highlight = {colors.fg, colors.line_bg},
+    highlight = {colors.fg, colors.line_bg},
   },
 }
 
@@ -367,8 +367,8 @@ insert_right{
   PerCent = {
     provider = current_line_percent,
     icon = '',
-    separator_highlight = {colors.blue,colors.line_bg},
-    highlight = {colors.cyan, colors.line_bg,'bold'},
+    separator_highlight = {colors.blue, colors.line_bg},
+    highlight = {colors.cyan, colors.line_bg, 'bold'},
     -- check: total number of buffer lines & width
     condition = function() return checkcond(vim.fn.line('$') < 2048) and checkwidth end,
   }
@@ -388,7 +388,7 @@ insert_right{
     -- check: width & show encoding only if it's not utf-8
     condition = function() return checkcond(vim.bo.fenc ~= 'utf-8') and checkwidth end,
     icon = '',
-    highlight = {colors.cyan, colors.line_bg,'bold'},
+    highlight = {colors.cyan, colors.line_bg, 'bold'},
   }
 }
 
@@ -397,6 +397,6 @@ insert_blank_line_at_right()
 insert_right{
   Separa = {
     provider = sepR,
-    highlight = {colors.line_bg, },
+    highlight = {colors.line_bg},
   }
 }
