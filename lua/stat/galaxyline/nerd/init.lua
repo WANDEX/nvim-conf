@@ -388,7 +388,8 @@ insert_right{
 insert_right{
   Encode = {
     provider = 'FileEncode',
-    condition = checkwidth,
+    -- check: width & show encoding only if it's not utf-8
+    condition = function() return checkcond(vim.bo.fenc ~= 'utf-8') and checkwidth end,
     icon = '',
     separator_highlight = {colors.blue,colors.line_bg},
     highlight = {colors.cyan, colors.line_bg,'bold'},
