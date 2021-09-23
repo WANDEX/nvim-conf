@@ -1,9 +1,4 @@
-local present1, gl = pcall(require, 'galaxyline')
-if not present1 then
-  print("galaxyline not found")
-  return
-end
-
+local gl = require('galaxyline')
 local gls = gl.section
 
 gl.short_line_list = {
@@ -17,8 +12,6 @@ gl.short_line_list = {
   'fugitiveblame',
   'plug'
 }
-
--- VistaPlugin = extension.vista_nearest
 
 local colors = {
   bg       = '#5C687A',
