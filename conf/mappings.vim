@@ -1,7 +1,7 @@
 "*****************************************************************************
 "" Core Mappings For Colemak
 "*****************************************************************************
-"" MEMO: use :verbose map 'key or sequence' - (imap) to see if mapping is used
+"" MEMO: use :verbose (map/imap) 'key or sequence' - to see if mapping is used
 "" hjkl remapped for colemak to
 "" hnei i.e. left/down/up/right
 
@@ -56,10 +56,13 @@ inoremap <silent><script> <C-L> <Esc><right>
 tnoremap <silent> <Esc> <C-\><C-n>
 tnoremap <silent> <C-l> <C-\><C-n>
 
-
 "*****************************************************************************
 "" Extra Mappings
 "*****************************************************************************
+
+" easier moving of code blocks, without losing of selection block
+vnoremap < <gv
+vnoremap > >gv
 
 " replace f/t with one-character Sneak,
 " use ;/, to move forth/back 'justinmk/vim-sneak':
@@ -114,10 +117,6 @@ nnoremap <F8> :emenu Encoding.
 
 " re-indent whole file / fix indentation, or V selection -> =
 nnoremap <F12> gg=G''
-
-" easier moving of code blocks, without losing of selection block
-vnoremap < <gv
-vnoremap > >gv
 
 " Reload vim configuration
 nnoremap <localleader>rc <cmd>ReloadConfig<CR>
