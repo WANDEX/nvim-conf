@@ -11,9 +11,42 @@ wk.setup {
       enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
       suggestions = 50, -- how many suggestions should be shown in the list?
     },
+    presets = {
+      windows = false, -- disable default bindings help on <c-w> -> because default keys are remapped
+    },
   },
   -- ignore_missing = true, -- enable this to hide mappings for which you didn't specify a label
 }
+
+-- window mappings (because default keys are remapped)
+wk.register({ ["<C-W>"] = {
+  name = "window",
+  ["+"] = "Increase height",
+  ["-"] = "Decrease height",
+  ["="] = "Equally high and wide",
+  [">"] = "Increase width",
+  ["<"] = "Decrease width", -- bug? - it's not showing.
+  ["|"] = "Max out the width",
+  ["<C-N>"] = "New empty buffer window",
+
+  ["h"] = "Go to the left window",
+  ["n"] = "Go to the down window",
+  ["e"] = "Go to the up window",
+  ["i"] = "Go to the right window",
+
+  ["H"] = "Move window to the left",
+  ["N"] = "Move window to the down",
+  ["E"] = "Move window to the up",
+  ["I"] = "Move window to the right",
+
+  ["q"] = "Quit a window",
+  ["s"] = "Split window",
+  ["T"] = "Break out into a new tab",
+
+  ["v"] = "Split window vertically",
+  ["w"] = "Switch windows",
+  ["x"] = "Swap current with next",
+}, })
 
 -- add
 wk.register({ a = {
