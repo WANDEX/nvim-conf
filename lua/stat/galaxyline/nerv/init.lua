@@ -127,6 +127,14 @@ local function insert_blank_line_at_right()
   }
 end
 
+local function insert_short_left(element)
+  table.insert(gls.short_line_left, element)
+end
+
+local function insert_short_right(element)
+  table.insert(gls.short_line_right, element)
+end
+
 -----------------------------------------------------
 ----------------- start insert ----------------------
 -----------------------------------------------------
@@ -391,5 +399,35 @@ insert_right{
   Separa = {
     provider = sepR,
     highlight = {colors.line_bg},
+  }
+}
+
+-- mainly for inactive window and when filetype is in short_line_list
+
+insert_short_left{
+  InactiveFileName = {
+    provider = function() return vim.fn.expand("%:F") end,
+    condition = function() return buffer_not_empty and has_file_type end,
+    highlight = {colors.fg, colors.line_bg},
+  }
+}
+
+insert_short_right{
+  InactivePercent = {
+    provider = current_line_percent,
+    icon = '',
+    separator_highlight = {colors.blue, colors.line_bg},
+    highlight = {colors.cyan, colors.line_bg, 'bold'},
+    -- check: total number of buffer lines & width
+    condition = function() return checkcond(vim.fn.line('$') < lines_limit) and checkwidth end,
+  }
+}
+
+insert_short_right{
+  InactiveLinesInfo = {
+    -- show line numbers: current/total
+    provider = function() return string.format("%03d/%03d ", vim.fn.line('.'), vim.fn.line('$')) end,
+    condition = buffer_not_empty,
+    highlight = {colors.cyan, colors.line_bg},
   }
 }
