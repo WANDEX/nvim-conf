@@ -52,6 +52,10 @@ cnoremap <silent><script> <C-L> <C-c>
 nnoremap <silent><script> <C-L> <cmd>nohlsearch<CR><C-L>
 " leave insert mode (+move cursor one char right)
 inoremap <silent><script> <C-L> <Esc><right>
+"" easier terminal Esc
+tnoremap <silent> <Esc> <C-\><C-n>
+tnoremap <silent> <C-l> <C-\><C-n>
+
 
 "*****************************************************************************
 "" Extra Mappings
@@ -110,10 +114,6 @@ nnoremap <F8> :emenu Encoding.
 
 " re-indent whole file / fix indentation, or V selection -> =
 nnoremap <F12> gg=G''
-
-" easier terminal Esc
-tnoremap <Esc> <C-\><C-n>
-tnoremap <C-l> <C-\><C-n>
 
 " easier moving of code blocks, without losing of selection block
 vnoremap < <gv
