@@ -7,7 +7,7 @@ local sep = '.' -- os specific path separator
 -- statusline dir to use
 local statusline = 'galaxyline'
 -- statusline theme dir name
-local theme = 'nerd'
+local theme = 'nerv'
 -- statusline init file path
 statusline_init = table.concat({'stat', statusline, theme, 'init'}, sep)
 
