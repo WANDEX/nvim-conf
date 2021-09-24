@@ -1,3 +1,4 @@
+-- based on 'Avimitin/nerd-galaxyline'
 local gl = require('galaxyline')
 local gls = gl.section
 
