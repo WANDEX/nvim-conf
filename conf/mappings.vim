@@ -45,7 +45,6 @@ noremap <silent> i l
 "" leave mappping to exit from all modes
 onoremap <silent><script> <C-L> <Esc>
 vnoremap <silent><script> <C-L> <Esc>
-xnoremap <silent><script> <C-L> <Esc>
 "" leave by canceling command
 cnoremap <silent><script> <C-L> <C-c>
 " original CTRL-L - Clears and redraws the screen.
