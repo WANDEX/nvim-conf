@@ -31,6 +31,7 @@ local colors = {
   red      = '#D54E53',
 }
 
+local lines_limit = 2048
 local sepl = ' '
 local sepr = ' '
 
@@ -356,13 +357,13 @@ insert_right{
 }
 
 insert_right{
-  PerCent = {
+  Percent = {
     provider = current_line_percent,
     icon = '',
     separator_highlight = {colors.blue, colors.line_bg},
     highlight = {colors.cyan, colors.line_bg, 'bold'},
     -- check: total number of buffer lines & width
-    condition = function() return checkcond(vim.fn.line('$') < 2048) and checkwidth end,
+    condition = function() return checkcond(vim.fn.line('$') < lines_limit) and checkwidth end,
   }
 }
 
