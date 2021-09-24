@@ -6,11 +6,10 @@
 "" hnei i.e. left/down/up/right
 
 " insert mode and modifier inside
-nnoremap <silent> k i|xnoremap <silent> k i|onoremap <silent> k i|vnoremap <silent> k i
-" nnoremap k i|onoremap k i|xnoremap k i
+noremap <silent> k i
 
 " go low
-nnoremap gl L
+noremap gl L
 
 " Forward towards the last letter of the word
 noremap <silent> l e
