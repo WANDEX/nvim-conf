@@ -27,11 +27,18 @@ nnoremap <silent> <M-e> Nzzzv
 nnoremap <silent> N <C-f>
 nnoremap <silent> E <C-b>
 
-" Move windows with C-Direction
-nnoremap <C-W>n <C-W>j
-nnoremap <C-W>e <C-W>k
-nnoremap <C-W>h <C-W>h
-nnoremap <C-W>i <C-W>l
+" Create new empty buffer window. (then disable default mapping)
+noremap <C-W><C-N> <C-W>n|map <C-W>n <nop>
+
+" Go to window in direction (then disable original mapping)
+noremap <C-W>n <C-W>j|map <C-W>j <nop>
+noremap <C-W>e <C-W>k|map <C-W>k <nop>
+noremap <C-W>i <C-W>l|map <C-W>l <nop>
+
+" Move window in direction (then disable original mapping)
+noremap <C-W>N <C-W>J|map <C-W>J <nop>
+noremap <C-W>E <C-W>K|map <C-W>K <nop>
+noremap <C-W>I <C-W>L|map <C-W>L <nop>
 
 nnoremap <silent> n j|xnoremap <silent> n j|onoremap <silent> n j|vnoremap <silent> n j
 nnoremap <silent> e k|xnoremap <silent> e k|onoremap <silent> e k|vnoremap <silent> e k
