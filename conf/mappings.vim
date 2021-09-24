@@ -22,8 +22,8 @@ nnoremap <silent> <M-n> nzzzv
 nnoremap <silent> <M-e> Nzzzv
 
 " Move screen one page
-nnoremap <silent> N <C-f>
-nnoremap <silent> E <C-b>
+noremap <silent> N <C-f>
+noremap <silent> E <C-b>
 
 " Create new empty buffer window. (then disable default mapping)
 noremap <C-W><C-N> <C-W>n|map <C-W>n <nop>
