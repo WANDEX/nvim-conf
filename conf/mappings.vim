@@ -13,10 +13,8 @@ nnoremap <silent> k i|xnoremap <silent> k i|onoremap <silent> k i|vnoremap <sile
 nnoremap gl L
 
 " Forward towards the last letter of the word
-nnoremap <silent> l e|onoremap <silent> l e|vnoremap <silent> l e
-vnoremap <silent> l e|onoremap <silent> l e|vnoremap <silent> l e
-nnoremap <silent> L E|onoremap <silent> L E|vnoremap <silent> L E
-vnoremap <silent> L E|onoremap <silent> L E|vnoremap <silent> L E
+noremap <silent> l e
+noremap <silent> L E
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
