@@ -17,8 +17,8 @@ noremap <silent> L E
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
-nnoremap <silent> <M-n> nzzzv
-nnoremap <silent> <M-e> Nzzzv
+noremap <silent> <M-n> nzzzv
+noremap <silent> <M-e> Nzzzv
 
 " Move screen one page
 noremap <silent> N <C-f>
