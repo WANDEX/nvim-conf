@@ -37,10 +37,10 @@ noremap <C-W>N <C-W>J|map <C-W>J <nop>
 noremap <C-W>E <C-W>K|map <C-W>K <nop>
 noremap <C-W>I <C-W>L|map <C-W>L <nop>
 
-nnoremap <silent> n j|xnoremap <silent> n j|onoremap <silent> n j|vnoremap <silent> n j
-nnoremap <silent> e k|xnoremap <silent> e k|onoremap <silent> e k|vnoremap <silent> e k
-nnoremap <silent> i l|xnoremap <silent> i l|onoremap <silent> i l|vnoremap <silent> i l
-" nnoremap i l|xnoremap i l|onoremap i l
+" colemak home row movement
+noremap <silent> n j
+noremap <silent> e k
+noremap <silent> i l
 
 "" leave mappping to exit from all modes
 onoremap <silent><script> <C-L> <Esc>
