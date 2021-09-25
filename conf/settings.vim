@@ -1,6 +1,7 @@
 "*****************************************************************************
 "" General
 "*****************************************************************************
+set shortmess=castWOI           " no intro message at startup & etc.
 set number relativenumber       " Show relative line numbers
 set linebreak                   " Break lines at word (requires Wrap lines)
 set showbreak=>>>>              " Wrap-broken line prefix
