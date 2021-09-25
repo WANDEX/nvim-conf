@@ -45,6 +45,16 @@ local current_line_percent = function()
   return string.format(" %03d%% ", math.floor((vim.fn.line('.')/vim.fn.line('$'))*100))
 end
 
+local filepath = function()
+  -- in some file types like help, path expanded differently
+  local f_type = vim.bo.filetype
+  if f_type == "help" or f_type == "git" then
+    return vim.fn.expand("%:t")
+  end
+  -- replace: '/home/user' -> '~'
+  return vim.fn.expand("%:F"):gsub("/home/%w+", "~")
+end
+
 local function lsp_status(status)
   local shorter_stat = ''
   for match in string.gmatch(status, "[^%s]+")  do
@@ -233,7 +243,7 @@ insert_left{
 
 insert_left{
   FileName = {
-    provider = function() return vim.fn.expand("%:F") end,
+    provider = filepath,
     condition = function() return buffer_not_empty and has_file_type end,
     highlight = {colors.fg, colors.line_bg},
   }
@@ -406,7 +416,7 @@ insert_right{
 
 insert_short_left{
   InactiveFileName = {
-    provider = function() return vim.fn.expand("%:F") end,
+    provider = filepath,
     condition = function() return buffer_not_empty and has_file_type end,
     highlight = {colors.fg, colors.line_bg},
   }
