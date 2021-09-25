@@ -40,6 +40,14 @@ local sepL = function() return sepl end
 local sepR = function() return sepr end
 local sepB = function() return ' ' end
 
+local contains = function(list, x)
+  -- return true if x found in list
+  for _, v in pairs(list) do
+    if v == x then return true end
+  end
+  return false
+end
+
 -- show current line percent of all lines
 local current_line_percent = function()
   return string.format(" %03d%% ", math.floor((vim.fn.line('.')/vim.fn.line('$'))*100))
@@ -67,6 +75,9 @@ local function lsp_status(status)
 end
 
 local trailing_whitespace = function()
+  local ignored_filetypes = { "git", "magit" }
+  -- simply return from function
+  if contains(ignored_filetypes, vim.bo.filetype) then return end
   local trail = vim.fn.search("\\s$", "nw")
   if trail ~= 0 then
     return ' '
