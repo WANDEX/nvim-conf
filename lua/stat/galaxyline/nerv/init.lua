@@ -55,9 +55,12 @@ end
 
 local filepath = function()
   -- in some file types like help, path expanded differently
+  local only_buf_name = { "git", "help" }
   local f_type = vim.bo.filetype
-  if f_type == "help" or f_type == "git" then
+  if contains(only_buf_name, f_type) then
     return vim.fn.expand("%:t")
+  elseif f_type == "magit" then
+    return vim.fn.expand("%:h:t")
   end
   -- replace: '/home/user' -> '~'
   return vim.fn.expand("%:F"):gsub("/home/%w+", "~")
