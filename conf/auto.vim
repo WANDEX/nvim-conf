@@ -53,6 +53,22 @@ if !exists('autocommands_loaded')
 
     aug END
 
+    aug magitMappings
+        au!
+        " go to Commit message
+        au FileType magit nnoremap <buffer><nowait> gc
+        \ <cmd>/Commit message\n=<CR> <cmd>nohl<CR> <cmd>exe 'normal }'<CR>
+        " go to Staged changes
+        au FileType magit nnoremap <buffer><nowait> gs
+        \ <cmd>/Staged changes\n=<CR> <cmd>nohl<CR> <cmd>exe 'normal }'<CR>
+        " go to Unstaged changes
+        au FileType magit nnoremap <buffer><nowait> gu
+        \ <cmd>/Unstaged changes\n=<CR> <cmd>nohl<CR> <cmd>exe 'normal }'<CR>
+        " go to Head line in Info and put cursor at the beginning of commit message
+        au FileType magit nnoremap <buffer><nowait> gh
+        \ <cmd>exe 'normal gg'<CR> <cmd>/Head:<CR> <cmd>nohl<CR> <cmd>exe 'normal 2W'<CR>
+    aug END
+
     aug TheVeryLastGroup
         " fix in case of memory leak vim issue. Should be at the end.
         au BufWinLeave * call clearmatches()
