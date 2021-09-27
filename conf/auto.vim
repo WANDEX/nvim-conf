@@ -72,6 +72,10 @@ if !exists('autocommands_loaded')
         " go to Head line in Info and put cursor at the beginning of commit message
         au FileType magit nnoremap <buffer><nowait> gh
         \ <cmd>exe 'normal gg'<CR> <cmd>/Head:<CR> <cmd>nohl<CR> <cmd>exe 'normal 2W'<CR>
+        " go to next found magit item, yank and paste [filename] in git commit message
+        au FileType magit nnoremap <buffer><nowait> gf
+        \ <cmd>let @f='['<CR> <cmd>exe 'normal gnn"FyT/'<CR> <cmd>let @f.=']'<CR>
+        \ <cmd>exe 'normal gce'<CR> <cmd>put F<CR>
     aug END
 
     aug TheVeryLastGroup
