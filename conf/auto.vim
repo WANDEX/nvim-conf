@@ -55,6 +55,11 @@ if !exists('autocommands_loaded')
 
     aug magitMappings
         au!
+        " regex to match magit items: (modified, untracked, added, new dir, etc.) \C = :noignorecase
+        let g:magit_item_regex = '^\(\C[a-z]\+.[a-z]\+\): \(.\{-\}\)\%( -> .*\)\?$'
+        " go to next magit item (without folding/unfolding of a hunk)
+        au FileType magit nnoremap <buffer><nowait> gn
+        \ <cmd>let ln = search(g:magit_item_regex, 'wn')<CR> <cmd>call cursor(ln, 1)<CR>
         " go to Commit message
         au FileType magit nnoremap <buffer><nowait> gc
         \ <cmd>/Commit message\n=<CR> <cmd>nohl<CR> <cmd>exe 'normal }'<CR>
