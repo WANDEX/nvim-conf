@@ -1,6 +1,12 @@
 """ functions.vim
 """ function definitions
 
+"clear the last used search pattern +(remove pattern highlighting)
+fu! ClearLastSearch()
+    let @/ = ""
+endf
+com! CLS call ClearLastSearch()
+
 " reload vim configuration
 if !exists('*ReloadConfig')
     function! ReloadConfig()
