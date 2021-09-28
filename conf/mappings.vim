@@ -23,6 +23,9 @@ noremap <silent> <M-e> N
 noremap <silent> N <C-f>
 noremap <silent> E <C-b>
 
+" prev command
+cnoremap <C-E> <C-P>
+
 " Create new empty buffer window. (then disable default mapping)
 noremap <C-W><C-N> <C-W>n|map <C-W>n <nop>
 
