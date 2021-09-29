@@ -35,5 +35,12 @@ omap ke <Plug>(textobj-entire-i)
 xmap ae <Plug>(textobj-entire-a)
 xmap ke <Plug>(textobj-entire-i)
 
+" vim-textobj-line {{{1
+let g:textobj_line_no_default_key_mappings = 1
+omap al <Plug>(textobj-line-a)
+omap kl <Plug>(textobj-line-i)
+xmap al <Plug>(textobj-line-a)
+xmap kl <Plug>(textobj-line-i)
+
 " END. {{{1
 " vim: foldmethod=marker
