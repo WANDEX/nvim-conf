@@ -42,13 +42,6 @@ omap kl <Plug>(textobj-line-i)
 xmap al <Plug>(textobj-line-a)
 xmap kl <Plug>(textobj-line-i)
 
-" vim-textobj-line {{{1
-let g:textobj_line_no_default_key_mappings = 1
-omap al <Plug>(textobj-line-a)
-omap kl <Plug>(textobj-line-i)
-xmap al <Plug>(textobj-line-a)
-xmap kl <Plug>(textobj-line-i)
-
 " vim-textobj-comment {{{1
 let g:textobj_comment_no_default_key_mappings = 1
 call textobj#user#map('comment', {
