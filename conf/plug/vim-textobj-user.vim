@@ -1,6 +1,6 @@
 """ kana/vim-textobj-user
 " configuration for the plugin textobj-user and related plugins based on it!
-" contains fixes for colemak layout!
+" contains fixes for colemak layout: (i->k), default key mappings disabled.
 
 " vim-textobj-indent {{{1
 let g:textobj_indent_no_default_key_mappings = 1
