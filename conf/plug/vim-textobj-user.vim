@@ -49,5 +49,16 @@ omap kl <Plug>(textobj-line-i)
 xmap al <Plug>(textobj-line-a)
 xmap kl <Plug>(textobj-line-i)
 
+" vim-textobj-comment {{{1
+let g:textobj_comment_no_default_key_mappings = 1
+call textobj#user#map('comment', {
+\   '-': {
+\     'select-i': 'kC',
+\   },
+\   'big': {
+\     'select-a': 'aC',
+\   }
+\ })
+
 " END. {{{1
 " vim: foldmethod=marker
