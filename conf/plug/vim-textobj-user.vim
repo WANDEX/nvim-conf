@@ -28,5 +28,12 @@ call textobj#user#map('python', {
 \   }
 \ })
 
+" vim-textobj-entire {{{1
+let g:textobj_entire_no_default_key_mappings = 1
+omap ae <Plug>(textobj-entire-a)
+omap ke <Plug>(textobj-entire-i)
+xmap ae <Plug>(textobj-entire-a)
+xmap ke <Plug>(textobj-entire-i)
+
 " END. {{{1
 " vim: foldmethod=marker
