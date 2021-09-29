@@ -60,5 +60,24 @@ call textobj#user#map('comment', {
 \   }
 \ })
 
+" vim-textobj-diff {{{1
+let g:textobj_diff_no_default_key_mappings = 1
+call textobj#user#map('diff', {
+\   'file': {
+\     'move-N': '<Leader>dfN',
+\     'move-P': '<Leader>dfE',
+\     'move-n': '<Leader>dfn',
+\     'move-p': '<Leader>dfe',
+\     'select': ['adH', 'adf', 'kdH', 'kdf'],
+\   },
+\   'hunk': {
+\     'move-N': '<Leader>dN',
+\     'move-P': '<Leader>dE',
+\     'move-n': '<Leader>dn',
+\     'move-p': '<Leader>de',
+\     'select': ['adh', 'kdh'],
+\   },
+\ })
+
 " END. {{{1
 " vim: foldmethod=marker
