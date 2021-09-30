@@ -54,7 +54,8 @@ require('packer').startup({function()
   }
 
   -- folding
-  -- use {'kalekundert/vim-coiled-snake', ft='python'} -- python code folding
+  -- FIXME: locked -> to not try updating it. Till fix arrive (kalekundert/vim-coiled-snake/issues/33)
+  use {'kalekundert/vim-coiled-snake', lock=true, ft='python'} -- python code folding
   use 'Konfekt/FastFold' -- remove default: 'zj', 'zk' movements -> breaks vim-sneak dz.. yz.. mappings!
 
   use { -- other
