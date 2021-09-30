@@ -55,9 +55,7 @@ require('packer').startup({function()
 
   -- folding
   -- use {'kalekundert/vim-coiled-snake', ft='python'} -- python code folding
-  use 'Konfekt/FastFold'
-  -- remove default: 'zj', 'zk' movements -> breaks vim-sneak dz.. yz.. mappings!
-  vim.g.fastfold_fold_movement_commands = { ']z', '[z' }
+  use 'Konfekt/FastFold' -- remove default: 'zj', 'zk' movements -> breaks vim-sneak dz.. yz.. mappings!
 
   use { -- other
     'airblade/vim-rooter', -- auto cwd to the project root
