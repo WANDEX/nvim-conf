@@ -53,6 +53,8 @@ set nojoinspaces                " Use one space, not two, after punctuation.
 set clipboard+=unnamedplus
 set timeoutlen=800 " used by vim-which-key as timeout before showing guide popup
 
+set foldlevel=2                 " how much levels of folding are open by default
+
 "*****************************************************************************
 "" Advanced
 "*****************************************************************************
