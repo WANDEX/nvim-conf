@@ -5,7 +5,7 @@
 vim.cmd([[
   augroup packer_user_config
     autocmd!
-    autocmd BufWritePost */nvim/lua/* source ~/.config/nvim/init.vim | PackerCompile
+    autocmd BufWritePost */nvim/lua/* nested source ~/.config/nvim/init.vim | PackerCompile
   augroup end
 ]])
 
