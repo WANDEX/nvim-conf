@@ -11,9 +11,6 @@ if !exists('autocommands_loaded')
         " nvim builtin yank highlight :h lua-highlight
         au TextYankPost * silent! lua vim.highlight.on_yank {timeout=1500}
 
-        " XXX hack to override highlight in magit
-        au FileType magit source ~/.config/nvim/conf/hi.vim
-
         " override highlights on every colorscheme change
         au ColorScheme * nested source ~/.config/nvim/conf/hi.vim
     aug END
