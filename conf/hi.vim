@@ -15,6 +15,8 @@ hi GeneralSub   guifg=#8FBCBB ctermfg=Cyan     guibg=#5C687A ctermbg=DarkGray
 hi GeneralMod   guifg=DarkRed ctermfg=DarkRed  cterm=bold gui=bold
 hi GeneralModS  guifg=DarkRed ctermfg=DarkRed  cterm=bold gui=bold guibg=#5C687A
 
+hi! link Tabline Folded
+
 " completion & etc.
 hi Pmenu ctermfg=White ctermbg=DarkGray
 hi! link PmenuSel GeneralSel
