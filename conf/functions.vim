@@ -66,10 +66,10 @@ command! -nargs=* -complete=help H call HelpTab(<q-args>)
 
 " toggle between background transparency
 fu! BgToggle()
-    if Exec('hi Normal') =~ 'cleared'
-        hi Normal guibg=Black ctermbg=0
-    else
+    if Exec('hi Normal') =~ 'guibg=Black'
         hi Normal guibg=NONE ctermbg=NONE
+    else
+        hi Normal guibg=Black ctermbg=0
     endif
 endf
 
