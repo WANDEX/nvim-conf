@@ -7,8 +7,17 @@
 " disable background (to support transparent terminal background)
 hi Normal guibg=NONE ctermbg=NONE
 
+" general highlighting to use them as a link
+hi GeneralBg    guibg=#16191D ctermbg=Black
+hi GeneralFg    guifg=#8FBCBB ctermfg=Cyan
+hi GeneralSel   guibg=#5C687A ctermbg=DarkGray
+hi GeneralSub   guifg=#8FBCBB ctermfg=Cyan     guibg=#5C687A ctermbg=DarkGray
+hi GeneralMod   guifg=DarkRed ctermfg=DarkRed  cterm=bold gui=bold
+hi GeneralModS  guifg=DarkRed ctermfg=DarkRed  cterm=bold gui=bold guibg=#5C687A
+
 " completion & etc.
 hi Pmenu ctermfg=White ctermbg=DarkGray
+hi! link PmenuSel GeneralSel
 
 " which-key.nvim colorscheme:
 hi WhichKey          ctermfg=Red      guifg=Red      ctermbg=NONE  guibg=NONE
