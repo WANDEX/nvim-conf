@@ -15,9 +15,9 @@ noremap gl L
 noremap <silent> l e
 noremap <silent> L E
 
-" Search mappings
-noremap <silent> <M-n> n
-noremap <silent> <M-e> N
+" make zz command silent -> to not clear cmd
+noremap <silent> zz zz
+
 
 " Move screen one page
 noremap <silent> N <C-f>
