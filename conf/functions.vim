@@ -161,3 +161,28 @@ fu! InstallVimPlug()
 endf
 command! InstallVimPlug call InstallVimPlug()
 
+fu! LastSearchCount() abort
+    " update search indexes [current/total] and return string (without 99 limit)
+    let result = searchcount(#{maxcount: 0})
+    if empty(result)
+        return ''
+    endif
+    if result.incomplete ==# 1     " timed out
+        return printf('/%s [?/??]', @/)
+    elseif result.incomplete ==# 2 " max count exceeded
+        if result.total > result.maxcount && result.current > result.maxcount
+            return printf('[>%d/>%d]', result.current, result.total)
+        elseif result.total > result.maxcount
+            return printf('[%d/>%d]',  result.current, result.total)
+        endif
+    endif
+    return printf('[%d/%d]', result.current, result.total)
+endf
+
+fu! ShowSearchIndexes()
+    " echo right justified info about search indexes
+    let l:search = LastSearchCount()
+    let l:pad = v:echospace - strwidth(l:search)
+    let l:format = "%"..l:pad.."s%s"
+    echo printf(l:format, ' ', l:search)
+endf
