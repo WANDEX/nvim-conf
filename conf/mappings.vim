@@ -16,7 +16,7 @@ noremap <silent> l e
 noremap <silent> L E
 
 " make zz command silent -> to not clear cmd
-noremap <silent> zz zz
+nnoremap <silent> zz zz
 
 " Search next/prev result, center on the screen, echo/update search indexes
 noremap <silent> <M-n> nzz<cmd>call ShowSearchIndexes()<CR>
