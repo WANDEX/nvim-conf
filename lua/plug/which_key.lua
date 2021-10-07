@@ -124,7 +124,7 @@ wk.register({ T = {
   c = { "<cmd>lua require'telescope.builtin'.grep_string{}<CR>", "grep under Cursor at cwd" },
   d = { ":lua require'telescope.builtin'.live_grep({search_dirs={ '', }})<C-Left><C-Left><Right>", "grep in list of dirs" },
   f = { "<cmd>lua require'telescope.builtin'.find_files{}<CR>", "find file at cwd" },
-  F = { "<cmd>lua require'telescope.builtin'.file_browser{}<CR>", "Filesystem" },
+  F = { "<cmd>lua require'telescope.builtin'.file_browser{ hidden=true }<CR>", "Filesystem" },
   g = { "<cmd>lua require'telescope.builtin'.live_grep{}<CR>", "grep at cwd" },
   o = { "<cmd>lua require'telescope.builtin'.live_grep{ grep_open_files=true }<CR>", "grep Opened files" },
   S = { "<cmd>SearchSession<CR>", "Session" },
