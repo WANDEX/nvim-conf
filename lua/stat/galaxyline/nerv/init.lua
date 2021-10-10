@@ -60,7 +60,9 @@ local filepath = function()
   if vim.fn.expand("%") == " |" then -- if pager
     if f_type == "man" then
       -- first words of a buffer till space, such as: NVIM(1) etc.
-      return vim.fn.get(vim.fn.split(vim.fn.getline(1), '^.* '), 0)
+      man_page = vim.fn.get(vim.fn.split(vim.fn.getline(1), '^.* '), 0)
+      vim.cmd('XTabNameBuffer '..man_page) -- set XTab buffer label name
+      return man_page
     else
       -- full path to current dir, :h - to remove last component " |"
       return vim.fn.expand('%:p:h'):gsub("/home/%w+", "~")
