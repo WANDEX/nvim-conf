@@ -57,7 +57,12 @@ local filepath = function()
   -- in some file types like help, path expanded differently
   local only_buf_name = { "git", "help" }
   local f_type = vim.bo.filetype
-  if contains(only_buf_name, f_type) then
+  if vim.fn.expand("%") == " |" then -- if pager
+    if f_type == "man" then
+      -- first words of a buffer till space, such as: NVIM(1) etc.
+      return vim.fn.get(vim.fn.split(vim.fn.getline(1), '^.* '), 0)
+    end
+  elseif contains(only_buf_name, f_type) then
     return vim.fn.expand("%:t")
   elseif f_type == "magit" then
     return vim.fn.expand("%:h:t")
