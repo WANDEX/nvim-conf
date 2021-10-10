@@ -65,6 +65,7 @@ local filepath = function()
       return man_page
     else
       -- full path to current dir, :h - to remove last component " |"
+      vim.cmd('XTabNameBuffer PAGER')
       return vim.fn.expand('%:p:h'):gsub("/home/%w+", "~")
     end
   elseif contains(only_buf_name, f_type) then
