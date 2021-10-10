@@ -61,6 +61,9 @@ local filepath = function()
     if f_type == "man" then
       -- first words of a buffer till space, such as: NVIM(1) etc.
       return vim.fn.get(vim.fn.split(vim.fn.getline(1), '^.* '), 0)
+    else
+      -- full path to current dir, :h - to remove last component " |"
+      return vim.fn.expand('%:p:h'):gsub("/home/%w+", "~")
     end
   elseif contains(only_buf_name, f_type) then
     return vim.fn.expand("%:t")
