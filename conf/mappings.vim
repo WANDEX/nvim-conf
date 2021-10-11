@@ -142,7 +142,7 @@ nnoremap <silent> <localleader>ct <cmd>call ColumnToggle()<CR>
 nnoremap <silent> <localleader>P :call Paste('')<Left><Left>
 
 " Save file as sudo on files that require root permission
-cnoremap W execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+cnoremap <C-w> execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " unmap mouse wheel up
 nmap <ScrollWheelUp> <nop>
