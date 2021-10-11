@@ -6,6 +6,13 @@
 if !exists('autocommands_loaded')
     let autocommands_loaded = 1
 
+    aug AutoClearCmd
+        au!
+        au BufWritePost * call EmptyMessTimer(1)
+        au BufWinEnter  * call EmptyMessTimer(3)
+        au CmdlineLeave : call EmptyMessTimer(5)
+    aug END
+
     aug OverrideHighlights
         au!
         " nvim builtin yank highlight :h lua-highlight

@@ -16,6 +16,19 @@ if !exists('*ReloadConfig')
     command! ReloadConfig call ReloadConfig()
 endif
 
+" clear cmd line message
+fu! s:EmptyMess(timer)
+    if mode() ==# 'n'
+        echon ''
+    endif
+endf
+
+" clear cmd line message after timer in seconds
+fu! EmptyMessTimer(sec)
+    let l:sec = a:sec * 1000
+    call timer_start(l:sec, funcref('s:EmptyMess'))
+endf
+
 " execute command and return output
 " !!! vim 8+ has built-in execute()
 " let l:h = Exec('hi Normal')
