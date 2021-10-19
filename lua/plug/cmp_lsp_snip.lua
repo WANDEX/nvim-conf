@@ -42,7 +42,7 @@ end
 
 -- show function signature when you type inside (|)
 use {'ray-x/lsp_signature.nvim', requires = {'hrsh7th/nvim-cmp'}}
-require'lsp_signature'.setup({
+require('lsp_signature').setup({
   bind = true,
   doc_lines = 5,
   floating_window = true,
@@ -98,11 +98,11 @@ for _, lsp in ipairs(servers) do
 end
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+vim.o.completeopt = 'menu,menuone,noselect'
 
 -- nvim-cmp setup
-local cmp = require 'cmp'
-cmp.setup {
+local cmp = require('cmp')
+cmp.setup({
   completion = {
     completeopt = 'menu,menuone,noinsert', -- preselect first result
     -- keyword_length = 2,
@@ -124,10 +124,10 @@ cmp.setup {
     ['<C-Space>'] = cmp.mapping.complete(),
     -- ['<C-l>'] = cmp.mapping.close(),
     ['<Esc>'] = cmp.mapping.abort(),
-    ['<C-y>'] = cmp.mapping.confirm {
+    ['<C-y>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
-    },
+    }),
     ['<CR>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
@@ -176,4 +176,4 @@ cmp.setup {
     { name = 'calc' },
     { name = 'look' },
   },
-}
+})
