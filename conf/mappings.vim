@@ -75,6 +75,8 @@ map f <Plug>Sneak_f
 map F <Plug>Sneak_F
 map t <Plug>Sneak_t
 map T <Plug>Sneak_T
+"unmap in Select mode (to not break snippets expansion)
+sunmap f|sunmap F|sunmap t|sunmap T
 
 " TODO dont go to next buf if next buf is empty
 " Move to next/previous bufpage :bnext,:bprev
