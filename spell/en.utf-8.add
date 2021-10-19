@@ -107,3 +107,10 @@ bestaudio
 mp3
 fi
 eq
+redownload
+basename
+json
+stdout
+img
+multiline
+args
