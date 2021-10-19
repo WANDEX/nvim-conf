@@ -100,16 +100,21 @@ end
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
-local t = function(str)
-    return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-
 -- nvim-cmp setup
 local cmp = require 'cmp'
 cmp.setup {
   completion = {
     completeopt = 'menu,menuone,noinsert', -- preselect first result
-    keyword_length = 2,
+    -- keyword_length = 2,
+  },
+  snippet = {
+    expand = function(args)
+      if (snip_source == 'luasnip') then
+        require('luasnip').lsp_expand(args.body)
+      elseif (snip_source == 'vsnip') then
+        vim.fn["vsnip#anonymous"](args.body)
+      end
+    end,
   },
   mapping = {
     ['<C-e>'] = cmp.mapping.select_prev_item(),
@@ -123,28 +128,28 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    ['<CR>'] = cmp.mapping.confirm {
+    ['<CR>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
-    },
-    ['<Tab>'] = function(fallback)
-      if (snip_source == 'luasnip') and require'luasnip'.expand_or_jumpable() then
-        vim.fn.feedkeys(t('<Plug>luasnip-expand-or-jump'), '')
+    }),
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if (snip_source == 'luasnip') and require('luasnip').expand_or_jumpable() then
+        require('luasnip').expand_or_jump()
       elseif (snip_source == 'vsnip') and vim.fn['vsnip#available']() == 1 then
-        vim.fn.feedkeys(t('<Plug>(vsnip-expand-or-jump)'), '')
+        feedkey("<Plug>(vsnip-expand-or-jump)", "")
       else
         fallback()
       end
-    end,
-    ['<S-Tab>'] = function(fallback)
-      if (snip_source == 'luasnip') and require'luasnip'.jumpable(-1) then
-        vim.fn.feedkeys(t('<Plug>luasnip-jump-prev'), '')
-      elseif (snip_source == 'vsnip') and vim.fn['vsnip#available']() == 1 then
-        vim.fn.feedkeys(t('<Plug>(vsnip-jump-prev)'), '')
+    end, { "i", "s" }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if (snip_source == 'luasnip') and require('luasnip').jumpable(-1) then
+        require('luasnip').jump(-1)
+      elseif (snip_source == 'vsnip') and vim.fn['vsnip#jumpable'](-1) == 1 then
+        feedkey("<Plug>(vsnip-jump-prev)", "")
       else
         fallback()
       end
-    end,
+    end, { "i", "s" }),
   },
   formatting = {
     format = function(entry, vim_item)
