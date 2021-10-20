@@ -82,9 +82,5 @@ if !exists('autocommands_loaded')
         \ <cmd>exe 'normal gce'<CR> <cmd>put F<CR>
     aug END
 
-    aug TheVeryLastGroup
-        " fix in case of memory leak vim issue. Should be at the end.
-        au BufWinLeave * call clearmatches()
-    aug END
 endif
 
