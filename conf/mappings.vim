@@ -56,7 +56,8 @@ cnoremap <silent><script> <C-L> <C-c>
 " clear the highlighting of :set hlsearch & cmd line
 nnoremap <silent><script> <C-L> <cmd>nohlsearch<CR><C-L>
 " leave insert mode (+move cursor one char right)
-inoremap <silent><script> <C-L> <Esc><right>
+" inoremap <silent><script> <C-L> <Esc><right>
+inoremap <silent><script> <C-L> <Esc>
 "" easier terminal Esc
 tnoremap <silent> <Esc> <C-\><C-n>
 tnoremap <silent> <C-l> <C-\><C-n>
