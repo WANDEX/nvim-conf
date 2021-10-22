@@ -114,3 +114,9 @@ stdout
 img
 multiline
 args
+dirs
+uniq
+sed
+awk
+arg
+printf
