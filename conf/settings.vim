@@ -76,3 +76,4 @@ endif
 " (https://github.com/neovim/neovim/issues/4684)
 filetype plugin indent on
 
+let g:python3_host_prog = '/usr/bin/python'
