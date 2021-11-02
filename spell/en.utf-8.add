@@ -120,3 +120,8 @@ sed
 awk
 arg
 printf
+dicts
+ueberzug
+kwargs
+callables
+traceback
