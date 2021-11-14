@@ -37,11 +37,7 @@ use {
   'Pocco81/Catppuccino.nvim',
   setup = add_pack('Catppuccino.nvim'),
   cmd={
-    'colorscheme catppuccino',
-    'colorscheme dark_catppuccino',
-    'colorscheme light_melya',
-    'colorscheme neon_latte',
-    'colorscheme soft_manilo',
+    'colorscheme catppuccin',
   },
 }
 
