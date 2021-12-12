@@ -138,3 +138,7 @@ localhost
 oauth
 pseudorandom
 asyncio
+resize
+prev
+symlink
+symlinking
