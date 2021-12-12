@@ -84,8 +84,8 @@ sunmap f|sunmap F|sunmap t|sunmap T
 nnoremap <silent>]b <cmd>bn<CR>
 nnoremap <silent>[b <cmd>bp<CR>
 
-" Move to next/previous tab :tabNext,:tabprevious
-nnoremap <silent>]t <cmd>tabN<CR>
+" Move to next/previous tab :tabnext,:tabprevious
+nnoremap <silent>]t <cmd>tabn<CR>
 nnoremap <silent>[t <cmd>tabp<CR>
 
 " create Qlist with word :vim bar %
