@@ -8,6 +8,10 @@
 " insert mode and modifier inside
 noremap <silent> k i
 
+" make it work even after reassigning the original modifier inside
+" fix: for rmagatti/alternate-toggler mapping etc.
+map ciw ckw
+
 " go low
 noremap gl L
 
