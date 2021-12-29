@@ -130,6 +130,9 @@ nnoremap <F8> :emenu Encoding.
 " re-indent whole file / fix indentation, or V selection -> =
 nnoremap <F12> gg=G''
 
+" toggle highlight of word under the cursor
+nnoremap <silent><expr><C-h> HighlightCword()
+
 " Reload vim configuration
 nnoremap <localleader>rc <cmd>ReloadConfig<CR>
 
