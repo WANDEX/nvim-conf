@@ -25,7 +25,7 @@ let g:neomake_info_sign = {
     \ }
 
 " get only last line of output and full path to local eslint path (current cwd)
-let b:neomake_javascript_eslint_exe = LastLine('!npm-exec -p eslint')
+" let b:neomake_javascript_eslint_exe = LastLine('!npm-exec -p eslint')
 
 let g:neomake_python_pylint_maker = {
     \ 'args': [
