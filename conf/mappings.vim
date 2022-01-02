@@ -133,6 +133,10 @@ nnoremap <F12> gg=G''
 " toggle highlight of word under the cursor
 nnoremap <silent><expr><C-h> HighlightCword()
 
+" 'moll/vim-bbye' plugin mappings
+nnoremap <Leader>q <cmd>Bdelete<CR>
+nnoremap <Leader>w <cmd>Bwipeout<CR>
+
 " Reload vim configuration
 nnoremap <localleader>rc <cmd>ReloadConfig<CR>
 
