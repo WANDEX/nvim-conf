@@ -48,9 +48,8 @@ require('packer').startup({function()
   }
 
   use {
-      'nvim-treesitter/nvim-treesitter',
-      branch = '0.5-compat', -- specific branch for nvim 0.5
-      run = ':TSUpdate',
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate'
   }
 
   -- folding
