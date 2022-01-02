@@ -34,8 +34,9 @@ use {
 }
 
 use {
-  'Pocco81/Catppuccino.nvim',
-  setup = add_pack('Catppuccino.nvim'),
+  'catppuccin/nvim',
+  as = 'catppuccin',
+  setup = add_pack('catppuccin'),
   cmd={
     'colorscheme catppuccin',
   },
