@@ -1,5 +1,5 @@
 -- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
+vim.api.nvim_command('packadd packer.nvim')
 
 local use = require('packer').use
 require('packer').startup({function()
