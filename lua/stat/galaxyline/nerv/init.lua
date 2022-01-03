@@ -1,5 +1,11 @@
 -- based on 'Avimitin/nerd-galaxyline'
-local gl = require('galaxyline')
+-- pcall() to prevent errors
+local found, gl = pcall(require, 'galaxyline')
+if not found then
+    print("galaxyline not found")
+    return
+end
+
 local gls = gl.section
 
 gl.short_line_list = {
