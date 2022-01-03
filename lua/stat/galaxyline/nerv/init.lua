@@ -8,6 +8,8 @@ end
 
 local gls = gl.section
 
+local lsp_provider = require('stat.providers.lsp')
+
 gl.short_line_list = {
   'LuaTree',
   'vista',
@@ -336,36 +338,36 @@ insert_left {
 }
 
 insert_left {
-  DiagnosticError = {
-    provider = 'DiagnosticError',
-    icon = '  ',
+  DiagError = {
+    provider = lsp_provider.diagnostic_errors,
     highlight = {colors.red, colors.line_bg},
+    icon = '   ',
   }
 }
 
 insert_left {
-  DiagnosticWarn = {
-    provider = 'DiagnosticWarn',
-    icon = '  ',
+  DiagWarn = {
+    provider = lsp_provider.diagnostic_warnings,
     highlight = {colors.yellow, colors.line_bg},
+    icon = '   ',
   }
 }
 
 insert_left {
-  DiagnosticInfo = {
-    provider = 'DiagnosticInfo',
+  DiagInfo = {
+    provider = lsp_provider.diagnostic_info,
     condition = checkwidth,
     highlight = {colors.green, colors.line_bg},
-    icon = '  ',
+    icon = '   ',
   }
 }
 
 insert_left {
-  DiagnosticHint = {
-    provider = 'DiagnosticHint',
+  DiagHint = {
+    provider = lsp_provider.diagnostic_hints,
     condition = checkwidth,
     highlight = {colors.white, colors.line_bg},
-    icon = '  ',
+    icon = '   ',
   }
 }
 
