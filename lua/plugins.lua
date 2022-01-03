@@ -1,6 +1,14 @@
 -- Only required if you have packer configured as `opt`
 vim.api.nvim_command('packadd packer.nvim')
 
+-- FIXME: THIS IS A FIX - packer doesn't sources packer_compiled.lua file for some reason...
+local util = require 'packer.util'
+local join_paths = util.join_paths
+local stdpath = vim.fn.stdpath
+compile_path = join_paths(stdpath 'config', 'plugin', 'packer_compiled.lua')
+compile_path = vim.fn.expand(compile_path)
+vim.cmd('source ' .. compile_path)
+
 local use = require('packer').use
 require('packer').startup({function()
   -- Packer can manage itself
