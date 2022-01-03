@@ -9,14 +9,20 @@ local statusline = 'galaxyline'
 -- statusline theme dir name
 local theme = 'nerv'
 -- statusline init file path
-statusline_init = table.concat({'stat', statusline, theme, 'init'}, sep)
+local statusline_init = table.concat({'stat', statusline, theme, 'init'}, sep)
+-- FIXME: ^ cannot be used
 
 if ( statusline == 'galaxyline' ) then
   use { -- galaxyline
     'glepnir/galaxyline.nvim',
     branch = 'main',
     config = function()
-      require(statusline_init)
+      statusline_init = 'stat.galaxyline.nerv.init'
+      local ok, _ = pcall(require, statusline_init)
+      if not ok then
+        print("error with statusline")
+        return
+      end
     end,
     requires = {
       'kyazdani42/nvim-web-devicons',
