@@ -114,9 +114,10 @@ nnoremap <F4> <cmd>set relativenumber!<CR>
 "nnoremap <F5><F5> :vs <CR> :term python % <CR>
 "nnoremap <F5>h :15sp <CR> :term python % <CR>
 
-" toggle spell check
-nnoremap <F7> <cmd>setlocal spell! spelllang=en_us<CR>
-nnoremap <F19> <cmd>setlocal spell! spelllang=ru_ru<CR>
+" toggle spell check F7 S-F7 C-F7
+nnoremap <F7> <cmd>setlocal spell! spelllang=en_us,ru_ru<CR>
+nnoremap <F19> <cmd>setlocal spell! spelllang=en_us<CR>
+nnoremap <F31> <cmd>setlocal spell! spelllang=ru_ru<CR>
 
 " see encoding-values
 menu Encoding.utf-8         <cmd>e ++enc=utf-8<CR>
