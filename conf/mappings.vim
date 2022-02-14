@@ -116,6 +116,7 @@ nnoremap <F4> <cmd>set relativenumber!<CR>
 
 " toggle spell check
 nnoremap <F7> <cmd>setlocal spell! spelllang=en_us<CR>
+nnoremap <F19> <cmd>setlocal spell! spelllang=ru_ru<CR>
 
 " see encoding-values
 menu Encoding.utf-8         <cmd>e ++enc=utf-8<CR>
