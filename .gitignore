@@ -1,3 +1,4 @@
 *.spl
+*.sug
 .netrwhist
 packer_compiled.lua
