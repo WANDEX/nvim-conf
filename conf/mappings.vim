@@ -135,7 +135,6 @@ nnoremap <F12> gg=G''
 " toggle highlight of word under the cursor
 nnoremap <silent><expr><C-h> HighlightCword()
 
-" insert new line below/above without entering insert mode (returning to prev cursor line)
 " add blank line below/above cursor without entering insert mode (returning to prev cursor line)
 nnoremap <M-o> mjo<Esc>`j
 nnoremap <M-O> mjO<Esc>`j
