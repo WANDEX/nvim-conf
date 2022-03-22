@@ -1,0 +1,1 @@
+../../conf/plug/vCoolor.vim

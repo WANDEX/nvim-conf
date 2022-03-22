@@ -1,5 +1,5 @@
 """ vim-visual-multi
-" configuration for the plugin mg979/vim-visual-multi
+" configuration for the plugin 'mg979/vim-visual-multi'
 
 let g:VM_maps = {}
 
@@ -40,8 +40,8 @@ let g:VM_maps["Redo"] = '<C-r>'
 let g:VM_maps["Find Next"] = '<Enter>'
 let g:VM_maps["Find Prev"] = '<BS>'
 
-let g:VM_maps['Find Under']          = '<C-j>' " replace C-n
-let g:VM_maps['Find Subword Under']  = '<C-j>' " replace visual C-n
+let g:VM_maps["Find Under"]          = '<C-j>' " replace C-n
+let g:VM_maps["Find Subword Under"]  = '<C-j>' " replace visual C-n
 
 let g:VM_maps["Add Cursor Down"]     = '<C-n>'
 let g:VM_maps["Add Cursor Up"]       = '<C-e>'

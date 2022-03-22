@@ -1,0 +1,1 @@
+../../conf/plug/vim-gtfo.vim

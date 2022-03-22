@@ -2,6 +2,11 @@
 " configuration for the plugin textobj-user and related plugins based on it!
 " contains fixes for colemak layout: (i->k), default key mappings disabled.
 
+" guard - stop sourcing file
+if !exists("textobj#user#map")
+    finish
+endif
+
 " vim-textobj-comment {{{1
 let g:textobj_comment_no_default_key_mappings = 1
 call textobj#user#map('comment', {

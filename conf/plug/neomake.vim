@@ -4,6 +4,11 @@
 " change warning signs and color, see https://goo.gl/eHcjSq
 " highlight NeomakeErrorMsg ctermfg=227 ctermbg=237
 
+" guard - stop sourcing file
+if !exists("neomake#configure#automake")
+    finish
+endif
+
 let g:neomake_error_sign = {
     \ 'text': 'E',
     \ 'texthl': 'NeomakeErrorSign',
@@ -81,4 +86,3 @@ if MyOnBattery()
 else
     call neomake#configure#automake('nrwi', 500)
 endif
-
