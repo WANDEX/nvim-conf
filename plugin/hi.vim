@@ -47,12 +47,12 @@ hi DiffText   cterm=bold ctermfg=0 ctermbg=11 gui=bold guibg=Red
 " magit
 hi DiffLine ctermfg=Gray guifg=Gray
 
-" dunno from where it comes, so just in case
-hi diffChanged ctermfg=White guifg=White
+hi diffAdded   ctermbg=NONE guibg=NONE ctermfg=LightGreen guifg=#98C379
+hi diffChanged ctermbg=NONE guibg=NONE ctermfg=DarkGreen  guifg=#73BA9F
+hi diffRemoved ctermbg=NONE guibg=NONE ctermfg=DarkRed    guifg=#D54E53
 
-" TODO: add bg colors
-hi Folded ctermfg=Gray guifg=Gray
-hi Whitespace ctermfg=Gray guifg=Gray
+hi Folded     ctermfg=Gray guifg=Gray ctermbg=NONE guibg=NONE
+hi Whitespace ctermfg=Gray guifg=Gray ctermbg=NONE guibg=NONE
 
 hi IndentGuidesOdd  guifg=#282a36 ctermfg=238 gui=nocombine cterm=nocombine
 hi IndentGuidesEven guifg=#383a46 ctermfg=242 gui=nocombine cterm=nocombine
