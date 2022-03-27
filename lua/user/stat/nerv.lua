@@ -34,8 +34,8 @@ function M.setup()
         },
     }
     local fcolors = {
+      black    = '#000000',
       bg       = '#5C687A',
-      line_bg  = '#16191D',
       fg       = '#8FBCBB',
       fg_green = '#65a380',
 
@@ -486,9 +486,9 @@ function M.setup()
         Space, -- for the same indent from right as with RSD in DefaultStatusline
     }
 
-    ViMode = utils.surround({ "", "" }, fcolors.line_bg, { ViMode })
-    LSD = utils.surround({ "", "" }, fcolors.line_bg, { LS })
-    RSD = utils.surround({ "", "" }, fcolors.line_bg, { RS })
+    ViMode = utils.surround({ "", "" }, fcolors.black, { ViMode })
+    LSD = utils.surround({ "", "" }, fcolors.black, { LS })
+    RSD = utils.surround({ "", "" }, fcolors.black, { RS })
 
     local DefaultStatusline = {
         ViMode,
