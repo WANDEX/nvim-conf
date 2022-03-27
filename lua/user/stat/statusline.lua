@@ -1,18 +1,9 @@
 -- configuration for 'rebelot/heirline.nvim'
--- using some providers from 'feline-nvim/feline.nvim'
 
--- local ok_fe, fe = pcall(require, 'feline')
--- if not ok_fe then
---   return
--- end
-
-local ok_he, he = pcall(require, 'heirline')
-if not ok_he then
+local ok, heirline = pcall(require, 'heirline')
+if not ok then
   return
 end
-
-vim.o.termguicolors = true -- required
-
 
 local conditions = require("heirline.conditions")
 local utils = require("heirline.utils")
@@ -37,14 +28,9 @@ function M.setup()
             info = utils.get_highlight("DiagnosticInfo").fg,
         },
         git = {
-            -- del = utils.get_highlight("diffDeleted").fg,
             del = utils.get_highlight("diffRemoved").fg,
             add = utils.get_highlight("diffAdded").fg,
             change = utils.get_highlight("diffChanged").fg,
-
-            -- del = utils.get_highlight("DiagnosticError").fg,
-            -- add = utils.get_highlight("DiagnosticHint").fg,
-            -- change = utils.get_highlight("DiagnosticWarn").fg,
         },
     }
     local fcolors = {
@@ -576,7 +562,7 @@ function M.setup()
         DefaultStatusline,
     }
 
-    require("heirline").setup(StatusLines)
+    heirline.setup(StatusLines)
 end
 
 M.setup()
