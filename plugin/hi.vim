@@ -24,7 +24,7 @@ hi! link PmenuSel GeneralSel
 " which-key.nvim colorscheme:
 hi WhichKey          ctermfg=Red      guifg=Red      ctermbg=NONE  guibg=NONE
 hi WhichKeyGroup     ctermfg=White    guifg=White    ctermbg=Black guibg=Black
-hi WhichKeySeparator ctermfg=Darkgray guifg=DarkGray ctermbg=NONE  guibg=NONE
+hi WhichKeySeparator ctermfg=DarkGray guifg=DarkGray ctermbg=NONE  guibg=NONE
 hi WhichKeyDesc      ctermfg=Gray     guifg=Gray     ctermbg=Black guibg=Black
 hi WhichKeyValue     ctermfg=Gray     guifg=Gray     ctermbg=Black guibg=Black
 hi WhichKeyFloat     ctermfg=Gray     guifg=Gray     ctermbg=NONE  guibg=NONE
@@ -51,7 +51,7 @@ hi diffAdded   ctermbg=NONE guibg=NONE ctermfg=LightGreen guifg=#98C379
 hi diffChanged ctermbg=NONE guibg=NONE ctermfg=DarkGreen  guifg=#73BA9F
 hi diffRemoved ctermbg=NONE guibg=NONE ctermfg=DarkRed    guifg=#D54E53
 
-hi Folded     ctermfg=Gray guifg=Gray ctermbg=NONE guibg=NONE
+hi Folded     ctermfg=Gray guifg=Gray ctermbg=Black guibg=Black
 hi Whitespace ctermfg=Gray guifg=Gray ctermbg=NONE guibg=NONE
 
 hi IndentGuidesOdd  guifg=#282a36 ctermfg=238 gui=nocombine cterm=nocombine
