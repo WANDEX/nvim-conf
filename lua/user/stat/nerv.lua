@@ -42,12 +42,12 @@ function M.setup()
       yellow   = '#E5C07B',
       cyan     = '#70C0BA',
       darkblue = '#83A598',
-      green    = '#98C379',
+      green    = '#98C378',
       orange   = '#FF8800',
       purple   = '#C678DD',
-      magenta  = '#C858E9',
+      magenta  = '#C858E8',
       blue     = '#73BA9F',
-      red      = '#D54E53',
+      red      = '#D54E54',
     }
 
     local ViMode = {
