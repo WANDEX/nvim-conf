@@ -220,6 +220,9 @@ packer.startup(function()
   --vim.api.nvim_command('luafile ~/.config/nvim/lua/user/themes.lua')
   require('user.pack.themes')
 
+  -- STATUS BAR
+  use 'rebelot/heirline.nvim'
+
   -- not sure (candidates for deletion):
   -- use 'metakirby5/codi.vim'
 end)
