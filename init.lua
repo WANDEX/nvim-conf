@@ -29,3 +29,7 @@ require 'user.globals'
 require 'user.disable_builtin'
 
 require 'user.pack.plugins'
+
+require 'user.diagnostic'
+
+require 'user.stat.nerv'
