@@ -37,4 +37,5 @@ telescope.setup {
   },
 }
 
-telescope.load_extension('fzf') -- fzf-native
+telescope.load_extension 'fzf' -- fzf-native
+telescope.load_extension 'file_browser'
