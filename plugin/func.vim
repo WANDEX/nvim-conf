@@ -11,7 +11,7 @@ com! CLS call ClearLastSearch()
 if !exists('*ReloadConfig')
     function! ReloadConfig()
         echom 'Reload configuration...'
-        source $cfg
+        luafile $MYVIMRC
     endfunction
     command! ReloadConfig call ReloadConfig()
 endif
