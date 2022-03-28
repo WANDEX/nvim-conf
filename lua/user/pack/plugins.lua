@@ -209,6 +209,7 @@ packer.startup(function()
       'kyazdani42/nvim-web-devicons',
       {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
       'TC72/telescope-tele-tabby.nvim',
+      'nvim-telescope/telescope-file-browser.nvim',
     },
   }
 
