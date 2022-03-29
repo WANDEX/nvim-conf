@@ -13,12 +13,15 @@ telescope.setup {
       i = {
         ["<C-n>"] = actions.move_selection_next,
         ["<C-e>"] = actions.move_selection_previous,
-        ["<C-j>"] = actions.complete_tag,
+        ["<C-p>"] = false,
+        ["<C-c>"] = false,
         ["<C-l>"] = actions.close,
       },
       n = {
-        ["<C-n>"] = actions.move_selection_next,
-        ["<C-e>"] = actions.move_selection_previous,
+        ["n"] = actions.move_selection_next,
+        ["e"] = actions.move_selection_previous,
+        ["j"] = false,
+        ["k"] = false,
         ["<C-l>"] = actions.close,
       },
     },
