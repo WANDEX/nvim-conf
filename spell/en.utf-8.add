@@ -182,3 +182,5 @@ utils
 GPLv3
 stdscr
 ws
+unhandled
+OAuth
