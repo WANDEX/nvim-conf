@@ -174,8 +174,13 @@ function M.setup()
   local FileName = {
     init = function(self)
       self.lfilename = vim.fn.fnamemodify(self.filename, ":.")
+      self.home = vim.fn.getenv('HOME')
       if self.lfilename == "" then
         self.lfilename = "[No Name]"
+      else
+        -- replace: '/home/user' -> '~'
+        -- self.lfilename = self.lfilename:gsub("/home/%w+", "~")
+        self.lfilename = self.lfilename:gsub(self.home, "~")
       end
     end,
     hl = { fg = fcolors.cyan },
