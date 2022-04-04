@@ -450,7 +450,9 @@ function M.setup()
     -- end,
     -- icon = ' ', -- 
     provider = function()
-      local tname, _ = vim.api.nvim_buf_get_name(0):gsub(".*:", "")
+      -- local tname, _ = vim.api.nvim_buf_get_name(0):gsub(".*:", "")
+      -- replace: '/home/user' -> '~'
+      local tname, _ = vim.api.nvim_buf_get_name(0):gsub(".*:", ""):gsub("/home/%w+", "~")
       return " " .. tname
     end,
     hl = { fg = fcolors.blue, style = "bold" },
