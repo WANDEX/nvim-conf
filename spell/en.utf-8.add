@@ -184,3 +184,6 @@ stdscr
 ws
 unhandled
 OAuth
+Wayland
+symlinks
+POSIX
