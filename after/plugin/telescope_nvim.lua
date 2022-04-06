@@ -8,7 +8,7 @@ end
 local actions = require 'telescope.actions'
 local action_layout = require 'telescope.actions.layout'
 
-local flip_cols = 110
+local flip_cols = 140
 
 telescope.setup {
   defaults = {
