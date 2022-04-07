@@ -3,7 +3,7 @@
 " contains fixes for colemak layout: (i->k), default key mappings disabled.
 
 " guard - stop sourcing file
-if !exists("textobj#user#map")
+if !exists(':Textobj*')
     finish
 endif
 
