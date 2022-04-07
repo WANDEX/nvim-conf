@@ -5,7 +5,7 @@
 " highlight NeomakeErrorMsg ctermfg=227 ctermbg=237
 
 " guard - stop sourcing file
-if !exists("neomake#configure#automake")
+if !exists(':Neomake')
     finish
 endif
 
