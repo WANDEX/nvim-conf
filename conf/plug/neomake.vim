@@ -68,6 +68,11 @@ let g:neomake_python_flake8_maker = {
 " whether to open quickfix or location list automatically
 let g:neomake_open_list = 0
 
+" lsp does that, so clang maker is removed
+" let g:neomake_c_enabled_makers   = ['clangtidy', 'clangcheck']
+" let g:neomake_cpp_enabled_makers = ['clangtidy', 'clangcheck']
+let g:neomake_c_enabled_makers   = []
+let g:neomake_cpp_enabled_makers = []
 
 function! MyOnBattery()
     if has('unix')
