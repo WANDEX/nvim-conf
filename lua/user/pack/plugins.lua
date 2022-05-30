@@ -65,7 +65,7 @@ packer.startup(function()
   }
 
   use { -- new text objects | more info: 'https://github.com/kana/vim-textobj-user/wiki'
-    'kana/vim-textobj-user',    -- CORE (wont be installed with 'requires = ...')
+    'kana/vim-textobj-user',    -- CORE plugin
     'glts/vim-textobj-comment', -- ac/ic aC
     'kana/vim-textobj-diff',    -- adh/idh
     'kana/vim-textobj-entire',  -- ae/ie
@@ -85,8 +85,12 @@ packer.startup(function()
   use { -- syntax
     "justinmk/vim-syntax-extra",
     {'kovetskiy/sxhkd-vim', ft='sxhkd'},
-    -- (https://github.com/wbthomason/packer.nvim/issues/464) add when it will be fixed
-    {'numirias/semshi', run=':UpdateRemotePlugins'}, -- TODO ft='python'
+  }
+
+  use {
+    'numirias/semshi',
+    ft = 'python',
+    run = ':UpdateRemotePlugins', -- FIXME: :UpdateRemotePlugins not runs automatically! call manually!
   }
 
   use {
