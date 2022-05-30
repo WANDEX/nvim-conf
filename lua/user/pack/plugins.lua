@@ -56,7 +56,12 @@ packer.startup(function()
     'editorconfig/editorconfig-vim',
     'sbdchd/neoformat',
     'scrooloose/nerdcommenter',
-    {'iamcco/markdown-preview.nvim', run='cd app && yarn install', ft='markdown'},
+  }
+
+  use {
+      'iamcco/markdown-preview.nvim',
+      ft='markdown',
+      run = function() vim.fn['mkdp#util#install']() end,
   }
 
   use { -- new text objects | more info: 'https://github.com/kana/vim-textobj-user/wiki'
