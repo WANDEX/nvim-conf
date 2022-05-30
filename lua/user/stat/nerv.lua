@@ -141,7 +141,7 @@ function M.setup()
     -- Same goes for the highlight. Now the foreground will change according to the current mode.
     hl = function(self)
       local mode = self.mode:sub(1, 1) -- get only the first mode character
-      return { fg = self.mode_fcolors[mode], style = "bold" }
+      return { fg = self.mode_fcolors[mode], bold = true }
     end,
   }
 
@@ -211,7 +211,7 @@ function M.setup()
     hl = function()
       if vim.bo.modified then
         -- use `force` because we need to override the child's hl foreground
-        return { fg = fcolors.cyan, style = "bold", force = true }
+        return { fg = fcolors.cyan, bold = true, force = true }
       end
     end,
   }
@@ -229,7 +229,7 @@ function M.setup()
     provider = function()
       return string.upper(vim.bo.filetype)
     end,
-    hl = { style = "bold" },
+    hl = { bold = true },
   }
 
   local FileEncoding = {
@@ -288,7 +288,7 @@ function M.setup()
       end
       return " [" .. table.concat(names, " ") .. "] "
     end,
-    hl = { fg = fcolors.green, style = "bold" },
+    hl = { fg = fcolors.green, bold = true },
   }
 
   local Diagnostics = {
@@ -352,7 +352,7 @@ function M.setup()
       provider = function(self)
         return self.status_dict.head
       end,
-      hl = { style = "bold" },
+      hl = { bold = true },
     },
     {
       condition = function(self)
@@ -415,7 +415,7 @@ function M.setup()
       local cwd = vim.fn.getcwd(0)
       self.cwd = vim.fn.fnamemodify(cwd, ":~")
     end,
-    hl = { fg = fcolors.blue, style = "bold" },
+    hl = { fg = fcolors.blue, bold = true },
 
     utils.make_flexible_component(1, {
       provider = function(self)
@@ -455,7 +455,7 @@ function M.setup()
       local tname, _ = vim.api.nvim_buf_get_name(0):gsub(".*:", ""):gsub("/home/%w+", "~")
       return " " .. tname
     end,
-    hl = { fg = fcolors.blue, style = "bold" },
+    hl = { fg = fcolors.blue, bold = true },
   }
 
   local Spell = {
@@ -463,7 +463,7 @@ function M.setup()
       return vim.wo.spell
     end,
     provider = "SPELL ",
-    hl = { fg = fcolors.red, style = "bold" },
+    hl = { fg = fcolors.red, bold = true },
   }
 
   local Align = { provider = "%=" }
