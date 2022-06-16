@@ -32,4 +32,6 @@ require 'user.pack.plugins'
 
 require 'user.diagnostic'
 
+require 'user.func'
+
 require 'user.stat.nerv'
