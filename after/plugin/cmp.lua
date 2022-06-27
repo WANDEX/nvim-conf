@@ -62,72 +62,82 @@ for _, lsp in ipairs(servers) do
 end
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menu,menuone,noselect'
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
--- nvim-cmp setup
+-- Don't show the dumb matching stuff.
+vim.opt.shortmess:append "c"
+
 cmp.setup({
+
   completion = {
-    completeopt = 'menu,menuone,noinsert', -- preselect first result
-    -- keyword_length = 2,
+    keyword_length = 2,
   },
+
+  mapping = {
+    ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+    ["<C-e>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+    ['<C-j>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-h>'] = cmp.mapping.scroll_docs(4),
+
+    ["<C-q>"] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+
+    ["<C-y>"] = cmp.mapping(
+      cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Insert,
+        select = true,
+      },
+      { "i", "c" }
+    ),
+
+    ["<C-Space>"] = cmp.mapping {
+      i = cmp.mapping.complete(),
+      c = function(
+        _ --[[fallback]]
+      )
+        if cmp.visible() then
+          if not cmp.confirm { select = true } then
+            return
+          end
+        else
+          cmp.complete()
+        end
+      end,
+    },
+
+    -- ['<C-l>'] = cmp.mapping.close(),
+    ['<Esc>'] = cmp.mapping.abort(),
+    ["<Tab>"] = cmp.config.disable,
+
+  },
+
   snippet = {
     expand = function(args)
       require('luasnip').lsp_expand(args.body)
     end,
   },
-  mapping = {
-    ['<C-e>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-j>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-h>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    -- ['<C-l>'] = cmp.mapping.close(),
-    ['<Esc>'] = cmp.mapping.abort(),
-    ['<C-y>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    }),
-    ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    }),
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if require('luasnip').expand_or_jumpable() then
-        require('luasnip').expand_or_jump()
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if require('luasnip').jumpable(-1) then
-        require('luasnip').jump(-1)
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-  },
+
   formatting = {
     format = function(entry, vim_item)
       -- set source name to show
       vim_item.menu = ({
+        luasnip  = "[S]",
         nvim_lsp = "[L]",
-        nvim_lua = "[nvimLua]",
-        luasnip = "[S]",
-        buffer = "[B]",
-        path = "[P]",
-        calc = "[C]",
-        look = "[W]",
+        nvim_lua = "[api]",
+        buffer   = "[B]",
+        look     = "[W]",
       })[entry.source.name]
       return vim_item
     end,
   },
+
   sources = {
     { name = 'luasnip' },
     { name = 'nvim_lsp' },
     { name = 'nvim_lua' },
-    { name = 'buffer' },
-    { name = 'path' },
-    { name = 'calc' },
-    { name = 'look' },
+    { name = 'buffer', keyword_length = 5 },
+    { name = 'look' ,  keyword_length = 5 },
   },
 })
