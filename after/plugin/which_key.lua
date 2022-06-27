@@ -142,6 +142,7 @@ wk.register({ T = {
     r = { "<cmd>lua require'telescope.builtin'.registers{}<CR>", "registers" },
     s = { "<cmd>lua require'telescope.builtin'.search_history{}<CR>", "search history" },
     T = { "<cmd>lua require'telescope.builtin'.current_buffer_tags{}<CR>", "tags buf" },
+    k = { "<cmd>Telescope keymaps<CR>", "keymaps" },
   },
 }, }, { prefix = "<leader>" })
 
