@@ -202,10 +202,6 @@ packer.startup(function()
     'saadparwaiz1/cmp_luasnip', -- luasnip snippets cmp source
     requires = {
       'L3MON4D3/LuaSnip', -- snippets engine
-      config = function()
-        -- lazy loading so you only get in memory snippets of languages you use
-        require("luasnip/loaders/from_vscode").lazy_load() -- takes snippets from "friendly-snippets"
-      end,
     },
   }
 
