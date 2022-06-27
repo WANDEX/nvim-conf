@@ -179,8 +179,6 @@ packer.startup(function()
     'hrsh7th/cmp-nvim-lsp',     -- LSP
     "hrsh7th/cmp-nvim-lua",     -- neovim's Lua runtime API such vim.lsp.*
     "hrsh7th/cmp-buffer",       -- buffer words
-    "hrsh7th/cmp-path",         -- filesystem paths
-    "hrsh7th/cmp-calc",         -- simple math calculation
     "octaltree/cmp-look",       -- completing words in English $export WORDLIST="/usr/share/dict/dictname"
   }
 
