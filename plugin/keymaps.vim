@@ -56,6 +56,7 @@ onoremap <silent><script> <C-L> <Esc>
 vnoremap <silent><script> <C-L> <Esc>
 "" leave by canceling command
 cnoremap <silent><script> <C-L> <C-c>
+snoremap <silent><script> <C-L> <C-c>
 "" original CTRL-L - Clears and redraws the screen.
 "" clear the highlighting of :set hlsearch & cmd line
 nnoremap <silent><script> <C-L> <cmd>nohlsearch<CR><C-L>
