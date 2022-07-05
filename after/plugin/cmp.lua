@@ -135,9 +135,9 @@ cmp.setup({
 
   sources = {
     { name = 'luasnip' },
-    { name = 'nvim_lsp' },
+    { name = 'nvim_lsp', keyword_length = 3 },
     { name = 'nvim_lua' },
-    { name = 'buffer', keyword_length = 5 },
-    { name = 'look' ,  keyword_length = 5 },
+    { name = 'buffer', keyword_length = 4 },
+    { name = 'look' ,  keyword_length = 6 },
   },
 })
