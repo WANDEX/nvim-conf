@@ -23,3 +23,7 @@ ls.add_snippets("cpp", {
     nl(" */"),
   }),
 })
+
+ls.add_snippets("cpp", {
+  s("#pro", fmt("{}\n\n", { i(1, "#pragma once") })),
+})
