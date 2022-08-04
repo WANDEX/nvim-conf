@@ -1,4 +1,5 @@
 local ls = require "luasnip"
+ls.filetype_extend("c", { "cpp" }) -- to have the same snippets in ft=c
 
 local s = ls.s
 local i = ls.insert_node
