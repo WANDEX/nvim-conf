@@ -1,4 +1,5 @@
 -- nerv configuration for 'rebelot/heirline.nvim'
+-- AUTHOR: WANDEX
 
 local ok, heirline = pcall(require, 'heirline')
 if not ok then
