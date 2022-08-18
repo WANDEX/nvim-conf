@@ -28,3 +28,15 @@ ls.add_snippets("cpp", {
 ls.add_snippets("cpp", {
   s("#pro", fmt("{}\n\n", { i(1, "#pragma once") })),
 })
+
+-- /****************************************************************************
+--  * description / separator
+--  */
+ls.add_snippets("cpp", {
+  s("docl", {
+    nl("/****************************************************************************"),
+    nl(" * "),
+    i(1, "description / separator"),
+    nl(" */"),
+  }),
+})
