@@ -25,10 +25,6 @@ ls.add_snippets("cpp", {
   }),
 })
 
-ls.add_snippets("cpp", {
-  s("#pro", fmt("{}\n\n", { i(1, "#pragma once") })),
-})
-
 -- /****************************************************************************
 --  * description / separator
 --  */
@@ -39,4 +35,19 @@ ls.add_snippets("cpp", {
     i(1, "description / separator"),
     nl(" */"),
   }),
+})
+
+ls.add_snippets("cpp", {
+  s("#pro", fmt("{}\n\n", { i(1, "#pragma once") })),
+})
+
+ls.add_snippets("cpp", {
+  s("#in", fmt("{} <{}>\n", { t("#include"), i(1) })),
+})
+
+ls.add_snippets("cpp", {
+  s({trig="s", hidden=true}, { t("std::") }),
+  s('st',   { t("std::") }),
+  s("sz",   { t("std::size_t ") }),
+  s("szc",  { t("const std::size_t ") }),
 })
