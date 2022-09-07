@@ -51,3 +51,9 @@ ls.add_snippets("cpp", {
   s("sz",   { t("std::size_t ") }),
   s("szc",  { t("const std::size_t ") }),
 })
+
+ls.add_snippets("cpp", {
+  s({trig="c", hidden=true}, { t("const ") }),
+  s("co",   { t("std::cout << "), i(1), t(" << '\\n';") }),
+  s("ce",   { t("std::cerr << "), i(1), t(" << '\\n';") }),
+})
