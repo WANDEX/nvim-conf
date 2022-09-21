@@ -557,7 +557,7 @@ function M.setup()
       end
     end,
 
-    init = utils.pick_child_on_condition,
+    fallthrough = false,
 
     SpecialStatusline,
     TerminalStatusline,
