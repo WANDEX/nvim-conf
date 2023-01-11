@@ -53,7 +53,6 @@ wk.register({ ["<C-W>"] = {
 wk.register({ a = {
   name = "add/alt",
   t = { "<cmd>ToggleAlternate<CR>", "toggle alt bool" }, -- FIXME does not work for some reason...
-  [";"] = { "<cmd>norm $a;<CR>", "$a;" },
 }, }, { prefix = "<leader>" })
 
 wk.register({ c = {
