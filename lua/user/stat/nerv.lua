@@ -177,24 +177,29 @@ function M.setup()
       self.lfilename = vim.fn.fnamemodify(self.filename, ":.")
       self.home = vim.fn.getenv('HOME')
       if self.lfilename == "" then
-        self.lfilename = "[No Name]"
+        self.lfilename = "[NONAME]"
       else
         -- replace: '/home/user' -> '~'
         -- self.lfilename = self.lfilename:gsub("/home/%w+", "~")
         self.lfilename = self.lfilename:gsub(self.home, "~")
       end
+      if not conditions.width_percent_below(#self.lfilename, 0.27) then
+        self.lfilename = vim.fn.pathshorten(self.lfilename)
+      end
     end,
     hl = { fg = fcolors.cyan },
 
-    utils.make_flexible_component(2, {
+    flexible = 2,
+    {
       provider = function(self)
         return self.lfilename
       end,
-    }, {
+    },
+    {
       provider = function(self)
         return vim.fn.pathshorten(self.lfilename)
       end,
-    }),
+    },
   }
 
   local FileFlags = {
@@ -411,27 +416,33 @@ function M.setup()
   }
 
   local WorkDir = {
-    provider = function(self)
+    init = function(self)
       self.icon = (vim.fn.haslocaldir(0) == 1 and "l" or "g") .. " " .. " "
       local cwd = vim.fn.getcwd(0)
       self.cwd = vim.fn.fnamemodify(cwd, ":~")
+      if not conditions.width_percent_below(#self.cwd, 0.27) then
+        self.cwd = vim.fn.pathshorten(self.cwd)
+      end
     end,
     hl = { fg = fcolors.blue, bold = true },
 
-    utils.make_flexible_component(1, {
+    flexible = 1,
+    {
       provider = function(self)
         local trail = self.cwd:sub(-1) == "/" and "" or "/"
         return self.icon .. self.cwd .. trail .. " "
       end,
-    }, {
+    },
+    {
       provider = function(self)
         local cwd = vim.fn.pathshorten(self.cwd)
         local trail = self.cwd:sub(-1) == "/" and "" or "/"
         return self.icon .. cwd .. trail .. " "
       end,
-    }, {
+    },
+    {
       provider = "",
-    }),
+    },
   }
 
   local HelpFilename = {
@@ -565,7 +576,7 @@ function M.setup()
     DefaultStatusline,
   }
 
-  heirline.setup(StatusLines)
+  heirline.setup({ statusline = StatusLines})
 end
 
 M.setup()
