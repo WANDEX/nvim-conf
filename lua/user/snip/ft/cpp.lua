@@ -19,8 +19,11 @@ ls.add_snippets("cpp", {
   -- the same
   s("doc", {
     nl("/**"),
-    nl(" * "),
-    i(1, "doc string"),
+    nl(" * @brief "),
+    i(1, "description"),
+    nl(" *"),
+    nl(" * @param  TODO"),
+    nl(" * @return TODO"),
     nl(" */"),
   }),
 })
