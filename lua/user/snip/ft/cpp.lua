@@ -51,6 +51,7 @@ ls.add_snippets("cpp", {
 ls.add_snippets("cpp", {
   s({trig="s", hidden=true}, { t("std::") }),
   s('st',   { t("std::") }),
+  s("sv",   { t("std::string_view ") }),
   s("sz",   { t("std::size_t ") }),
   s("szc",  { t("const std::size_t ") }),
 })
