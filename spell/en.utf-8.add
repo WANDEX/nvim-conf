@@ -256,8 +256,14 @@ ctest
 cv
 dereference
 dereferencing
+
 ctor
+ctors
 dtor
+dtors
+constructible
+destructible
+
 gcc
 gcov
 grcov
@@ -272,3 +278,11 @@ ostream
 rethrow
 sizeof
 unpushed
+
+DECSCUSR
+dll
+dotfiles
+firefox
+pacman
+postfix
+x86
