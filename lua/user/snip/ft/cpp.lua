@@ -4,7 +4,8 @@ ls.filetype_extend("c", { "cpp" }) -- to have the same snippets in ft=c
 local s = ls.s
 local i = ls.insert_node
 local t = ls.text_node
-local fmt = require("luasnip.extras.fmt").fmt
+local fmt  = require("luasnip.extras.fmt").fmt
+local fmta = require("luasnip.extras.fmt").fmta
 
 local nl = function(text) -- new line
   return t { "", text }
@@ -46,6 +47,34 @@ ls.add_snippets("cpp", {
 
 ls.add_snippets("cpp", {
   s("#in", fmt("{} <{}>\n", { t("#include"), i(1) })),
+})
+
+ls.add_snippets("cpp", {
+  s("ns",  fmta([[
+  namespace <name> {
+  <inside>
+  } // namespace <name>
+  ]], {
+    name   = i(1),
+    inside = i(2),
+  }, { repeat_duplicates = true })),
+
+  -- v1, v2, etc.
+  s("nsi",  fmta([[
+  inline namespace v<name> {
+  <inside>
+  } // inline namespace v<name>
+  ]], {
+    name   = i(1),
+    inside = i(2),
+  }, { repeat_duplicates = true })),
+
+  s("nsa",  {
+    nl("namespace /* (anonymous) */ {"),
+    nl(""), i(1),
+    nl("} // (anonymous) [internal_linkage]"),
+    nl(""),
+  }),
 })
 
 ls.add_snippets("cpp", {
