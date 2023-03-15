@@ -153,7 +153,7 @@ packer.startup(function()
   }
 
   use {
-    'Pocco81/TrueZen.nvim',
+    'Pocco81/true-zen.nvim',
     config = function()
       require("true-zen").setup{
         modes = {
@@ -164,11 +164,6 @@ packer.startup(function()
       }
     end,
     cmd={'TZMinimalist', 'TZFocus', 'TZAtaraxis'},
-  }
-
-  use {
-    'rmagatti/session-lens',
-    requires = {'rmagatti/auto-session', 'nvim-telescope/telescope.nvim'},
   }
 
   -- completion
@@ -213,6 +208,7 @@ packer.startup(function()
       {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
       'TC72/telescope-tele-tabby.nvim',
       'nvim-telescope/telescope-file-browser.nvim',
+      {'rmagatti/auto-session', requires = {'rmagatti/session-lens'}},
     },
   }
 
