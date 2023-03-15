@@ -118,7 +118,7 @@ wk.register({ N = {
 wk.register({ T = {
   name = "Telescope",
   -- command! -nargs=? Tgrep lua require 'telescope.builtin'.grep_string({ search = vim.fn.input("Grep For > ")})
-  b = { "<cmd>Telescope buffers theme=get_dropdown previewer=false border=false<CR>", "buffers" },
+  b = { "<cmd>Telescope buffers theme=dropdown previewer=false border=false<CR>", "buffers" },
   B = { "<cmd>lua require'telescope.builtin'.buffers{}<CR>", "buffers w preview" },
   c = { "<cmd>lua require'telescope.builtin'.grep_string{}<CR>", "grep under Cursor at cwd" },
   d = { "<cmd>Telescope diagnostics<CR>", "diagnostics" },
@@ -128,7 +128,7 @@ wk.register({ T = {
   g = { "<cmd>lua require'telescope.builtin'.live_grep{}<CR>", "grep at cwd" },
   o = { "<cmd>lua require'telescope.builtin'.live_grep{ grep_open_files=true }<CR>", "grep Opened files" },
   S = { "<cmd>SearchSession<CR>", "Session" },
-  t = { "<cmd>Telescope tele_tabby list theme=get_dropdown previewer=false border=false<CR>", "tabs" },
+  t = { "<cmd>Telescope tele_tabby list theme=dropdown previewer=false border=false<CR>", "tabs" },
   v = {
     name = "vim",
     C = { "<cmd>lua require'telescope.builtin'.colorscheme{}<CR>", "colorscheme" },
