@@ -286,3 +286,6 @@ firefox
 pacman
 postfix
 x86
+configs
+repo
+readline
