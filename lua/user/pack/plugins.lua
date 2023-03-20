@@ -113,7 +113,7 @@ packer.startup(function()
     'farmergreg/vim-lastplace',
   }
 
-  use {'rmagatti/alternate-toggler', cmd='ToggleAlternate'} -- toggle alternate "boolean" values
+  use 'rmagatti/alternate-toggler' -- toggle alternate values (0/1, true/false, etc.)
 
   use 'moll/vim-bbye' -- wipe/delete buffers without closing windows or messing up layout.
 

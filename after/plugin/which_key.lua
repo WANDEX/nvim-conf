@@ -52,7 +52,7 @@ wk.register({ ["<C-W>"] = {
 -- add
 wk.register({ a = {
   name = "add/alt",
-  t = { "<cmd>ToggleAlternate<CR>", "toggle alt bool" }, -- FIXME does not work for some reason...
+  t = { "<cmd>ToggleAlternate<CR>", "toggle alt val" },
 }, }, { prefix = "<leader>" })
 
 wk.register({ c = {
