@@ -8,6 +8,10 @@ end
 -- require('neogit').setup{}
 
 gitsigns.setup{
+  current_line_blame_formatter_opts = {
+    relative_time = true,
+  },
+  numhl = false,
   signs = {
     add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
     change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
@@ -15,30 +19,47 @@ gitsigns.setup{
     topdelete    = {hl = 'GitSignsDelete', text = '^', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
     changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
   },
-  numhl = false,
-  keymaps = {
-    -- Default keymap options
-    noremap = true,
+  on_attach = function(bufnr)
+    local gs = package.loaded.gitsigns
 
-    ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'"},
-    ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'"},
+    local function map(mode, l, r, opts)
+      opts = opts or {}
+      opts.buffer = bufnr
+      vim.keymap.set(mode, l, r, opts)
+    end
 
-    ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-    ['v <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-    ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-    ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-    ['v <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-    ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
-    ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-    ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line(true)<CR>',
-    ['n <leader>hS'] = '<cmd>lua require"gitsigns".stage_buffer()<CR>',
-    ['n <leader>hU'] = '<cmd>lua require"gitsigns".reset_buffer_index()<CR>',
+    -- Navigation: next_hunk()
+    map('n', ']c', function()
+      if vim.wo.diff then return ']c' end
+      vim.schedule(function() gs.next_hunk() end)
+      return '<Ignore>'
+    end, {expr=true})
 
-    -- Text objects (remapped for colemak layout: i->k)
-    ['o kh'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
-    ['x kh'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>'
-  },
-  current_line_blame_formatter_opts = {
-    relative_time = true,
-  },
+    -- Navigation: prev_hunk()
+    map('n', '[c', function()
+      if vim.wo.diff then return '[c' end
+      vim.schedule(function() gs.prev_hunk() end)
+      return '<Ignore>'
+    end, {expr=true})
+
+    -- Actions
+    map('v', '<leader>hs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end, {desc='gs.stage_hunk'})
+    map('v', '<leader>hr', function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end, {desc='gs.reset_hunk'})
+    map('n', '<leader>hs', gs.stage_hunk,                           {desc='gs.stage_hunk'})
+    map('n', '<leader>hr', gs.reset_hunk,                           {desc='gs.reset_hunk'})
+    map('n', '<leader>hS', gs.stage_buffer,                         {desc='gs.stage_buffer'})
+    map('n', '<leader>hu', gs.undo_stage_hunk,                      {desc='gs.undo_stage_hunk'})
+    map('n', '<leader>hR', gs.reset_buffer,                         {desc='gs.reset_buffer'})
+    map('n', '<leader>hp', gs.preview_hunk,                         {desc='gs.preview_hunk'})
+    map('n', '<leader>hb', function() gs.blame_line{full=true} end, {desc='gs.blame_line{full=true}'})
+    map('n', '<leader>hd', gs.diffthis,                             {desc='gs.diffthis'})
+    map('n', '<leader>hD', function() gs.diffthis('~') end,         {desc='gs.diffthis(~)'})
+
+    -- toggle
+    map('n', '<leader>ab', gs.toggle_current_line_blame,            {desc='gs.toggle_current_line_blame'})
+    map('n', '<leader>ad', gs.toggle_deleted,                       {desc='gs.toggle_deleted'})
+
+    -- Text object
+    map({'o', 'x'}, 'kh', ':<C-U>Gitsigns select_hunk<CR>')
+  end
 }
