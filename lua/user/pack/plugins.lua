@@ -138,16 +138,18 @@ packer.startup(function()
   use {
     'lukas-reineke/indent-blankline.nvim',
     config = function()
-      require('indent_blankline').setup{
-        -- exclude: TODO somehow exclude floating_windows
-        -- bufname_exclude = {''},
-        buftype_exclude = {'nofile', 'terminal'}, -- :se bt
-        filetype_exclude = {'man', 'help', 'packer'}, -- :se ft
-        char_highlight_list = {
-          "IndentGuidesOdd",
-          "IndentGuidesEven",
+      require('ibl').setup{
+        -- TODO somehow exclude floating_windows
+        exclude = {
+          buftypes  = {'nofile', 'terminal'}, -- :se bt
+          filetypes = {'man', 'help', 'packer'}, -- :se ft
         },
-        show_trailing_blankline_indent = false,
+        indent = {
+          highlight = {
+            "IndentGuidesOdd",
+            "IndentGuidesEven",
+          },
+        },
       }
     end,
   }
