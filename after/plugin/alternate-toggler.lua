@@ -11,10 +11,6 @@ altt.setup {
     ["ON"] = "OFF",
     ["On"] = "Off",
     ["on"] = "off",
-    -- XXX: stupidity (not flips otherwise)
-    ["OFF"] = "ON",
-    ["Off"] = "On",
-    ["off"] = "on",
 
   },
 }
