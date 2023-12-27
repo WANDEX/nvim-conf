@@ -206,11 +206,18 @@ packer.startup(function()
     'nvim-telescope/telescope.nvim',
     requires = {
       'nvim-lua/plenary.nvim',
-      'kyazdani42/nvim-web-devicons',
+      'nvim-tree/nvim-web-devicons',
       {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
       'TC72/telescope-tele-tabby.nvim',
       'nvim-telescope/telescope-file-browser.nvim',
       {'rmagatti/auto-session', requires = {'rmagatti/session-lens'}},
+    },
+  }
+
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons',
     },
   }
 
