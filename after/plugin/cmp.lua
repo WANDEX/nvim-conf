@@ -124,8 +124,8 @@ cmp.setup({
       -- set source name to show
       vim_item.menu = ({
         luasnip  = "[S]",
-        nvim_lsp = "[L]",
         nvim_lua = "[api]",
+        nvim_lsp = "[L]",
         buffer   = "[B]",
         look     = "[W]",
       })[entry.source.name]
@@ -134,10 +134,10 @@ cmp.setup({
   },
 
   sources = {
-    { name = 'luasnip' },
-    { name = 'nvim_lsp', keyword_length = 3 },
+    { name = 'luasnip'  },
     { name = 'nvim_lua' },
-    { name = 'buffer', keyword_length = 4 },
-    { name = 'look' ,  keyword_length = 6 },
+    { name = 'nvim_lsp', keyword_length = 3 },
+    { name = 'buffer'  , keyword_length = 4 },
+    { name = 'look'    , keyword_length = 6 },
   },
 })
