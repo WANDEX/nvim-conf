@@ -231,7 +231,6 @@ packer.startup(function()
   use 'folke/which-key.nvim'
 
   -- THEMES (source file)
-  --vim.api.nvim_command('luafile ~/.config/nvim/lua/user/themes.lua')
   require('user.pack.themes')
 
   -- STATUS BAR
