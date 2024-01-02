@@ -1,9 +1,13 @@
 local ls = require "luasnip"
+
+local fn = require "user.func"
+
 ls.filetype_extend("c", { "cpp" }) -- to have the same snippets in ft=c
 
 local s = ls.s
 local i = ls.insert_node
 local t = ls.text_node
+local f = ls.function_node
 local fmt  = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
 
@@ -41,6 +45,16 @@ ls.add_snippets("cpp", {
   }),
 })
 
+-- doc string with content from clipboard.
+-- NOTE: luasnip requires splitting multiline string on table of lines.
+ls.add_snippets("cpp", {
+  s("docc",
+    fmt("\n\n/**\n * {}{}\n */",
+      { f(fn.get_clip_content_as_table_split_by_nl, {1}), i(1) }
+    )
+  ),
+})
+
 ls.add_snippets("cpp", {
   s("#pro", fmt("{}\n\n", { i(1, "#pragma once") })),
 })
@@ -70,7 +84,7 @@ ls.add_snippets("cpp", {
   }, { repeat_duplicates = true })),
 
   s("nsa",  {
-    nl("namespace /* (anonymous) */ {"),
+    nl("namespace { // (anonymous)"),
     nl(""), i(1),
     nl("} // (anonymous) [internal_linkage]"),
     nl(""),
