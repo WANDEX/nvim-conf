@@ -7,6 +7,9 @@
 " disable background (to support transparent terminal background)
 hi Normal guibg=NONE ctermbg=NONE
 
+"" transparent telescope bg across all themes
+hi! link TelescopeNormal Normal
+
 " general highlighting to use them as a link
 hi GeneralBg    guibg=#16191D ctermbg=Black
 hi GeneralFg    guifg=#8FBCBB ctermfg=Cyan
@@ -58,3 +61,4 @@ hi IndentGuidesOdd  guifg=#282a36 ctermfg=238 gui=nocombine cterm=nocombine
 hi IndentGuidesEven guifg=#383a46 ctermfg=242 gui=nocombine cterm=nocombine
 
 hi EndOfBuffer ctermfg=DarkGray guifg=DarkGray ctermbg=NONE guibg=NONE
+
