@@ -481,6 +481,14 @@ function M.setup()
   local Align = { provider = "%=" }
   local Space = { provider = " " }
 
+  local narrow_FT_ruler = {
+    Space,
+    FileType,
+    Align,
+    Ruler,
+    Space,
+  }
+
   local LS = {
     -- WorkDir,
     FileNameBlock,
@@ -502,8 +510,8 @@ function M.setup()
   }
 
   ViMode = utils.surround({ "", "" }, fcolors.black, { ViMode })
-  LSD = utils.surround({ "", "" }, fcolors.black, { LS })
-  RSD = utils.surround({ "", "" }, fcolors.black, { RS })
+  LSD    = utils.surround({ "", "" }, fcolors.black, { LS })
+  RSD    = utils.surround({ "", "" }, fcolors.black, { RS })
 
   local DefaultStatusline = {
     ViMode,
@@ -529,10 +537,19 @@ function M.setup()
     RSO,
   }
 
+  local NarrowStatusline = {
+    condition = function()
+      return conditions.buffer_matches({
+        filetype = { "NvimTree" },
+      })
+    end,
+    narrow_FT_ruler,
+  }
+
   local SpecialStatusline = {
     condition = function()
       return conditions.buffer_matches({
-        buftype = { "prompt", "quickfix" },
+        buftype  = { "prompt", "quickfix" },
         filetype = { "^git.*", "fugitive" },
       })
     end,
@@ -544,7 +561,9 @@ function M.setup()
 
   local TerminalStatusline = {
     condition = function()
-      return conditions.buffer_matches({ buftype = { "terminal" } })
+      return conditions.buffer_matches({
+        buftype = { "terminal" }
+      })
     end,
     hl = { bg = colors.dark_red },
     { condition = conditions.is_active, ViMode, Space },
@@ -570,6 +589,7 @@ function M.setup()
 
     fallthrough = false,
 
+    NarrowStatusline,
     SpecialStatusline,
     TerminalStatusline,
     InactiveStatusline,
