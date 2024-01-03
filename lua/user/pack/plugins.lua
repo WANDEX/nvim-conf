@@ -183,8 +183,10 @@ packer.startup(function()
     'ray-x/lsp_signature.nvim', -- show function signature
     config = function()
       require('lsp_signature').setup({
+        -- FIXME: not always shows doc_lines
+        --      - even of the same function!
         bind = true,
-        doc_lines = 5,
+        doc_lines = 10,
         floating_window = true,
         hint_enable = false,
         handler_opts = {border = "single"},
