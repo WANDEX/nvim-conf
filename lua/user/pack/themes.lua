@@ -13,46 +13,42 @@ local use = require('packer').use
 
 use {
   'nekonako/xresources-nvim',
-  setup = add_pack('xresources-nvim'),
-  cmd={'colorscheme xresources'},
-}
-
-use {
-  'jeffkreeftmeijer/vim-dim', -- OLD -> ONLY! notermguicolors (Xresources) consistent term colors w invers
-  config = function()
-    -- FIXME why notermguicolors not sets?
-    vim.o.termguicolors = false
-    vim.cmd('set notermguicolors')
-  end,
-  setup = add_pack('vim-dim'),
-  cmd={'colorscheme dim'},
-}
-
-use {
-  'catppuccin/nvim',
-  as = 'catppuccin',
-  setup = add_pack('catppuccin'),
-  cmd={'colorscheme catppuccin'},
+  -- XXX: with alternating name - prepending '-'
+  -- somehow prevents automatic manual loading at startup (:PackerStatus)
+  as     = '-xresources-nvim',
+  setup  = add_pack('xresources-nvim'),
+  cmd    = {'colorscheme xresources'},
 }
 
 use {
   'tanvirtin/monokai.nvim',
-  setup = add_pack('monokai.nvim'),
-  cmd={'colorscheme monokai', 'colorscheme monokai_pro', 'colorscheme monokai_soda'},
-}
-
-use {
-  'EdenEast/nightfox.nvim',
-  setup = add_pack('nightfox.nvim'),
-  cmd={'colorscheme nightfox', 'NightfoxLoad'}, -- style :NightfoxLoad <fox>
 }
 
 use {
   'sainnhe/sonokai',
   config = function()
-    -- FIXME why termguicolors not sets?
-    vim.o.termguicolors = true
+    vim.cmd('let g:sonokai_transparent_background = 2')
   end,
-  setup = add_pack('sonokai'),
-  cmd={'colorscheme sonokai'},
 }
+
+use {
+  'catppuccin/nvim',
+  as     = 'catppuccin',
+  config = function()
+    require('catppuccin').setup{
+      transparent_background = true,
+    }
+  end,
+}
+
+use {
+  'EdenEast/nightfox.nvim',
+  config = function()
+    require('nightfox').setup{
+      options = {
+        transparent = true,      -- Disable setting background
+      },
+    }
+  end,
+}
+
