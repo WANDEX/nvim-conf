@@ -150,6 +150,9 @@ packer.startup(function()
             "IndentGuidesEven",
           },
         },
+        scope = {
+          enabled = false,
+        },
       }
     end,
   }
