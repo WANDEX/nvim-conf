@@ -1,6 +1,6 @@
 -- Only required if you have packer configured as `opt`
 vim.api.nvim_command('packadd packer.nvim')
-vim.api.nvim_command('packadd vimball')
+-- vim.api.nvim_command('packadd vimball')
 
 local has = function(x)
   return vim.fn.has(x) == 1
@@ -89,6 +89,7 @@ packer.startup(function()
 
   use {
     'numirias/semshi',
+    disable = true, -- XXX maybe there is a better alternatives?
     ft = 'python',
     run = ':UpdateRemotePlugins', -- FIXME: :UpdateRemotePlugins not runs automatically! call manually!
   }
