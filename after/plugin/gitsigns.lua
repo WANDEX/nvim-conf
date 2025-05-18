@@ -5,12 +5,7 @@ if not ok then
   return
 end
 
--- require('neogit').setup{}
-
 gitsigns.setup{
-  current_line_blame_formatter_opts = {
-    relative_time = true,
-  },
   numhl = false,
   signs = {
     add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
@@ -63,3 +58,4 @@ gitsigns.setup{
     map({'o', 'x'}, 'kh', ':<C-U>Gitsigns select_hunk<CR>')
   end
 }
+
