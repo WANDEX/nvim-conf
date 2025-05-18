@@ -1,35 +1,28 @@
--- configuration for the plugin "rmagatti/auto-session" & "rmagatti/session-lens"
+-- configuration for the plugin "rmagatti/auto-session"
 
 local aus_ok, aus = pcall(require, 'auto-session')
 if not aus_ok then
   return
 end
 
-local aul_ok, aul = pcall(require, 'session-lens')
-if not aul_ok then
-  return
-end
-
 -- Recommended sessionoptions config
 vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
-local opts = {
-  log_level = 'info',
-  auto_session_enable_last_session = false,
-  auto_session_root_dir = vim.fn.stdpath('data').."/aus/",
-  auto_session_enabled = true,
-  auto_session_create_enabled = false,
-  auto_save_enabled = false,
-  auto_restore_enabled = true,
-  -- auto_session_allowed_dirs = ["list", "of paths"],
-  -- auto_session_suppress_dirs = ["list", "of paths"],
-}
+---enables autocomplete for opts
+---@module "auto-session"
+---@type AutoSession.Config
+aus.setup({
+  enabled = true,
+  root_dir = vim.fn.stdpath('data').."/sessions/",
+  auto_save = true,
+  auto_restore = true,
+  auto_create = false,
+  log_level = "error",
 
-aus.setup(opts)
+  session_lens = {
+    previewer = false,
+    path_display = { "shorten" },
+    theme_conf = { border = false },
+  },
+})
 
-aul.setup {
-  path_display = {'shorten'},
-  theme = 'dropdown',
-  theme_conf = { border = false },
-  previewer = false,
-}

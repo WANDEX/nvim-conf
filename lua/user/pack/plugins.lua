@@ -216,7 +216,7 @@ packer.startup(function()
       {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
       'TC72/telescope-tele-tabby.nvim',
       'nvim-telescope/telescope-file-browser.nvim',
-      {'rmagatti/auto-session', requires = {'rmagatti/session-lens'}},
+      {'rmagatti/auto-session', disable = false},
     },
   }
 
