@@ -45,7 +45,7 @@ local on_attach = function(client, bufnr)
 end
 
 -- language servers simple setup (enable with simple defaults)
-local servers = { 'clangd', 'pyright', 'tsserver' }
+local servers = { 'clangd', 'pyright', 'ts_ls' }
 for _, lang_serv in ipairs(servers) do
   lspconfig[lang_serv].setup {
     on_attach = on_attach,
