@@ -69,7 +69,8 @@ wk.add({
 })
 
 wk.add({
-  { "<leader>L", group = "List" },
+  { "<leader>L", group = "List/Diag/Toggle" },
+  { "<leader>LD", group = "Diag" },
 })
 
 wk.add({ -- LSP - just a label. don't create any mappings
