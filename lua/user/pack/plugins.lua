@@ -27,15 +27,12 @@ packer.startup(function()
   use 'wbthomason/packer.nvim'
   use 'lewis6991/impatient.nvim'
 
-  use { -- icons
-    'kyazdani42/nvim-web-devicons', -- lua
+  use { -- visual
+    'kyazdani42/nvim-web-devicons', -- icons
+    'junegunn/limelight.vim', cmd='Limelight' -- reading
   }
 
-  -- visual
-  use {'junegunn/limelight.vim', cmd='Limelight'}
-
-  -- git
-  use {
+  use { -- git
     'tpope/vim-fugitive',
     'jreybert/vimagit', -- till neogit is not fixed
   }
@@ -52,16 +49,19 @@ packer.startup(function()
   }
 
   use { -- format
-    'ntpeters/vim-better-whitespace',
-    'editorconfig/editorconfig-vim',
     'sbdchd/neoformat',
     'scrooloose/nerdcommenter',
   }
 
+  use { -- trim_trailing_whitespace respecting .editorconfig rules.
+    'mcauley-penney/tidy.nvim',
+    -- commit = '31f95306ffd408ed4bb5185e8ec3bab9516ad34c', -- 2025 April 14
+  }
+
   use {
-      'iamcco/markdown-preview.nvim',
-      ft='markdown',
-      run = function() vim.fn['mkdp#util#install']() end,
+    'iamcco/markdown-preview.nvim',
+    ft='markdown',
+    run = function() vim.fn['mkdp#util#install']() end,
   }
 
   use { -- new text objects | more info: 'https://github.com/kana/vim-textobj-user/wiki'
