@@ -1,31 +1,28 @@
+-- AUTHOR: 'WANDEX/nvim-conf'
+
 require 'user.profile'
 
 if require 'user.first_load'() then
   return
 end
 
--- In general, it's a good idea to set this early in your config, because otherwise
--- if you have any mappings you set BEFORE doing this, they will be set to the OLD
--- Leader key - <SPACE>
+-- good idea to set following early in the config, because otherwise
+-- any mappings set BEFORE doing this, will be set to the OLD Leader key.
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
 vim.g.python3_host_prog = '/usr/bin/python'
 
--- I set some global variables to use as configuration throughout my config.
--- These don't have any special meaning.
+-- set some global variables to use as configuration throughout the config.
+-- these do not have any special meaning.
 vim.g.snippets = 'luasnip'
 
--- Setup globals that I expect to be always available.
---  See `./lua/user/globals/*.lua` for more information.
-require 'user.globals'
+require 'user.globals' -- setup globals expected to be always available.
 
--- Turn off builtin plugins I do not use.
-require 'user.disable_builtin'
-
-require 'user.pack.plugins'
+require 'user.disable_builtin' -- turn off built-in plugins I do not use.
 
 require 'user.diagnostic'
 
-require 'user.func'
+require 'user.pack.plugins'
 
+require 'user.func'
