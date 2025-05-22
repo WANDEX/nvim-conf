@@ -284,13 +284,24 @@ function M.setup()
 
   local LSPActive = {
     condition = conditions.lsp_attached,
-    -- You can keep it simple,
-    -- provider = " [LSP] ",
-    -- Or complicate things a bit and get the servers names
-    provider  = function(self)
+    provider = function(bufnr)
       local names = {}
-      for i, server in ipairs(vim.lsp.buf_get_clients(0)) do
-        table.insert(names, server.name)
+      local clients = vim.lsp.get_clients({bufnr}) ---@class vim.lsp.Client
+      if not clients then
+        return "❓" -- unexpected as conditions.lsp_attached is used!
+      -- else return "[LSP]" -- uncomment - might be as simple as this
+      end
+      for _, client in ipairs(clients) do
+        if not client.config then
+          table.insert(names, "💀") -- unexpected!
+          goto continue -- config structure not exist!
+        end
+        if not client.config.name then
+          table.insert(names, "☠️") -- unexpected!
+          goto continue -- name string not exist!
+        end
+        table.insert(names, client.config.name)
+        ::continue::
       end
       return "[" .. table.concat(names, " ") .. "] "
     end,
