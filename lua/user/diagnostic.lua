@@ -1,37 +1,54 @@
+-- AUTHOR: 'WANDEX/nvim-conf'
+-- configuration for built-in neovim diagnostic.
 -- NOTE: source in which DiagnosticSign* highlights are defined
-vim.api.nvim_command('source ~/.config/nvim/plugin/hi.vim')
+-- vim.api.nvim_command('source ~/.config/nvim/plugin/hi.vim')
 
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "", linehl = "" })
-end
-
-vim.diagnostic.config {
+vim.diagnostic.config({
   underline = true,
   virtual_text = {
-    severity = nil,
-    source = "if_many",
-    format = nil,
+    current_line = true,
+    virt_text_hide = true,
+    virt_text_pos = 'eol_right_align',
+    severity = { min = 'HINT', max = 'ERROR' },
+    source = false,
+    spacing = 0,
   },
-  signs = true,
-
-  -- options for floating windows:
-  float = {
-    show_header = true,
-    -- border = "rounded",
-    -- source = "always",
-    format = function(d)
-      local t = vim.deepcopy(d)
-      local code = d.code or d.user_data.lsp.code
-      if code then
-        t.message = string.format("%s [%s]", t.message, code):gsub("1. ", "")
-      end
-      return t.message
-    end,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = '',
+      [vim.diagnostic.severity.WARN]  = '',
+      [vim.diagnostic.severity.INFO]  = '',
+      [vim.diagnostic.severity.HINT]  = '',
+    },
   },
-
-  -- general purpose
+  float = { -- options for floating windows
+    header = "",
+    border = 'none',
+    source = true,
+  }, -- general purpose
   severity_sort = true,
   update_in_insert = false,
-}
+})
+
+vim.keymap.set('n', '<leader>LDD', function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { desc = 'Diag toggle' })
+
+vim.keymap.set('n', '<leader>LDU', function()
+  local opts = vim.diagnostic.config() ---@class vim.diagnostic.Opts
+  opts.underline = not opts.underline
+  vim.diagnostic.config(opts)
+end, { desc = 'Diag Underline toggle' })
+
+vim.keymap.set('n', '<leader>LDL', function()
+  local opts = vim.diagnostic.config() ---@class vim.diagnostic.Opts
+  opts.virtual_lines = not opts.virtual_lines
+  vim.diagnostic.config(opts)
+end, { desc = 'Diag Lines virtual toggle' })
+
+-- toggle showing of the virtual_text - current_line / all lines.
+vim.keymap.set('n', '<leader>LDT', function()
+  local opts = vim.diagnostic.config() ---@class vim.diagnostic.Opts
+  opts.virtual_text.current_line = not opts.virtual_text.current_line
+  vim.diagnostic.config(opts)
+end, { desc = 'Diag Text virtual toggle' })
