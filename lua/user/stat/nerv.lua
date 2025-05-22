@@ -292,49 +292,49 @@ function M.setup()
       for i, server in ipairs(vim.lsp.buf_get_clients(0)) do
         table.insert(names, server.name)
       end
-      return " [" .. table.concat(names, " ") .. "] "
+      return "[" .. table.concat(names, " ") .. "] "
     end,
-    hl = { fg = fcolors.green, bold = true },
+    hl = { fg = fcolors.green, bold = false },
   }
 
   local Diagnostics = {
     condition = conditions.has_diagnostics,
 
     static = {
-      error_icon = vim.fn.sign_getdefined("DiagnosticSignError")[1].text,
-      warn_icon = vim.fn.sign_getdefined("DiagnosticSignWarn")[1].text,
-      info_icon = vim.fn.sign_getdefined("DiagnosticSignInfo")[1].text,
-      hint_icon = vim.fn.sign_getdefined("DiagnosticSignHint")[1].text,
+      erro_icon = ' ',
+      warn_icon = ' ',
+      info_icon = ' ',
+      hint_icon = ' ',
     },
 
     init = function(self)
-      self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
-      self.warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
-      self.hints = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
-      self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
+      self.erroc = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+      self.warnc = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+      self.infoc = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
+      self.hintc = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
     end,
 
     {
       provider = function(self)
-        return self.errors > 0 and (self.error_icon .. self.errors .. " ")
+        return self.erroc > 0 and (" " .. self.erro_icon .. self.erroc)
       end,
       hl = { fg = colors.diag.error },
     },
     {
       provider = function(self)
-        return self.warnings > 0 and (self.warn_icon .. self.warnings .. " ")
+        return self.warnc > 0 and (" " .. self.warn_icon .. self.warnc)
       end,
       hl = { fg = colors.diag.warn },
     },
     {
       provider = function(self)
-        return self.info > 0 and (self.info_icon .. self.info .. " ")
+        return self.infoc > 0 and (" " .. self.info_icon .. self.infoc)
       end,
       hl = { fg = colors.diag.info },
     },
     {
       provider = function(self)
-        return self.hints > 0 and (self.hint_icon .. self.hints)
+        return self.hintc > 0 and (" " .. self.hint_icon .. self.hintc)
       end,
       hl = { fg = colors.diag.hint },
     },
