@@ -18,12 +18,10 @@ tidy.setup({
 
 -- buffer toggle trimming of whitespaces at the EOF
 vim.keymap.set('n', '<localleader>we', function()
-  local cur_opts = tidy.opts
-  local new_state = not tidy.opts.provide_undefined_editorconfig_behavior
-  local merge_opts = vim.tbl_extend("force", cur_opts, {
-    provide_undefined_editorconfig_behavior = new_state,
-  })
-  tidy.setup(merge_opts)
+  local opts = tidy.opts
+  local new_state = not opts.provide_undefined_editorconfig_behavior
+  opts.provide_undefined_editorconfig_behavior = new_state
+  tidy.setup(opts)
   vim.notify("ws trim at EOF = " .. string.format("%s", new_state),
     vim.log.levels.INFO, {title = "WNDX"}
   )
