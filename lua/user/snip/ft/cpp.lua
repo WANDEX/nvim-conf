@@ -104,3 +104,20 @@ ls.add_snippets("cpp", {
   s("co",   { t("std::cout << "), i(1), t(" << '\\n';") }),
   s("ce",   { t("std::cerr << "), i(1), t(" << '\\n';") }),
 })
+
+ls.add_snippets("cpp", {
+  s("fmti", fmt([[
+  #include <fmt/core.h>
+  #include <fmt/format.h>
+  #include <fmt/ranges.h>         // fmt::join
+  {}
+  ]], {
+    nl(''),
+  }, {})),
+
+  s("fmtj",  fmta([[
+  fmt::print(stderr, "<name>: {:>>3} : [{}]\n", <name>.size(), fmt::join(<name>, ", "));
+  ]], {
+    name   = i(1),
+  }, { repeat_duplicates = true })),
+})
