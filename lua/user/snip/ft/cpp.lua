@@ -1,10 +1,6 @@
-local ls = require "luasnip"
+local ls = require("luasnip")
 
-local fn = require "user.func"
-
-ls.filetype_extend("c", { "cpp" }) -- to have the same snippets in ft=c
-
-local s = ls.s
+local s = ls.snippet
 local i = ls.insert_node
 local t = ls.text_node
 local f = ls.function_node
@@ -15,6 +11,10 @@ local nl = function(text) -- new line
   return t { "", text }
 end
 
+local fn = require("user.func")
+
+
+ls.filetype_extend("c", { "cpp" }) -- to have the same snippets in ft=c
 
 -- /**
 --  * doc string

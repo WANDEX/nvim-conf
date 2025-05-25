@@ -45,7 +45,7 @@ ls.config.set_config {
 
 -- create snippet
 -- s(context, nodes, condition, ...)
-local snippet = ls.s
+local snippet = ls.snippet
 
 --  Useful for dynamic nodes and choice nodes
 local snippet_from_nodes = ls.sn
