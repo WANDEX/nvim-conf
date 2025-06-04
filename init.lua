@@ -23,6 +23,14 @@ require 'user.disable_builtin' -- turn off built-in plugins I do not use.
 
 require 'user.diagnostic'
 
-require 'user.pack.plugins'
+require('lazy').setup({
+  root   = vim.fn.stdpath("data") .. "/pack/lazy", -- dir for plugins
+  rocks  = {
+    root = vim.fn.stdpath("data") .. "/pack/lazy/lazy-rocks",
+  },
+  spec = {
+    { import = 'user.pack' },
+  },
+})
 
 require 'user.func'

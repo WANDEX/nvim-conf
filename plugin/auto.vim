@@ -22,8 +22,8 @@ if !exists('autocommands_loaded')
         au ColorScheme * nested source ~/.config/nvim/plugin/hi.vim
 
         "" statusline highlights fix: manually remove from cache, then reload.
-        au ColorScheme * nested lua package.loaded['user.stat.nerv'] = nil
-        au ColorScheme * nested lua require('user.stat.nerv')
+        " au ColorScheme * nested lua package.loaded['user.stat.nerv'] = nil
+        " au ColorScheme * nested lua require('user.stat.nerv')
     aug END
 
     aug MiscGroup
@@ -89,4 +89,3 @@ if !exists('autocommands_loaded')
     aug END
 
 endif
-

@@ -1,50 +1,37 @@
 -- themes configuration, lazy-load & etc.
---
--- NOTE: require('user.themes') inside packer.startup() to simply source this file
 
--- XXX: NOT WORKS ANYMORE - obsolete function signature!
--- packadd package_name as a string argument
--- local add_pack = function(package_name)
---   vim.validate{package_name={package_name, 'string'}}
---   -- silent! to suppress error message if package is not yet installed
---   vim.cmd('silent! packadd ' .. package_name)
--- end
-
-local use = require('packer').use
-
-use {
-  'nekonako/xresources-nvim',
-}
-
-use {
-  'tanvirtin/monokai.nvim',
-}
-
-use {
-  'sainnhe/sonokai',
-  config = function()
-    vim.cmd('let g:sonokai_transparent_background = 2')
-  end,
-}
-
-use {
-  'catppuccin/nvim',
-  as     = 'catppuccin',
-  config = function()
-    require('catppuccin').setup{
+return {
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    lazy = true,
+    priority = 1000,            -- from the github README
+    opts = {
       transparent_background = true,
-    }
-  end,
-}
+    },
+  },
 
-use {
-  'EdenEast/nightfox.nvim',
-  config = function()
-    require('nightfox').setup{
+  {
+    'EdenEast/nightfox.nvim',
+    lazy = true,
+    priority = 1000,
+    opts = {
       options = {
-        transparent = true,      -- Disable setting background
+        transparent = true,     -- disable setting background
       },
-    }
-  end,
-}
+    },
+  },
 
+  {
+    'sainnhe/sonokai',
+    lazy = true,
+    priority = 1000,
+    opts = function(_, _)
+      vim.cmd('let g:sonokai_transparent_background = 2')
+    end,
+  },
+
+  { 'tanvirtin/monokai.nvim',   lazy = true, priority = 1000, },
+
+  { 'nekonako/xresources-nvim', lazy = true, priority = 1000, },
+}
