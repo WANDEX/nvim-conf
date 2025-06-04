@@ -38,22 +38,21 @@ function M.setup()
     git_del = utils.get_highlight("diffDeleted").fg,
     git_add = utils.get_highlight("diffAdded").fg,
     git_change = utils.get_highlight("diffChanged").fg,
-  }
-  local fcolors = {
-    black    = '#000000',
-    bg       = '#5C687A',
-    fg       = '#8FBCBB',
-    fg_green = '#65a380',
-
-    yellow   = '#E5C07B',
-    cyan     = '#70C0BA',
-    darkblue = '#83A598',
-    green    = '#98C378',
-    orange   = '#FF8800',
-    purple   = '#C678DD',
-    magenta  = '#C858E8',
-    blue     = '#73BA9F',
-    red      = '#D54E54',
+    f = {
+      black    = '#000000',
+      bg       = '#5C687A',
+      fg       = '#8FBCBB',
+      fg_green = '#65a380',
+      yellow   = '#E5C07B',
+      cyan     = '#70C0BA',
+      darkblue = '#83A598',
+      green    = '#98C378',
+      orange   = '#FF8800',
+      purple   = '#C678DD',
+      magenta  = '#C858E8',
+      blue     = '#73BA9F',
+      red      = '#D54E54',
+    },
   }
 
   local ViMode = {
@@ -119,19 +118,19 @@ function M.setup()
         t = colors.red,
       },
       mode_fcolors = {
-        n = fcolors.yellow,
-        i = fcolors.green,
-        v = fcolors.blue,
-        V = fcolors.blue,
-        ["\22"] = fcolors.blue, -- this is an actual ^V, type <C-v><C-v> in insert mode
-        c = fcolors.magenta,
-        s = fcolors.cyan,
-        S = fcolors.cyan,
-        ["\19"] = fcolors.cyan, -- this is an actual ^S, type <C-v><C-s> in insert mode
-        R = fcolors.purple,
-        r = fcolors.purple,
-        ["!"] = fcolors.red,
-        t = fcolors.red,
+        n = colors.f.yellow,
+        i = colors.f.green,
+        v = colors.f.blue,
+        V = colors.f.blue,
+        ["\22"] = colors.f.blue, -- this is an actual ^V, type <C-v><C-v> in insert mode
+        c = colors.f.magenta,
+        s = colors.f.cyan,
+        S = colors.f.cyan,
+        ["\19"] = colors.f.cyan, -- this is an actual ^S, type <C-v><C-s> in insert mode
+        R = colors.f.purple,
+        r = colors.f.purple,
+        ["!"] = colors.f.red,
+        t = colors.f.red,
       },
     },
     -- We can now access the value of mode() that, by now, would have been
@@ -192,7 +191,7 @@ function M.setup()
         self.lfilename = vim.fn.pathshorten(self.lfilename)
       end
     end,
-    hl = { fg = fcolors.cyan },
+    hl = { fg = colors.f.cyan },
 
     flexible = 2,
     {
@@ -214,7 +213,7 @@ function M.setup()
           return " "
         end
       end,
-      hl = { fg = fcolors.red },
+      hl = { fg = colors.f.red },
     },
   }
 
@@ -222,7 +221,7 @@ function M.setup()
     hl = function()
       if vim.bo.modified then
         -- use `force` because we need to override the child's hl foreground
-        return { fg = fcolors.cyan, bold = true, force = true }
+        return { fg = colors.f.cyan, bold = true, force = true }
       end
     end,
   }
@@ -310,7 +309,7 @@ function M.setup()
       end
       return "[" .. table.concat(names, " ") .. "] "
     end,
-    hl = { fg = fcolors.green, bold = false },
+    hl = { fg = colors.f.green, bold = false },
   }
 
   local Diagnostics = {
@@ -368,7 +367,7 @@ function M.setup()
 
     {
       provider = "  ", --  
-      hl = { fg = fcolors.orange },
+      hl = { fg = colors.f.orange },
     },
     {
       provider = function(self)
@@ -440,7 +439,7 @@ function M.setup()
         self.cwd = vim.fn.pathshorten(self.cwd)
       end
     end,
-    hl = { fg = fcolors.blue, bold = true },
+    hl = { fg = colors.f.blue, bold = true },
 
     flexible = 1,
     {
@@ -469,7 +468,7 @@ function M.setup()
       local filename = vim.api.nvim_buf_get_name(0)
       return vim.fn.fnamemodify(filename, ":t")
     end,
-    hl = { fg = fcolors.blue },
+    hl = { fg = colors.f.blue },
   }
 
   local TerminalName = {
@@ -483,7 +482,7 @@ function M.setup()
       local tname, _ = vim.api.nvim_buf_get_name(0):gsub(".*:", ""):gsub("/home/%w+", "~")
       return " " .. tname
     end,
-    hl = { fg = fcolors.blue, bold = true },
+    hl = { fg = colors.f.blue, bold = true },
   }
 
   local Spell = {
@@ -491,7 +490,7 @@ function M.setup()
       return vim.wo.spell
     end,
     provider = "SPELL ",
-    hl = { fg = fcolors.red, bold = true },
+    hl = { fg = colors.f.red, bold = true },
   }
 
   local Align = { provider = "%=" }
@@ -525,9 +524,9 @@ function M.setup()
     Space, -- for the same indent from right as with RSD in DefaultStatusline
   }
 
-  ViMode = utils.surround({ "", "" }, fcolors.black, { ViMode })
-  LSD    = utils.surround({ "", "" }, fcolors.black, { LS })
-  RSD    = utils.surround({ "", "" }, fcolors.black, { RS })
+  ViMode = utils.surround({ "", "" }, colors.f.black, { ViMode })
+  LSD    = utils.surround({ "", "" }, colors.f.black, { LS })
+  RSD    = utils.surround({ "", "" }, colors.f.black, { RS })
 
   local DefaultStatusline = {
     ViMode,
@@ -547,7 +546,7 @@ function M.setup()
     condition = function()
       return not conditions.is_active()
     end,
-    -- { hl = { fg = fcolors.darkblue, force = true }, WorkDir },
+    -- { hl = { fg = colors.f.darkblue, force = true }, WorkDir },
     FileNameBlock,
     { provider = "%<" },
     RSO,
@@ -593,7 +592,7 @@ function M.setup()
     hl = function()
       if conditions.is_active() then
         return {
-          fg = fcolors.fg,
+          fg = colors.f.fg,
         }
       else
         return {
