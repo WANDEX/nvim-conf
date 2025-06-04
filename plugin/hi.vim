@@ -52,6 +52,7 @@ hi DiffLine ctermfg=Gray guifg=Gray
 
 hi diffAdded   ctermbg=NONE guibg=NONE ctermfg=LightGreen guifg=#98C379
 hi diffChanged ctermbg=NONE guibg=NONE ctermfg=DarkGreen  guifg=#73BA9F
+hi diffDeleted ctermbg=NONE guibg=NONE ctermfg=DarkRed    guifg=#D54E53
 hi diffRemoved ctermbg=NONE guibg=NONE ctermfg=DarkRed    guifg=#D54E53
 
 hi Folded     ctermfg=Gray guifg=Gray ctermbg=Black guibg=Black
@@ -61,4 +62,3 @@ hi IndentGuidesOdd  guifg=#282a36 ctermfg=238 gui=nocombine cterm=nocombine
 hi IndentGuidesEven guifg=#383a46 ctermfg=242 gui=nocombine cterm=nocombine
 
 hi EndOfBuffer ctermfg=DarkGray guifg=DarkGray ctermbg=NONE guibg=NONE
-
