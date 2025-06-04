@@ -22,6 +22,7 @@ function M.setup()
 
   local colors = {
     bright_bg = utils.get_highlight("Folded").bg,
+    bright_fg = utils.get_highlight("Folded").fg,
     red = utils.get_highlight("DiagnosticError").fg,
     dark_red = utils.get_highlight("DiffDelete").bg,
     green = utils.get_highlight("String").fg,
@@ -30,17 +31,13 @@ function M.setup()
     orange = utils.get_highlight("Constant").fg,
     purple = utils.get_highlight("Statement").fg,
     cyan = utils.get_highlight("Special").fg,
-    diag = {
-      warn = utils.get_highlight("DiagnosticWarn").fg,
-      error = utils.get_highlight("DiagnosticError").fg,
-      hint = utils.get_highlight("DiagnosticHint").fg,
-      info = utils.get_highlight("DiagnosticInfo").fg,
-    },
-    git = {
-      del = utils.get_highlight("diffRemoved").fg,
-      add = utils.get_highlight("diffAdded").fg,
-      change = utils.get_highlight("diffChanged").fg,
-    },
+    diag_warn = utils.get_highlight("DiagnosticWarn").fg,
+    diag_error = utils.get_highlight("DiagnosticError").fg,
+    diag_hint = utils.get_highlight("DiagnosticHint").fg,
+    diag_info = utils.get_highlight("DiagnosticInfo").fg,
+    git_del = utils.get_highlight("diffDeleted").fg,
+    git_add = utils.get_highlight("diffAdded").fg,
+    git_change = utils.get_highlight("diffChanged").fg,
   }
   local fcolors = {
     black    = '#000000',
@@ -337,25 +334,25 @@ function M.setup()
       provider = function(self)
         return self.erroc > 0 and (" " .. self.erro_icon .. self.erroc)
       end,
-      hl = { fg = colors.diag.error },
+      hl = { fg = colors.diag_error },
     },
     {
       provider = function(self)
         return self.warnc > 0 and (" " .. self.warn_icon .. self.warnc)
       end,
-      hl = { fg = colors.diag.warn },
+      hl = { fg = colors.diag_warn },
     },
     {
       provider = function(self)
         return self.infoc > 0 and (" " .. self.info_icon .. self.infoc)
       end,
-      hl = { fg = colors.diag.info },
+      hl = { fg = colors.diag_info },
     },
     {
       provider = function(self)
         return self.hintc > 0 and (" " .. self.hint_icon .. self.hintc)
       end,
-      hl = { fg = colors.diag.hint },
+      hl = { fg = colors.diag_hint },
     },
   }
 
@@ -390,21 +387,21 @@ function M.setup()
         local count = self.status_dict.added or 0
         return count > 0 and ("+" .. count)
       end,
-      hl = { fg = colors.git.add },
+      hl = { fg = colors.git_add },
     },
     {
       provider = function(self)
         local count = self.status_dict.removed or 0
         return count > 0 and ("-" .. count)
       end,
-      hl = { fg = colors.git.del },
+      hl = { fg = colors.git_del },
     },
     {
       provider = function(self)
         local count = self.status_dict.changed or 0
         return count > 0 and ("~" .. count)
       end,
-      hl = { fg = colors.git.change },
+      hl = { fg = colors.git_change },
     },
     {
       condition = function(self)
