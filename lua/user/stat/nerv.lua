@@ -3,24 +3,9 @@
 
 local M = {}
 
-function M.setup()
-  local error_statusline = {
-    { provider = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":.") },
-    { provider = "%<" },
-    { provider = " | NERV - SOMETHING WENT WRONG | HEIRLINE PLUGIN NOT FOUND" },
-    { provider = "%=" },
-    { provider = "%3(%l%)/%-3(%L%):%2c %3(%p%)%%" },
-  }
-
-  local ok, _ = pcall(require, 'heirline')
-  if not ok then
-    return error_statusline
-  end
-
-  local conditions = require("heirline.conditions")
+function M.setup_colors()
   local utils = require("heirline.utils")
-
-  local colors = {
+  return {
     bright_bg = utils.get_highlight("Folded").bg,
     bright_fg = utils.get_highlight("Folded").fg,
     red = utils.get_highlight("DiagnosticError").fg,
@@ -54,6 +39,26 @@ function M.setup()
       red      = '#D54E54',
     },
   }
+end
+
+function M.setup()
+  local error_statusline = {
+    { provider = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":.") },
+    { provider = "%<" },
+    { provider = " | NERV - SOMETHING WENT WRONG | HEIRLINE PLUGIN NOT FOUND" },
+    { provider = "%=" },
+    { provider = "%3(%l%)/%-3(%L%):%2c %3(%p%)%%" },
+  }
+
+  local ok, _ = pcall(require, 'heirline')
+  if not ok then
+    return error_statusline
+  end
+
+  local conditions = require("heirline.conditions")
+  local utils = require("heirline.utils")
+
+  local colors = M.setup_colors()
 
   local ViMode = {
     -- get vim current mode, this information will be required by the provider
