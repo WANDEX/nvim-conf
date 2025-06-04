@@ -1,17 +1,25 @@
 -- nerv configuration for 'rebelot/heirline.nvim'
 -- AUTHOR: WANDEX
 
-local ok, heirline = pcall(require, 'heirline')
-if not ok then
-  return
-end
-
-local conditions = require("heirline.conditions")
-local utils = require("heirline.utils")
-
 local M = {}
 
 function M.setup()
+  local error_statusline = {
+    { provider = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":.") },
+    { provider = "%<" },
+    { provider = " | NERV - SOMETHING WENT WRONG | HEIRLINE PLUGIN NOT FOUND" },
+    { provider = "%=" },
+    { provider = "%3(%l%)/%-3(%L%):%2c %3(%p%)%%" },
+  }
+
+  local ok, _ = pcall(require, 'heirline')
+  if not ok then
+    return error_statusline
+  end
+
+  local conditions = require("heirline.conditions")
+  local utils = require("heirline.utils")
+
   local colors = {
     bright_bg = utils.get_highlight("Folded").bg,
     red = utils.get_highlight("DiagnosticError").fg,
@@ -607,8 +615,7 @@ function M.setup()
     DefaultStatusline,
   }
 
-  heirline.setup({ statusline = StatusLines})
+  return StatusLines -- { statusline = StatusLines }
 end
 
-M.setup()
-return M
+return M.setup()
