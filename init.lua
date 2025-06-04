@@ -19,7 +19,7 @@ vim.g.snippets = 'luasnip'
 
 require 'user.globals' -- setup globals expected to be always available.
 
-require 'user.disable_builtin' -- turn off built-in plugins I do not use.
+require 'user.builtin' -- turn off built-in plugins I do not use.
 
 require 'user.diagnostic'
 
