@@ -1,4 +1,4 @@
--- nerv configuration for 'rebelot/heirline.nvim'
+-- nerv statusline for 'rebelot/heirline.nvim'
 -- AUTHOR: WANDEX
 
 local M = {}
@@ -41,7 +41,7 @@ function M.setup_colors()
   }
 end
 
-function M.setup()
+function M.statusline()
   local error_statusline = {
     { provider = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":.") },
     { provider = "%<" },
@@ -619,4 +619,4 @@ function M.setup()
   return StatusLines -- { statusline = StatusLines }
 end
 
-return M.setup()
+return M
