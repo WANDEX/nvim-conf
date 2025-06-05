@@ -131,7 +131,17 @@ return {
     lazy = false, -- load during startup
     priority = 1, -- load after all other plugins (colorscheme)
     opts = function(_, opts)
-      opts.statusline = require('user.stat.nerv')
+      local stat = require('user.stat.nerv')
+      opts.statusline = stat.statusline()
+      opts.colors     = stat.setup_colors()
+      -- re-evaluate on ColorScheme events (upd statusline colors on colorscheme change)
+      vim.api.nvim_create_augroup('Heirline', { clear = true })
+      vim.api.nvim_create_autocmd('ColorScheme', {
+        callback = function()
+          require('heirline.utils').on_colorscheme(opts.colors)
+        end,
+        group = 'Heirline',
+      })
     end,
   },
 
