@@ -91,7 +91,6 @@ return {
   -- other
   { 'airblade/vim-rooter' }, -- auto cwd to the project root
   { 'voldikss/vim-translator' },
-  { 'mg979/vim-visual-multi' },
   { 'mg979/vim-xtabline',
     config = function()
       vim.cmd('silent! XTabMode buffers') -- fix: set default mode to buffers

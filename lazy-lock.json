@@ -51,7 +51,6 @@
   "vim-textobj-user": { "branch": "master", "commit": "41a675ddbeefd6a93664a4dc52f302fe3086a933" },
   "vim-titlecase": { "branch": "master", "commit": "69a697c54a08ca5603cb757b4d4f78cd4b567549" },
   "vim-translator": { "branch": "master", "commit": "6f0639c6d471a3a90ac19db96e1e379c030f74e3" },
-  "vim-visual-multi": { "branch": "master", "commit": "a6975e7c1ee157615bbc80fc25e4392f71c344d4" },
   "vim-xtabline": { "branch": "master", "commit": "ccfa687d4f8d34bc2e23facc9b92c3abb90e5f93" },
   "vimagit": { "branch": "master", "commit": "fc7eda97da4f8182c8abbe6ea7befbd789b8b935" },
   "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" },
