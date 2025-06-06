@@ -51,10 +51,6 @@ noremap <silent> n j
 noremap <silent> e k
 noremap <silent> i l
 
-"" easier terminal Esc
-tnoremap <silent> <Esc> <C-\><C-n>
-tnoremap <silent> <C-l> <C-\><C-n>
-
 "*****************************************************************************
 "" Extra Mappings
 "*****************************************************************************
@@ -132,9 +128,6 @@ nnoremap <M-O> mjO<Esc>`j
 nnoremap <Leader>q <cmd>Bdelete<CR>
 nnoremap <Leader>w <cmd>Bwipeout<CR>
 
-" Reload vim configuration
-nnoremap <localleader>rc <cmd>ReloadConfig<CR>
-
 " toggle between background transparency
 nnoremap <silent> <localleader>b <cmd>call BgToggle()<CR>
 
@@ -153,24 +146,5 @@ nnoremap <silent> <localleader>P :call Paste('')<Left><Left>
 " Save file as sudo on files that require root permission
 cnoremap <C-w> execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
-" unmap mouse wheel up
-nmap <ScrollWheelUp> <nop>
-imap <ScrollWheelUp> <nop>
-vmap <ScrollWheelUp> <nop>
-" unmap mouse wheel down
-nmap <ScrollWheelDown> <nop>
-imap <ScrollWheelDown> <nop>
-vmap <ScrollWheelDown> <nop>
-
-" Disable C-z suspend
-map  <C-z> <nop>
-map! <C-z> <nop>
-
-" Disable Ex mode
-nnoremap Q <nop>
-
 " Encode visual selection into qr code
 vnoremap Q !curl -s -F-=\<- https://qrenco.de
-
-" CDC = Change to Directory of Current file
-command CDC cd %:p:h
