@@ -17,6 +17,7 @@ vim.g.python3_host_prog = '/usr/bin/python'
 -- these do not have any special meaning.
 vim.g.snippets = 'luasnip'
 
+require 'user.options'
 require 'user.keymaps'
 
 require 'user.globals' -- setup globals expected to be always available.
@@ -36,3 +37,5 @@ require('lazy').setup({
 })
 
 require 'user.func'
+
+vim.cmd [[ silent! colorscheme monokai_pro ]]
