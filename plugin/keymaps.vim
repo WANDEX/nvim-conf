@@ -51,17 +51,6 @@ noremap <silent> n j
 noremap <silent> e k
 noremap <silent> i l
 
-"" leave mappping to exit from all modes
-onoremap <silent><script> <C-L> <Esc>
-vnoremap <silent><script> <C-L> <Esc>
-"" leave by canceling command
-cnoremap <silent><script> <C-L> <C-c>
-snoremap <silent><script> <C-L> <C-c>
-"" original CTRL-L - Clears and redraws the screen.
-"" clear the highlighting of :set hlsearch & cmd line
-nnoremap <silent><script> <C-L> <cmd>nohlsearch<CR><C-L>
-"" leave insert mode
-inoremap <silent><script> <C-L> <Esc>
 "" easier terminal Esc
 tnoremap <silent> <Esc> <C-\><C-n>
 tnoremap <silent> <C-l> <C-\><C-n>
@@ -185,4 +174,3 @@ vnoremap Q !curl -s -F-=\<- https://qrenco.de
 
 " CDC = Change to Directory of Current file
 command CDC cd %:p:h
-

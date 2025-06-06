@@ -17,6 +17,8 @@ vim.g.python3_host_prog = '/usr/bin/python'
 -- these do not have any special meaning.
 vim.g.snippets = 'luasnip'
 
+require 'user.keymaps'
+
 require 'user.globals' -- setup globals expected to be always available.
 
 require 'user.builtin' -- turn off built-in plugins I do not use.
