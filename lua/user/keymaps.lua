@@ -14,16 +14,29 @@ local nxo = { 'n', 'x', 'o' } -- Normal, Visual, Operator
 local nvs = { 'n', 'v' }      -- Normal, Visual, Select
 local nvo = { 'n', 'v', 'o' } -- Normal, Visual, Select, Operator
 
-vim.keymap.set(nx , '<M-n>', 'nzz<cmd>call ShowSearchIndexes()<CR>', {
-  desc = 'find next', silent = true
-}) -- search next/prev result, center on the screen, echo/update search index
-vim.keymap.set(nx , '<M-e>', 'Nzz<cmd>call ShowSearchIndexes()<CR>', {
-  desc = 'find prev', silent = true
+vim.keymap.set(nvo, 'gSP}', 'n', {
+  desc = 'repeat search/pattern in  direction', silent = true, remap = false
+}) -- go search/repeat pattern in (opposite) direction
+vim.keymap.set(nvo, 'gSP{', 'N', {
+  desc = 'repeat search/pattern in !direction', silent = true, remap = false
 })
 
+vim.keymap.set(nvo, 'gSPZ}', 'gSP}zz', {
+  desc = 'repeat search/pattern in  direction & center line', silent = true, remap = true
+}) -- go search/repeat pattern in (opposite) direction & center line
+vim.keymap.set(nvo, 'gSPZ{', 'gSP{zz', {
+  desc = 'repeat search/pattern in !direction & center line', silent = true, remap = true
+})
+
+-- insert mode and modifier inside
+vim.keymap.set(nvo, 'k', 'i', { silent = true })
+
 -- hjkl -> hnei
-vim.keymap.set(nx , 'n', 'j', { silent = true })
-vim.keymap.set(nx , 'e', 'k', { silent = true })
+-- vim.keymap.set(nx , 'n', 'j', { silent = true })
+-- vim.keymap.set(nx , 'e', 'k', { silent = true })
+vim.keymap.set(nvo, 'n', 'j', { silent = true })
+vim.keymap.set(nvo, 'e', 'k', { silent = true })
+
 vim.keymap.set(nvo, 'i', 'l', { silent = true })
 
 -- vim.keymap.del('o', 'n') -- next
@@ -36,9 +49,6 @@ vim.keymap.set(nvo, 'gl', 'L',{ silent = true })
 -- forward towards the last letter of the word (end of word)
 vim.keymap.set(nvo, 'l', 'e', { silent = true })
 vim.keymap.set(nvo, 'L', 'E', { silent = true })
-
--- insert mode and modifier inside
-vim.keymap.set(nvo, 'k', 'i', { silent = true })
 
 -- FIXME: omap? why this standard keymap does not work without this?
 -- make it work even after reassigning the original modifier inside
@@ -113,6 +123,13 @@ vim.keymap.set('n', '<C-w>L', '<nop>')
 --============================================================================
 -- next/prev keymaps
 --============================================================================
+
+vim.keymap.set(nvo, '<M-n>', 'gSPZ}<cmd>call ShowSearchIndexes()<CR>', {
+  desc = 'find next', silent = true, remap = true
+}) -- search next/prev result, center line, echo/update search index
+vim.keymap.set(nvo, '<M-e>', 'gSPZ{<cmd>call ShowSearchIndexes()<CR>', {
+  desc = 'find prev', silent = true, remap = true
+})
 
 vim.keymap.set('n', 'N', '<C-f>', {
   desc = 'scroll page next', silent = true
