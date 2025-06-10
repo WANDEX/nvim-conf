@@ -66,6 +66,7 @@ return {
 
   { -- new text objects | more info: 'https://github.com/kana/vim-textobj-user/wiki'
     'kana/vim-textobj-user', lazy = false, -- CORE plugin
+    enabled = false, -- XXX
     dependencies = {
       { 'glts/vim-textobj-comment'  }, -- ac/ic aC
       { 'kana/vim-textobj-diff'     }, -- adh/idh
@@ -80,7 +81,7 @@ return {
   { 'justinmk/vim-sneak' },
   { 'christoomey/vim-sort-motion' },
   { 'christoomey/vim-titlecase' },
-  { 'tpope/vim-surround' },
+  { 'tpope/vim-surround', enabled = false }, -- XXX
   { 'tpope/vim-repeat' },
 
   -- folding
@@ -97,11 +98,11 @@ return {
     end,
   },
   { 'preservim/tagbar' },
-  { 'justinmk/vim-gtfo' },
+  { 'justinmk/vim-gtfo', enabled = false }, -- XXX
   { 'farmergreg/vim-lastplace' },
   { 'rmagatti/alternate-toggler' }, -- toggle alternate values (0/1, true/false, etc.)
   { 'moll/vim-bbye' }, -- wipe/delete buffers without closing windows or messing up layout.
-  { 'windwp/nvim-autopairs', event = 'InsertEnter', config = true, },
+  { 'windwp/nvim-autopairs', event = 'InsertEnter', config = true, enabled = false }, -- XXX
 
   -- telescope
   { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
