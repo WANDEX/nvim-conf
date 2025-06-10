@@ -5,15 +5,20 @@
 -- :h map-listing, :h mode-switching, :h recursive_mapping,
 -- :h motion.txt, :h omap-info, :h language-mapping
 
---============================================================================
--- colemak keymaps: hjkl -> hnei -- i.e. left/down/up/right
---============================================================================
-
 local nx  = { 'n', 'x' }      -- Normal, Visual
 local nxo = { 'n', 'x', 'o' } -- Normal, Visual, Operator
 local nvs = { 'n', 'v' }      -- Normal, Visual, Select
 local nvo = { 'n', 'v', 'o' } -- Normal, Visual, Select, Operator
 
+--============================================================================
+-- repeat search/pattern -- save default n/N keymaps -- then override
+--============================================================================
+
+vim.keymap.set('n', 'zz', 'zz', {
+  desc = 'Center this line', silent = true
+}) -- make zz keymap silent -> to not clear cmd
+
+-- save def repeat pattern n/N as uniq seq => n/N keys are overridden later!
 vim.keymap.set(nvo, 'gSP}', 'n', {
   desc = 'repeat search/pattern in  direction', silent = true, remap = false
 }) -- go search/repeat pattern in (opposite) direction
@@ -28,41 +33,43 @@ vim.keymap.set(nvo, 'gSPZ{', 'gSP{zz', {
   desc = 'repeat search/pattern in !direction & center line', silent = true, remap = true
 })
 
+vim.keymap.set(nvo, '<M-n>', 'gSPZ}<cmd>call ShowSearchIndexes()<CR>', {
+  desc = 'find next', silent = true, remap = true
+}) -- search next/prev result, center line, echo/update search index
+vim.keymap.set(nvo, '<M-e>', 'gSPZ{<cmd>call ShowSearchIndexes()<CR>', {
+  desc = 'find prev', silent = true, remap = true
+})
+
+vim.keymap.set(nvo, 'N', '<C-f>', {
+  desc = 'scroll page next', silent = true
+}) -- scroll screen one page
+vim.keymap.set(nvo, 'E', '<C-b>', {
+  desc = 'scroll page prev', silent = true
+})
+
+--============================================================================
+-- colemak keymaps: hjkl -> hnei -- i.e. left/down/up/right
+--============================================================================
+
 -- insert mode and modifier inside
 vim.keymap.set(nvo, 'k', 'i', { silent = true })
-
--- hjkl -> hnei
--- vim.keymap.set(nx , 'n', 'j', { silent = true })
--- vim.keymap.set(nx , 'e', 'k', { silent = true })
-vim.keymap.set(nvo, 'n', 'j', { silent = true })
-vim.keymap.set(nvo, 'e', 'k', { silent = true })
-
-vim.keymap.set(nvo, 'i', 'l', { silent = true })
-
--- vim.keymap.del('o', 'n') -- next
--- vim.keymap.set('o', 'N', '<nop>', { silent = true })
--- vim.keymap.del('o', 'N') -- prev
 
 -- go low (bottom of the screen)
 vim.keymap.set(nvo, 'gl', 'L',{ silent = true })
 
--- forward towards the last letter of the word (end of word)
+-- forward towards last letter of the word (end of word)
 vim.keymap.set(nvo, 'l', 'e', { silent = true })
 vim.keymap.set(nvo, 'L', 'E', { silent = true })
 
--- FIXME: omap? why this standard keymap does not work without this?
--- make it work even after reassigning the original modifier inside
--- fix: for rmagatti/alternate-toggler mapping etc.
--- map ciw ckw
--- vim.keymap.set('' , 'ckw', 'ciw', { silent = true })
--- vim.keymap.set('' , 'ciw', 'ckw', { silent = true })
+-- hjkl -> hnei
+vim.keymap.set(nvo, 'n', 'j', { silent = true })
+vim.keymap.set(nvo, 'e', 'k', { silent = true })
+-- do not modify Operator mode (some plugins rely on default e.g. i -> ciw)
+vim.keymap.set(nvs, 'i', 'l', { silent = true })
 
 --============================================================================
 -- essential global / safe disable by redefining keymap
 --============================================================================
-
--- CDC = Change to Directory of Current file [[ command CDC cd %:p:h ]]
-vim.api.nvim_create_user_command('CDC', "cd %:p:h", {})
 
 -- map ctrl+l as the Esc key (easier to reach default exit key etc.)
 vim.keymap.set('' , '<C-l>', '<Esc>', {
@@ -70,7 +77,7 @@ vim.keymap.set('' , '<C-l>', '<Esc>', {
 }) -- Normal, Visual, Select and Operator-pending
 vim.keymap.set('!', '<C-l>', '<C-c>', { -- cancel
   desc = 'ESC', silent = true
-}) -- Insert and Command-line
+}) -- Insert, Command
 vim.keymap.set('t', '<C-l>', '<C-\\><C-n>', {
   desc = 'ESC', silent = true
 }) -- Terminal -- much easier terminal Esc
@@ -81,10 +88,6 @@ vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', {
 vim.keymap.set('' , '<C-z>', '<nop>', {
   desc = '', silent = true
 }) -- disable C-z suspend by overriding
-
-vim.keymap.set('n', 'zz', 'zz', {
-  desc = 'Center this line', silent = true
-}) -- make zz keymap silent -> to not clear cmd
 
 vim.keymap.set('' , '<ScrollWheelUp>', '<nop>', {
   desc = '', silent = true
@@ -124,25 +127,11 @@ vim.keymap.set('n', '<C-w>L', '<nop>')
 -- next/prev keymaps
 --============================================================================
 
-vim.keymap.set(nvo, '<M-n>', 'gSPZ}<cmd>call ShowSearchIndexes()<CR>', {
-  desc = 'find next', silent = true, remap = true
-}) -- search next/prev result, center line, echo/update search index
-vim.keymap.set(nvo, '<M-e>', 'gSPZ{<cmd>call ShowSearchIndexes()<CR>', {
-  desc = 'find prev', silent = true, remap = true
-})
-
-vim.keymap.set('n', 'N', '<C-f>', {
-  desc = 'scroll page next', silent = true
-}) -- scroll screen one page
-vim.keymap.set('n', 'E', '<C-b>', {
-  desc = 'scroll page prev', silent = true
-})
-
-vim.keymap.set('c', '<C-n>', '<C-n>', {
-  desc = 'command next', silent = false
-})
-vim.keymap.set('c', '<C-e>', '<C-p>', {
-  desc = 'command prev', silent = false
+vim.keymap.set('!', '<C-n>', '<C-n>', {
+  desc = 'next', silent = false
+}) -- Insert, Command -- next/prev -- command, completion, etc.
+vim.keymap.set('!', '<C-e>', '<C-p>', {
+  desc = 'prev', silent = false
 })
 
 vim.keymap.set('n', ']b', '<cmd>bn<CR>', {
@@ -178,6 +167,9 @@ vim.keymap.set('n', '[q', '<cmd>cp<CR>', {
 --============================================================================
 -- Function keys
 --============================================================================
+
+-- CDC = Change to Directory of Current file [[ command CDC cd %:p:h ]]
+vim.api.nvim_create_user_command('CDC', "cd %:p:h", {})
 
 -- TODO: how to reload lazy.nvim config?
 -- " Reload vim configuration (old)
