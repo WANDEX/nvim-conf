@@ -1,57 +1,4 @@
 "*****************************************************************************
-"" Core Mappings For Colemak
-"*****************************************************************************
-"" MEMO: use :verbose (map/imap) 'key or sequence' - to see if mapping is used
-"" hjkl remapped for colemak to
-"" hnei i.e. left/down/up/right
-
-" insert mode and modifier inside
-noremap <silent> k i
-
-" make it work even after reassigning the original modifier inside
-" fix: for rmagatti/alternate-toggler mapping etc.
-map ciw ckw
-
-" go low
-noremap gl L
-
-" Forward towards the last letter of the word
-noremap <silent> l e
-noremap <silent> L E
-
-" make zz command silent -> to not clear cmd
-nnoremap <silent> zz zz
-
-" Search next/prev result, center on the screen, echo/update search indexes
-noremap <silent> <M-n> nzz<cmd>call ShowSearchIndexes()<CR>
-noremap <silent> <M-e> Nzz<cmd>call ShowSearchIndexes()<CR>
-
-" Move screen one page
-noremap <silent> N <C-f>
-noremap <silent> E <C-b>
-
-" prev command
-cnoremap <C-E> <C-P>
-
-" Create new empty buffer window. (then disable default mapping)
-noremap <C-W><C-N> <C-W>n|map <C-W>n <nop>
-
-" Go to window in direction (then disable original mapping)
-noremap <C-W>n <C-W>j|map <C-W>j <nop>
-noremap <C-W>e <C-W>k|map <C-W>k <nop>
-noremap <C-W>i <C-W>l|map <C-W>l <nop>
-
-" Move window in direction (then disable original mapping)
-noremap <C-W>N <C-W>J|map <C-W>J <nop>
-noremap <C-W>E <C-W>K|map <C-W>K <nop>
-noremap <C-W>I <C-W>L|map <C-W>L <nop>
-
-" colemak home row movement
-noremap <silent> n j
-noremap <silent> e k
-noremap <silent> i l
-
-"*****************************************************************************
 "" Extra Mappings
 "*****************************************************************************
 
@@ -68,36 +15,9 @@ map T <Plug>Sneak_T
 "unmap in Select mode (to not break snippets expansion)
 sunmap f|sunmap F|sunmap t|sunmap T
 
-" TODO dont go to next buf if next buf is empty
-" Move to next/previous bufpage :bnext,:bprev
-nnoremap <silent>]b <cmd>bn<CR>
-nnoremap <silent>[b <cmd>bp<CR>
-
-" Move to next/previous tab :tabnext,:tabprevious
-nnoremap <silent>]t <cmd>tabn<CR>
-nnoremap <silent>[t <cmd>tabp<CR>
-
-" create Qlist with word :vim bar %
-" Jump to next/previous Quickfix list item :cn,:cp
-nnoremap <silent>]q <cmd>cn<CR>
-nnoremap <silent>[q <cmd>cp<CR>
-
-" create Llist with word :lvim bar %
-" Jump to next/previous Location list item :lne,:lp
-nnoremap <silent>]l <cmd>lne<CR>
-nnoremap <silent>[l <cmd>lp<CR>
-
-" To navigate to the previous or next trailing whitespace
-nnoremap ]w <cmd>NextTrailingWhitespace<CR>
-nnoremap [w <cmd>PrevTrailingWhitespace<CR>
-
 nnoremap <F3> <cmd>TagbarToggle<CR>
 
 nnoremap <F4> <cmd>set relativenumber!<CR>
-
-" run current python buffer in nvim term
-"nnoremap <F5><F5> :vs <CR> :term python % <CR>
-"nnoremap <F5>h :15sp <CR> :term python % <CR>
 
 " toggle spell check F7 S-F7 C-F7
 nnoremap <F7>  <cmd>setlocal spell! spelllang=en_us,ru_yo,ru_ru<CR>
