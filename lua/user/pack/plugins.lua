@@ -135,11 +135,17 @@ return {
 
   { 'windwp/nvim-autopairs', event = 'InsertEnter', config = true, enabled = false }, -- XXX
 
-  -- telescope
-  { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
-  { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-  { 'TC72/telescope-tele-tabby.nvim' },
-  { 'nvim-telescope/telescope-file-browser.nvim' },
+  {
+    'nvim-telescope/telescope.nvim',
+    version = '*',
+    lazy = false,
+    dependencies = {
+      { 'nvim-lua/plenary.nvim' },
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+      { 'TC72/telescope-tele-tabby.nvim' },
+      { 'nvim-telescope/telescope-file-browser.nvim' },
+    },
+  },
   { 'rmagatti/auto-session', lazy = false, enabled = true },
 
   { 'nvim-tree/nvim-tree.lua', version = '*', lazy = false, dependencies = { 'nvim-tree/nvim-web-devicons', } },
