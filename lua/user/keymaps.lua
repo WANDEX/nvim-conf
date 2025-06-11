@@ -164,9 +164,71 @@ vim.keymap.set('n', '[q', '<cmd>cp<CR>', {
   desc = 'Qlist prev', silent = true
 })
 
+vim.keymap.set('v', '<', '<gv', {
+  desc = 'indent selection  left', silent = true
+}) -- easier moving of code blocks, without losing the selection block
+vim.keymap.set('v', '>', '>gv', {
+  desc = 'indent selection right', silent = true
+})
+
+vim.keymap.set('n', '<M-o>', 'mjo<Esc>`j', {
+  desc = 'add blank line below cursor', silent = true
+}) -- without entering insert mode (returning to the prev cursor line)
+vim.keymap.set('n', '<M-O>', 'mjO<Esc>`j', {
+  desc = 'add blank line above cursor', silent = true
+})
+
 --============================================================================
 -- Function keys
 --============================================================================
+
+vim.keymap.set('n', '<F3>', '<cmd>TagbarToggle<CR>', {
+  desc = 'TagbarToggle'
+})
+
+vim.keymap.set('n', '<F4>', '<cmd>set relativenumber!<CR>', {
+  desc = 'set relativenumber!'
+})
+
+vim.keymap.set('n', '<F7>', '<cmd>setlocal spell! spelllang=en_us,ru_yo,ru_ru<CR>', {
+  desc = 'spell en,ru'
+}) -- toggle spell check
+vim.keymap.set('n', '<F19>', '<cmd>setlocal spell! spelllang=en_us<CR>', {
+  desc = 'spell en' -- S-F7
+})
+vim.keymap.set('n', '<F31>', '<cmd>setlocal spell! spelllang=ru_yo,ru_ru<CR>', {
+  desc = 'spell ru' -- C-F7
+})
+
+vim.keymap.set('n', '<F12>', "gg=G''", {
+  desc = 'fix/re-indent file' -- or only selection: V -> =
+})
+
+--============================================================================
+-- extra keymaps -- leader, localleader, etc.
+--============================================================================
+
+vim.keymap.set('n', '<C-h>', function()
+  local cword = vim.fn.expand('<cword>')
+  local rword = vim.fn.getreg('/')
+  if vim.g.hl_CWORD and rword == cword then
+    vim.g.hl_CWORD = false
+    vim.cmd('silent nohlsearch') -- tmp stop the highlighting
+  else
+    vim.g.hl_CWORD = true
+    vim.o.hlsearch = true -- to auto turn on, on next search etc.
+    vim.fn.setreg('/', cword)
+  end
+end, {
+  desc = 'highlight CWORD toggle', silent = false, expr = true
+}) -- toggle highlight of word under the cursor
+
+vim.keymap.set('n', '<Leader>q', '<cmd>Bdelete<CR>', {
+  desc = 'Bdelete',  silent = true
+}) -- 'moll/vim-bbye' plugin mappings
+vim.keymap.set('n', '<Leader>w', '<cmd>Bwipeout<CR>', {
+  desc = 'Bwipeout', silent = true
+})
 
 -- CDC = Change to Directory of Current file [[ command CDC cd %:p:h ]]
 vim.api.nvim_create_user_command('CDC', "cd %:p:h", {})

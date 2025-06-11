@@ -199,15 +199,3 @@ fu! ShowSearchIndexes()
     let l:format = "%"..l:pad.."s%s"
     echo printf(l:format, ' ', l:search)
 endf
-
-" intended for use with <expr> mapping, returned is executed as a command.
-let g:highlighting = 0
-fu! HighlightCword()
-  if g:highlighting == 1 && @/ =~ '^\\<'.expand('<cword>').'\\>$'
-    let g:highlighting = 0
-    return ":silent nohlsearch\<CR>"
-  endif
-  let @/ = '\<'.expand('<cword>').'\>'
-  let g:highlighting = 1
-  return ":silent set hlsearch\<CR>"
-endf

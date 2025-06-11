@@ -2,10 +2,6 @@
 "" Extra Mappings
 "*****************************************************************************
 
-" easier moving of code blocks, without losing of selection block
-vnoremap < <gv
-vnoremap > >gv
-
 " replace f/t with one-character Sneak,
 " use ;/, to move forth/back 'justinmk/vim-sneak':
 map f <Plug>Sneak_f
@@ -14,15 +10,6 @@ map t <Plug>Sneak_t
 map T <Plug>Sneak_T
 "unmap in Select mode (to not break snippets expansion)
 sunmap f|sunmap F|sunmap t|sunmap T
-
-nnoremap <F3> <cmd>TagbarToggle<CR>
-
-nnoremap <F4> <cmd>set relativenumber!<CR>
-
-" toggle spell check F7 S-F7 C-F7
-nnoremap <F7>  <cmd>setlocal spell! spelllang=en_us,ru_yo,ru_ru<CR>
-nnoremap <F19> <cmd>setlocal spell! spelllang=en_us<CR>
-nnoremap <F31> <cmd>setlocal spell! spelllang=ru_yo,ru_ru<CR>
 
 " see encoding-values
 menu Encoding.utf-8         <cmd>e ++enc=utf-8<CR>
@@ -34,19 +21,6 @@ menu Encoding.cp866         <cmd>e ++enc=cp866  ++ff=dos<CR>
 " use TAB to cycle between menu variants
 nnoremap <F8> :emenu Encoding.
 
-" re-indent whole file / fix indentation, or V selection -> =
-nnoremap <F12> gg=G''
-
-" toggle highlight of word under the cursor
-nnoremap <silent><expr><C-h> HighlightCword()
-
-" add blank line below/above cursor without entering insert mode (returning to prev cursor line)
-nnoremap <M-o> mjo<Esc>`j
-nnoremap <M-O> mjO<Esc>`j
-
-" 'moll/vim-bbye' plugin mappings
-nnoremap <Leader>q <cmd>Bdelete<CR>
-nnoremap <Leader>w <cmd>Bwipeout<CR>
 
 " toggle between background transparency
 nnoremap <silent> <localleader>b <cmd>call BgToggle()<CR>
