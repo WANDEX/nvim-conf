@@ -117,7 +117,22 @@ return {
   { 'justinmk/vim-gtfo', enabled = false }, -- XXX
   { 'farmergreg/vim-lastplace' },
   { 'rmagatti/alternate-toggler' }, -- toggle alternate values (0/1, true/false, etc.)
-  { 'moll/vim-bbye' }, -- wipe/delete buffers without closing windows or messing up layout.
+
+  { -- wipe/delete buffers without closing windows or messing up layout.
+    'moll/vim-bbye',
+    lazy = false,
+    keys = {
+      {
+        mode = 'n', '<Leader>q', '<cmd>Bdelete<CR>',  { silent = true,
+        desc = 'Bdelete'  },
+      },
+      {
+        mode = 'n', '<Leader>w', '<cmd>Bwipeout<CR>', { silent = true,
+        desc = 'Bwipeout' },
+      },
+    },
+  },
+
   { 'windwp/nvim-autopairs', event = 'InsertEnter', config = true, enabled = false }, -- XXX
 
   -- telescope

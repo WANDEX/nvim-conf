@@ -223,13 +223,6 @@ end, {
   desc = 'highlight CWORD toggle', silent = false, expr = true
 }) -- toggle highlight of word under the cursor
 
-vim.keymap.set('n', '<Leader>q', '<cmd>Bdelete<CR>', {
-  desc = 'Bdelete',  silent = true
-}) -- 'moll/vim-bbye' plugin mappings
-vim.keymap.set('n', '<Leader>w', '<cmd>Bwipeout<CR>', {
-  desc = 'Bwipeout', silent = true
-})
-
 vim.keymap.set('n', '<localleader>b', '<cmd>call BgToggle()<CR>', {
   desc = 'BgToggle()', silent = true
 }) -- toggle between background transparency
