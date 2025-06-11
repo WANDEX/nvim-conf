@@ -179,7 +179,7 @@ return {
     -- version = '*',
     event = 'VeryLazy',
     opts = function(_, opts)
-      opts = require('user.pack.multicursors.config')
+      opts = require('user.pack.conf.multicursors')
       return opts
     end,
     cmd  = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
