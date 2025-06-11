@@ -140,7 +140,13 @@ return {
 
   -- at the end
   { 'neomake/neomake' },
-  { 'folke/which-key.nvim' },
+
+  {
+    'folke/which-key.nvim',
+    version = '*',
+    lazy = false,
+    opts = require('user.pack.conf.which-key').opts,
+  },
 
   {
     'smoka7/multicursors.nvim',

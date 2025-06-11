@@ -1,12 +1,9 @@
--- configuration for the plugin "folke/which-key.nvim"
+-- configuration for the plugin 'folke/which-key.nvim'
 
-local ok, wk = pcall(require, 'which-key')
-if not ok then
-  return
-end
+local M = {}
 
----@class wk.Opts
-wk.setup {
+---@class which-key.Opts
+M.opts = {
   notify = false, -- TODO: toggle after updates | show a warning when issues were detected with your mappings
   plugins = {
     spelling = {
@@ -18,9 +15,16 @@ wk.setup {
       windows = false, -- disable default bindings help on <c-w> -> because default keys are remapped
     },
   },
+  spec = {},
 }
 
-wk.add({ -- window mappings (because default keys are remapped for the colemak layout)
+---@class which-key.Opts.spec
+-- add table to the which-key.Opts.spec table -> simulate which-key.add()
+M.add = function(tbl)
+  table.insert(M.opts.spec, tbl)
+end
+
+M.add({ -- window mappings (because default keys are remapped for the colemak layout)
   { "<C-W>", group = "window" },
   { "<C-W>+", desc = "Increase height" },
   { "<C-W>-", desc = "Decrease height" },
@@ -49,31 +53,31 @@ wk.add({ -- window mappings (because default keys are remapped for the colemak l
   { "<C-W>x", desc = "Swap current with next" },
 })
 
-wk.add({ -- add/alt
+M.add({ -- add/alt
   { "<leader>a", group = "add/alt" },
   { "<leader>at", "<cmd>ToggleAlternate<CR>", desc = "toggle alt val" },
 })
 
-wk.add({
+M.add({
   { "<leader>c", group = "comment" },
 })
 
-wk.add({ -- delete/diff
+M.add({ -- delete/diff
   { "<leader>d", group = "delete/diff" },
   { "<leader>dW", desc = "Whitespace strip" },
   { "<leader>dd", "<cmd>bd!<CR>", desc = "buffer delete" },
 })
 
-wk.add({
+M.add({
   { "<leader>h", group = "hunk" },
 })
 
-wk.add({
+M.add({
   { "<leader>L", group = "List/Diag/Toggle" },
   { "<leader>LD", group = "Diag" },
 })
 
-wk.add({ -- LSP - just a label. don't create any mappings
+M.add({ -- LSP - just a label. don't create any mappings
   { "<C-k>", desc = "[LSP] signature help" },
   { "gD", desc = "[LSP] declaration" },
   { "gd", desc = "[LSP] definition" },
@@ -82,7 +86,7 @@ wk.add({ -- LSP - just a label. don't create any mappings
   { "[d", desc = "[LSP] prev diag" },
   { "]d", desc = "[LSP] next diag" },
 })
-wk.add({ -- lsp
+M.add({ -- lsp
   { "<leader>l", group = "lsp" },
   { "<leader>lD", desc = "type definition" },
   { "<leader>la", desc = "action" },
@@ -97,14 +101,14 @@ wk.add({ -- lsp
   { "<leader>lwr", desc = "remove workspace folder" },
 })
 
-wk.add({
+M.add({
   { "<leader>M", group = "Magit" },
   { "<leader>Mh", "<cmd>call magit#show_magit('h')<CR>", desc = "hrz" },
   { "<leader>Mo", "<cmd>call magit#show_magit('c')<CR>", desc = "only" },
   { "<leader>Mv", desc = "vrt" }, -- magit cannot unbind def mapping
 })
 
-wk.add({
+M.add({
   { "<leader>N", group = "Neogit" },
   { "<leader>NS", "<cmd>lua require('neogit').open({ kind = 'split_above' })<CR>", desc = "split above" },
   { "<leader>Nc", "<cmd>lua require('neogit').open({ 'commit' })<CR>", desc = "commit" },
@@ -113,7 +117,7 @@ wk.add({
   { "<leader>Nv", "<cmd>lua require('neogit').open({ kind = 'vsplit' })<CR>", desc = "vsplit" },
 })
 
-wk.add({
+M.add({
   { "<leader>T", group = "Telescope" },
   { "<leader>TB", "<cmd>lua require'telescope.builtin'.buffers{}<CR>", desc = "buffers w preview" },
   { "<leader>TD", ":lua require'telescope.builtin'.live_grep({search_dirs={ '', }})<C-Left><C-Left><Right>", desc = "grep in list of dirs" },
@@ -141,7 +145,7 @@ wk.add({
   { "<leader>Tvs", "<cmd>lua require'telescope.builtin'.search_history{}<CR>", desc = "search history" },
 })
 
-wk.add({ -- translate normal mode
+M.add({ -- translate normal mode
   {
     mode = { "n" },
     { "<leader>t", group = "trans" },
@@ -154,7 +158,7 @@ wk.add({ -- translate normal mode
   },
 })
 
-wk.add({ -- translate visual mode
+M.add({ -- translate visual mode
   {
     mode = { "v" },
     { "<leader>t", group = "trans" },
@@ -165,14 +169,14 @@ wk.add({ -- translate visual mode
   },
 })
 
-wk.add({
+M.add({
   { "<leader>x", group = "xtab" },
   { "<leader>xb", group = "buf" },
   { "<leader>xs", group = "ses" },
   { "<leader>xt", group = "tab" },
 })
 
-wk.add({
+M.add({
   { "<localleader>z", group = "zen" },
   { "<localleader>zA", "<cmd>TZAtaraxis l10 r10 t3 b1<CR>", desc = "Ataraxis wide" },
   { "<localleader>zc", "<cmd>TZAtaraxis<CR>", desc = "centered" },
@@ -180,3 +184,4 @@ wk.add({
   { "<localleader>zm", "<cmd>TZMinimalist<CR>", desc = "minimalist" },
 })
 
+return M
