@@ -230,6 +230,18 @@ vim.keymap.set('n', '<Leader>w', '<cmd>Bwipeout<CR>', {
   desc = 'Bwipeout', silent = true
 })
 
+vim.keymap.set('n', '<localleader>b', '<cmd>call BgToggle()<CR>', {
+  desc = 'BgToggle()', silent = true
+}) -- toggle between background transparency
+
+vim.keymap.set('n', '<localleader>ct', '<cmd>call ColumnToggle()<CR>', {
+  desc = 'ColumnToggle()', silent = true
+}) -- toggle colored column at lines which character length exceed N
+
+vim.keymap.set('n', '<localleader>ww', ':%s/\\s\\+$//gc ', {
+  desc = 'ws trim substitute'
+}) -- trim trailing whitespace using substitute cmd
+
 -- CDC = Change to Directory of Current file [[ command CDC cd %:p:h ]]
 vim.api.nvim_create_user_command('CDC', "cd %:p:h", {})
 

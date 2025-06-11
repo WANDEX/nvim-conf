@@ -2,15 +2,6 @@
 "" Extra Mappings
 "*****************************************************************************
 
-" replace f/t with one-character Sneak,
-" use ;/, to move forth/back 'justinmk/vim-sneak':
-map f <Plug>Sneak_f
-map F <Plug>Sneak_F
-map t <Plug>Sneak_t
-map T <Plug>Sneak_T
-"unmap in Select mode (to not break snippets expansion)
-sunmap f|sunmap F|sunmap t|sunmap T
-
 " see encoding-values
 menu Encoding.utf-8         <cmd>e ++enc=utf-8<CR>
 menu Encoding.latin1        <cmd>e ++enc=latin1<CR>
@@ -21,18 +12,6 @@ menu Encoding.cp866         <cmd>e ++enc=cp866  ++ff=dos<CR>
 " use TAB to cycle between menu variants
 nnoremap <F8> :emenu Encoding.
 
-
-" toggle between background transparency
-nnoremap <silent> <localleader>b <cmd>call BgToggle()<CR>
-
-" Clear trailing whitespace
-nnoremap <localleader>cw <cmd>%s/\s\+$//g<CR><cmd>nohlsearch<CR>
-
-" Colorizer toggle color highlight
-nnoremap <localleader>Ct <cmd>ColorizerToggle<CR>
-
-" toggle colored column at lines which character length exceed N
-nnoremap <silent> <localleader>ct <cmd>call ColumnToggle()<CR>
 
 " execute command and paste output in current buffer
 nnoremap <silent> <localleader>P :call Paste('')<Left><Left>

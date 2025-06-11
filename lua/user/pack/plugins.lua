@@ -48,13 +48,21 @@ return {
   },
   {
     'norcalli/nvim-colorizer.lua',
-    opts = {    -- exclusion only makes sense if '*' is specified!
-      '*';      -- highlight all files, but customize some others.
-      '!html';  -- exclude from highlighting.
-    },
+    lazy = false,
     config = function()
       vim.opt.termguicolors = true -- fix: &termguicolors must be set
+      require('colorizer').setup({
+        -- exclusion only makes sense if '*' is specified!
+        '*';      -- highlight all files, but customize some others.
+        '!html';  -- exclude from highlighting.
+      })
     end,
+    keys = {
+      {
+        mode = { 'n' }, '<localleader>cC', '<cmd>ColorizerToggle<CR>',
+        desc = 'Colorizer toggle color highlight', silent = true
+      },
+    },
   },
 
   {
@@ -78,7 +86,15 @@ return {
   },
 
   -- motion
-  { 'justinmk/vim-sneak' },
+  { 'justinmk/vim-sneak', -- replace f/F t/T with one-character Sneak
+    lazy = false,
+    keys = { -- not map in Select mode (to not break snippets expansion)
+      { mode = { 'n', 'x', 'o' }, 'f', '<Plug>Sneak_f', },
+      { mode = { 'n', 'x', 'o' }, 'F', '<Plug>Sneak_F', },
+      { mode = { 'n', 'x', 'o' }, 't', '<Plug>Sneak_t', },
+      { mode = { 'n', 'x', 'o' }, 'T', '<Plug>Sneak_T', },
+    },
+  },
   { 'christoomey/vim-sort-motion' },
   { 'christoomey/vim-titlecase' },
   { 'tpope/vim-surround', enabled = false }, -- XXX
