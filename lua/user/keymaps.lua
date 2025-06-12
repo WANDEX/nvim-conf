@@ -97,6 +97,23 @@ vim.keymap.set('' , '<ScrollWheelDown>', '<nop>', {
 }) -- disable mouse scroll down
 
 --============================================================================
+-- disable def keymaps - edit an Ex command-line against accidental key press
+-- currently no way to unbind this keymap after timeoutlen normally:
+-- https://www.reddit.com/r/neovim/comments/w0h3uq/comment/igf657x/
+-- vim.opt.timeout = false -> fixes 'q:' '<nop>' rebind!
+--============================================================================
+
+vim.keymap.set('n', '<localleader>E', 'q:', {
+  desc = 'edit an Ex command-line', silent = false
+}) -- re-bind before disable keymap by overriding [ :h q: ]
+vim.keymap.set('n', 'q:', '<nop>', {
+  desc = '', silent = true, nowait = true
+})
+vim.keymap.set('n', 'gQ', '<nop>', {
+  desc = '', silent = true
+})
+
+--============================================================================
 -- window keymaps
 --============================================================================
 
