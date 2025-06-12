@@ -158,7 +158,19 @@ return {
   { 'preservim/tagbar' },
   { 'justinmk/vim-gtfo', enabled = false }, -- XXX
   { 'farmergreg/vim-lastplace' },
-  { 'rmagatti/alternate-toggler' }, -- toggle alternate values (0/1, true/false, etc.)
+
+  { -- toggle alternate values (0/1, true/false, etc.)
+    'rmagatti/alternate-toggler',
+    lazy = false,
+    opts = {
+      alternates = {
+        ["ON"] = "OFF",
+        ["On"] = "Off",
+        ["on"] = "off",
+      },
+    },
+    config = true,
+  },
 
   { -- wipe/delete buffers without closing windows or messing up layout.
     'moll/vim-bbye',
