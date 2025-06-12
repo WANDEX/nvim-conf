@@ -1,3 +1,4 @@
+-- AUTHOR: 'WANDEX/nvim-conf'
 -- main list of the plugins
 
 return {
@@ -110,8 +111,7 @@ return {
   {
     'iamcco/markdown-preview.nvim', ft = { 'markdown' },
     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-    -- build = function() vim.fn["mkdp#util#install"]() end,
-    build = ':call mkdp#util#install()' -- else run manually :Lazy build markdown-preview.nvim
+    build = ':call mkdp#util#install()', -- else run manually :Lazy build markdown-preview.nvim
   },
 
   { -- new text objects | more info: 'https://github.com/kana/vim-textobj-user/wiki'
@@ -139,8 +139,9 @@ return {
   },
   { 'christoomey/vim-sort-motion' },
   { 'christoomey/vim-titlecase' },
-  { 'tpope/vim-surround', enabled = false }, -- XXX
+  { 'tpope/vim-surround' },
   { 'tpope/vim-repeat' },
+  { 'glts/vim-radical', dependencies = { 'glts/vim-magnum' } }, -- gA, crd, crx, cro, crb
 
   -- folding
   -- FIXME: pin -> to not try updating it. Till fix arrive (kalekundert/vim-coiled-snake/issues/33)
@@ -233,7 +234,8 @@ return {
 
   {
     'glacambre/firenvim',
-    -- build = function() vim.fn['firenvim#install'](0) end,
+    version = '*',
+    enabled = false,
     build = ':call firenvim#install(0)', -- else run manually
   },
 
