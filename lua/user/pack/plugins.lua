@@ -242,13 +242,6 @@ return {
   { 'neomake/neomake' },
 
   {
-    'folke/which-key.nvim',
-    version = '*',
-    lazy = false,
-    opts = require('user.pack.conf.which-key').opts,
-  },
-
-  {
     'smoka7/multicursors.nvim',
     -- commit = '72225ea9e4443c3f4b9df91d0193e07c4ee8d382',
     dependencies = {{
