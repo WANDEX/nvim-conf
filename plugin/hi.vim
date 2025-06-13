@@ -35,25 +35,27 @@ hi WhichKeyFloat     ctermfg=Gray     guifg=Gray     ctermbg=NONE  guibg=NONE
 hi CmpDocumentation       cterm=reverse
 hi CmpDocumentationBorder ctermbg=black
 
-hi FloatBorder ctermfg=red  ctermbg=NONE guibg=NONE
-hi NormalFloat ctermfg=gray ctermbg=NONE guibg=NONE
+hi FloatBorder ctermbg=NONE guibg=NONE ctermfg=LightRed   guifg=#B04E53
+hi NormalFloat ctermbg=NONE guibg=NONE ctermfg=DarkCyan   guifg=#73BA9F
 
 " for neomake & etc.
-hi SignColumn ctermfg=14 guifg=Cyan ctermbg=NONE guibg=NONE
+hi SignColumn  ctermbg=NONE guibg=NONE ctermfg=DarkCyan   guifg=#73BA9F
 
-" diff & git signs
-hi DiffAdd    ctermbg=NONE guibg=NONE ctermfg=Green guifg=Green
-hi DiffChange ctermbg=NONE guibg=NONE ctermfg=White guifg=White
-hi DiffDelete ctermbg=NONE guibg=NONE ctermfg=Red   guifg=Red
-hi DiffText   cterm=bold ctermfg=0 ctermbg=11 gui=bold guibg=Red
+" diff & git signs, diff text without bg
+hi DiffText    ctermbg=NONE guibg=NONE cterm=bold gui=bold
+
+hi DiffAdd     ctermbg=NONE guibg=NONE ctermfg=LightGreen guifg=#98C379
+hi DiffChange  ctermbg=NONE guibg=NONE ctermfg=DarkCyan   guifg=#73BA9F
+hi DiffDelete  ctermbg=NONE guibg=NONE ctermfg=LightRed   guifg=#B04E53
+hi DiffRemove  ctermbg=NONE guibg=NONE ctermfg=DarkRed    guifg=#FF4E53
+
+hi diffAdded   ctermbg=NONE guibg=NONE ctermfg=LightGreen guifg=#98C379
+hi diffChanged ctermbg=NONE guibg=NONE ctermfg=DarkCyan   guifg=#73BA9F
+hi diffDeleted ctermbg=NONE guibg=NONE ctermfg=LightRed   guifg=#B04E53
+hi diffRemoved ctermbg=NONE guibg=NONE ctermfg=DarkRed    guifg=#FF4E53
 
 " magit
 hi DiffLine ctermfg=Gray guifg=Gray
-
-hi diffAdded   ctermbg=NONE guibg=NONE ctermfg=LightGreen guifg=#98C379
-hi diffChanged ctermbg=NONE guibg=NONE ctermfg=DarkGreen  guifg=#73BA9F
-hi diffDeleted ctermbg=NONE guibg=NONE ctermfg=DarkRed    guifg=#D54E53
-hi diffRemoved ctermbg=NONE guibg=NONE ctermfg=DarkRed    guifg=#D54E53
 
 hi Folded     ctermfg=Gray guifg=Gray ctermbg=Black guibg=Black
 hi Whitespace ctermfg=Gray guifg=Gray ctermbg=NONE guibg=NONE
