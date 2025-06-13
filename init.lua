@@ -33,6 +33,7 @@ require('lazy').setup({
   },
   spec = {
     { import = 'user.pack' },
+    { import = 'user.pack.spec' },
   },
 })
 

@@ -24,7 +24,6 @@ return {
   -- git
   { 'tpope/vim-fugitive' },
   { 'jreybert/vimagit' }, -- till neogit is not fixed
-  { 'lewis6991/gitsigns.nvim', dependencies = {'nvim-lua/plenary.nvim'}, },
   { 'NeogitOrg/neogit', dependencies = {'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim'},
     -- enabled = false, -- FIXME throws error if enabled & setup{}
   },
