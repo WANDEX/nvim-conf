@@ -17,13 +17,6 @@ if !exists('autocommands_loaded')
         au!
         "" nvim builtin yank highlight :h lua-highlight
         au TextYankPost * silent! lua vim.highlight.on_yank {timeout=1500}
-
-        "" override highlights on every colorscheme change
-        au ColorScheme * nested source ~/.config/nvim/plugin/hi.vim
-
-        "" statusline highlights fix: manually remove from cache, then reload.
-        " au ColorScheme * nested lua package.loaded['user.stat.nerv'] = nil
-        " au ColorScheme * nested lua require('user.stat.nerv')
     aug END
 
     aug MiscGroup

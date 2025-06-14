@@ -38,5 +38,4 @@ require('lazy').setup({
 })
 
 require 'user.func'
-
-vim.cmd [[ silent! colorscheme monokai_pro ]]
+require 'user.hi'
