@@ -135,10 +135,10 @@ local function highlights()
   -- hi CmpDocumentationBorder ctermbg=black
 
   mod_hl("FloatBorder", c.lred)
-  mod_hl("NormalFloat", c.dcyn)
+  mod_hl("NormalFloat", c.lgry)
 
   -- for neomake & etc.
-  mod_hl("SignColumn",  c.dcyn)
+  mod_hl("SignColumn",  c.lgry)
 
   -- diff, git signs, bold DiffText without bg.
   mod_hl("DiffLine",    te(nobg, c.gry3))
