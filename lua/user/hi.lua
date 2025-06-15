@@ -4,46 +4,28 @@
 -- MEMO: :call Paste('hi') - to search in output of :hi command
 -- also note: cterm=reverse gui=reverse
 
-
--- src: https://gist.github.com/lkhphuc/ea6db0458268cad1493b2674cb0fda51
--- Due to the way different colorschemes configure different highlights group,
--- there is no universal way to add gui options to all the desired components.
--- Findout the final highlight group being linked to and update gui option.
+-- modify highlight group by the name
+-- without losing keys defined by the colorscheme or create new group.
 local function mod_hl(hl_name, opts)
-  local is_ok, hl_def = pcall(vim.api.nvim_get_hl_by_name, hl_name, true)
-  if is_ok then
-    for k,v in pairs(opts) do hl_def[k] = v end
-    vim.api.nvim_set_hl(0, hl_name, hl_def)
+  local hl_def = vim.api.nvim_get_hl(0, { name=hl_name })
+  for k, v in pairs(opts) do
+    hl_def[k] = v
   end
+  vim.api.nvim_set_hl(0, hl_name, hl_def)
 end
 
-local function mod_hl_mod()
-  local is_italic = false
-  mod_hl("TSKeywordReturn",   { bold=true, italic=is_italic })
-  mod_hl("TSConstBuiltin",    { bold=true, italic=is_italic })
-  mod_hl("TSFuncBuiltin",     { bold=true, italic=is_italic })
-  mod_hl("TSTypeBuiltin",     { bold=true, italic=is_italic })
-  mod_hl("TSBoolean",         { bold=true, italic=is_italic })
-
-  mod_hl("TSType",            { bold=true })
-  mod_hl("TSConstructor",     { bold=true })
-  mod_hl("TSOperator",        { bold=true })
-
-  mod_hl("TSInclude",         { italic=is_italic })
-  mod_hl("TSVariableBuiltin", { italic=is_italic })
-  mod_hl("TSConditional",     { italic=is_italic })
-  mod_hl("TSKeyword",         { italic=is_italic })
-  mod_hl("TSKeywordFunction", { italic=is_italic })
-  mod_hl("TSComment",         { italic=is_italic })
-  mod_hl("TSParameter",       { italic=is_italic })
-
-  mod_hl("semshiBuiltin",     { italic=is_italic })
-  -- vim.api.nvim_set_hl(0, "semshiImported", {link="TSConstant"})
-  -- mod_hl("semshiImported", { bold=true, })
-  vim.api.nvim_set_hl(0, "semshiAttribute", { link="TSAttribute" })
-
-  -- mod_hl("TSVariable",        { bold=false, italic=false, })
-  -- mod_hl("Folded", { bg="" })
+-- e.g. mod_hl_all_has({ italic=false })
+-- disable italic style in all highlights which has italic key.
+local function mod_hl_all_has(opts)
+  local hl_defs = vim.api.nvim_get_hl(0, {})
+  for hl_name, hl_def in pairs(hl_defs) do
+    for k, v in pairs(opts) do
+      if hl_def[k] ~= nil then
+        hl_def[k] = v
+      end
+    end
+    vim.api.nvim_set_hl(0, hl_name, hl_def)
+  end
 end
 
 local function wndx_colors()
@@ -171,20 +153,15 @@ local function highlights()
   -- @tag           xxx guifg=#ff6188
   -- @tag.builtin   xxx links to Special
 
-  -- hi Folded     ctermfg=Gray guifg=Gray ctermbg=Black guibg=Black
-  -- hi Whitespace ctermfg=Gray guifg=Gray ctermbg=NONE guibg=NONE
-
   -- hi IndentGuidesOdd  guifg=#282a36 ctermfg=238 gui=nocombine cterm=nocombine
   -- hi IndentGuidesEven guifg=#383a46 ctermfg=242 gui=nocombine cterm=nocombine
-
-  -- hi EndOfBuffer ctermfg=DarkGray guifg=DarkGray ctermbg=NONE guibg=NONE
 end
 
 vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
   group = vim.api.nvim_create_augroup('Color', {}),
   pattern = "*",
   callback = function()
-    mod_hl_mod()
+    mod_hl_all_has({ italic=false })
     highlights()
   end
 })
