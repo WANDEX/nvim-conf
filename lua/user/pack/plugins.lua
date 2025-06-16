@@ -227,8 +227,6 @@ return {
     end,
   },
 
-  { 'nvim-tree/nvim-tree.lua', version = '*', lazy = false, dependencies = { 'nvim-tree/nvim-web-devicons', } },
-
   -- completion
   { 'neovim/nvim-lspconfig' }, -- Collection of configurations for built-in LSP client
 
