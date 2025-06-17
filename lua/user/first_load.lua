@@ -1,3 +1,5 @@
+-- AUTHOR: 'WANDEX/nvim-conf'
+
 local lazy_path = function()
   return vim.fn.stdpath("data") .. "/pack/lazy/lazy.nvim"
 end
@@ -23,9 +25,8 @@ local download_lazy_nvim = function()
       vim.fn.getchar()
       os.exit(1)
     end
-    vim.cmd([[qa]])
+    vim.cmd('qa')
   end
-  vim.opt.rtp:prepend(lazypath)
 end
 
 return function()
