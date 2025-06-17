@@ -2,20 +2,7 @@
 -- main list of the plugins
 
 return {
-  { -- plugin manager
-    'folke/lazy.nvim', version = '*',
-    opts = {
-      git = {
-        log = { '-8' }, -- show last 8 commits
-      },
-      checker = { enabled = false },
-      diff = { -- diff command <d> can be one of:
-        -- * git: will run git diff and open a buffer with filetype git
-        -- * diffview.nvim: will open Diffview to show the diff
-        cmd = 'git',
-      },
-    },
-  },
+  { 'folke/lazy.nvim', version = '*' }, -- plugin manager
 
   -- visual
   { 'kyazdani42/nvim-web-devicons' }, -- icons
