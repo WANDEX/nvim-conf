@@ -248,6 +248,7 @@ return {
       -- commit = '8c4a9f621ec7cdc30411a1f3b6d5eebb12b469dc',
     }},
     -- version = '*',
+    lazy = false,
     event = 'VeryLazy',
     opts = function(_, opts)
       opts = require('user.pack.conf.multicursors')
@@ -278,7 +279,9 @@ return {
       vim.api.nvim_create_augroup('Heirline', { clear = true })
       vim.api.nvim_create_autocmd('ColorScheme', {
         callback = function()
-          require('heirline.utils').on_colorscheme(opts.colors)
+          require('heirline.utils').on_colorscheme(
+            require('user.stat.nerv').setup_colors()
+          )
         end,
         group = 'Heirline',
       })

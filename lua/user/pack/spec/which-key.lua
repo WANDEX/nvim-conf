@@ -3,6 +3,7 @@
 return {
   'folke/which-key.nvim',
   version = '*',
+  lazy = false,
   event = 'VeryLazy',
   ---@class which-key.Opts
   opts = {
