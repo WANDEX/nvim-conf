@@ -16,12 +16,12 @@ local fn = require("user.func")
 
 ls.filetype_extend("c", { "cpp" }) -- to have the same snippets in ft=c
 
--- /**
---  * doc string
---  */
-ls.add_snippets("cpp", {
-  -- s("doc", fmt("\n\n/**\n * {}\n */", { i(1, "doc string") })),
-  -- the same
+
+return {
+
+  -- /**
+  --  * doc string
+  --  */
   s("doc", {
     nl("/**"),
     nl(" * @brief "),
@@ -30,40 +30,32 @@ ls.add_snippets("cpp", {
     nl(" * @param  TODO"),
     nl(" * @return TODO"),
     nl(" */"),
-  }),
-})
+  }), -- the same
+  -- s("doc", fmt("\n\n/**\n * {}\n */", { i(1, "doc string") })),
 
--- /****************************************************************************
---  * description / separator
---  */
-ls.add_snippets("cpp", {
+
+  -- /****************************************************************************
+  --  * description / separator
+  --  */
   s("docl", {
     nl("/****************************************************************************"),
     nl(" * "),
     i(1, "description / separator"),
     nl(" */"),
   }),
-})
 
--- doc string with content from clipboard.
--- NOTE: luasnip requires splitting multiline string on table of lines.
-ls.add_snippets("cpp", {
+  -- doc string with content from clipboard.
   s("docc",
     fmt("\n\n/**\n * {}{}\n */",
+      -- NOTE: luasnip requires splitting multiline string on table of lines.
       { f(fn.get_clip_content_as_table_split_by_nl, {1}), i(1) }
     )
   ),
-})
 
-ls.add_snippets("cpp", {
   s("#pro", fmt("{}\n\n", { i(1, "#pragma once") })),
-})
 
-ls.add_snippets("cpp", {
   s("#in", fmt("{} <{}>\n", { t("#include"), i(1) })),
-})
 
-ls.add_snippets("cpp", {
   s("ns",  fmta([[
   namespace <name> {
   <inside>
@@ -89,23 +81,17 @@ ls.add_snippets("cpp", {
     nl("} // (anonymous) [internal_linkage]"),
     nl(""),
   }),
-})
 
-ls.add_snippets("cpp", {
   s({trig="s", hidden=true}, { t("std::") }),
   s('st',   { t("std::") }),
   s("sv",   { t("std::string_view ") }),
   s("sz",   { t("std::size_t ") }),
   s("szc",  { t("const std::size_t ") }),
-})
 
-ls.add_snippets("cpp", {
   s({trig="c", hidden=true}, { t("const ") }),
   s("co",   { t("std::cout << "), i(1), t(" << '\\n';") }),
   s("ce",   { t("std::cerr << "), i(1), t(" << '\\n';") }),
-})
 
-ls.add_snippets("cpp", {
   s("fmti", fmt([[
   #include <fmt/core.h>
   #include <fmt/format.h>
@@ -120,4 +106,5 @@ ls.add_snippets("cpp", {
   ]], {
     name   = i(1),
   }, { repeat_duplicates = true })),
-})
+
+}

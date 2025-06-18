@@ -12,7 +12,13 @@ return {
       { 'rafamadriz/friendly-snippets' }, -- snippets collection
       -- !Important! Make sure you're using the latest release of LuaSnip
       -- `main` does not work at the moment
-      { 'L3MON4D3/LuaSnip', version = 'v2.*' }, -- snippets engine
+      { -- snippets engine
+        'L3MON4D3/LuaSnip', version = 'v2.*',
+        opts = {},
+        config = function() -- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#lua
+          require('luasnip.loaders.from_lua').load({paths = './lua/user/snip/ft'})
+        end,
+      },
     },
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
@@ -37,9 +43,9 @@ return {
       snippets   = { preset = 'luasnip' },
       sources = { -- default list of enabled providers
         default = { 'lsp', 'path', 'snippets', 'buffer' },
-        providers = {
-          lsp = { fallbacks = {} } -- always show the buffer source (defaults to { 'buffer' })
-        },
+        -- providers = {
+        --   lsp = { fallbacks = {} } -- always show the buffer source (defaults to { 'buffer' })
+        -- },
       },
       fuzzy = { implementation = 'prefer_rust_with_warning' }
     }, -- can be extended elsewhere in config, without redefining 'sources.default', due to `opts_extend`
