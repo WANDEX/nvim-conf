@@ -153,8 +153,8 @@ local function highlights()
   -- @tag           xxx guifg=#ff6188
   -- @tag.builtin   xxx links to Special
 
-  -- hi IndentGuidesOdd  guifg=#282a36 ctermfg=238 gui=nocombine cterm=nocombine
-  -- hi IndentGuidesEven guifg=#383a46 ctermfg=242 gui=nocombine cterm=nocombine
+  mod_hl("IndentGuidesOdd",  te(nobg, {fg='#282a36', ctermfg=238, nocombine=true}))
+  mod_hl("IndentGuidesEven", te(nobg, {fg='#383a46', ctermfg=242, nocombine=true}))
 end
 
 vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
