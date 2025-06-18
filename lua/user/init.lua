@@ -18,6 +18,15 @@ require 'user.globals' -- setup globals expected to be always available.
 
 require 'user.diagnostic'
 
+-- vim.lsp.config('*')
+vim.lsp.config('*', {
+  root_markers = { '.git' },
+})
+
+-- luals not works, what is it? standard lua - not nvim?
+-- vim.lsp.enable({'luals', 'clangd', 'pyright', 'ts_ls'})
+vim.lsp.enable({'lua_ls', 'clangd', 'pyright', 'ts_ls'})
+
 require('user.lazy').load({
   profiling = {
     -- loader = true,  -- debug tab extra stats: loader cache + package.loaders.
