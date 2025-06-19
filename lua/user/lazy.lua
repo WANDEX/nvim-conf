@@ -6,9 +6,9 @@ local M = {}
 ---@param opts LazyConfig
 function M.load(opts)
   opts = vim.tbl_deep_extend('force', {
-    root   = vim.fn.stdpath("data") .. "/pack/lazy", -- dir for plugins
+    root   = require('user.fn').path.concat({ vim.fn.stdpath('data'), 'pack', 'lazy' }), -- dir for plugins
     rocks  = {
-      root = vim.fn.stdpath("data") .. "/pack/lazy/lazy-rocks",
+      root = require('user.fn').path.concat({ vim.fn.stdpath('data'), 'pack', 'lazy', 'lazy-rocks' }),
     },
     spec = {
       { import = 'user.pack' },

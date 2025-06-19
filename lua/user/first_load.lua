@@ -1,7 +1,10 @@
 -- AUTHOR: 'WANDEX/nvim-conf'
 
+---@nodiscard
+---@return string path lazy.nvim plugin.
 local lazy_path = function()
-  return vim.fn.stdpath("data") .. "/pack/lazy/lazy.nvim"
+  -- return vim.fn.stdpath('data') .. '/pack/lazy/lazy.nvim'
+  return require('user.fn').path.concat({ vim.fn.stdpath('data'), 'pack', 'lazy', 'lazy.nvim' })
 end
 
 -- bootstrap lazy.nvim
@@ -29,9 +32,10 @@ local download_lazy_nvim = function()
   end
 end
 
+---@return boolean result lazy.nvim plugin not found.
 return function()
   vim.opt.rtp:prepend(lazy_path())
-  if not pcall(require, "lazy") then
+  if not pcall(require, 'lazy') then
     download_lazy_nvim()
     return true
   end

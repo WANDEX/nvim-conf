@@ -1,7 +1,17 @@
 -- AUTHOR: 'WANDEX/nvim-conf'
 -- user functions
 
-local M = {}
+local M = {
+  path = {},
+}
+
+---@nodiscard
+---@param path_components string[]
+---@return string
+---@see src: 'https://github.com/mason-org/mason.nvim/blob/8024d64e1330b86044fed4c8494ef3dcd483a67c/lua/mason-core/path.lua#L5'
+function M.path.concat(path_components)
+    return vim.fs.normalize(table.concat(path_components, '/'))
+end
 
 -- write file preserving old modification time.
 M.wfpmt = function()
