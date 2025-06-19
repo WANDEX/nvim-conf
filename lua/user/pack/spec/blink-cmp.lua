@@ -74,8 +74,10 @@ return {
         ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
         ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
       },
+      cmdline = {
+        keymap = { preset = 'inherit' }, -- inherit from top level keymap
+      },
       appearance = { nerd_font_variant = 'mono' },
-      -- completion = { documentation = { auto_show = true } },
       signature  = { enabled = true },
       snippets   = { preset = 'luasnip' },
       sources = { -- default list of enabled providers
@@ -86,18 +88,23 @@ return {
       },
       completion = {
         documentation = { auto_show = true },
-        ghost_text = { enabled = true, show_with_menu = true }, -- only show when menu is closed
-        menu = {
+        ghost_text = { enabled = true, show_without_menu = true, show_with_menu = true },
+        menu = { -- TODO: enable/show menu if word length > 3 chars, otherwise ghost_text only
           auto_show = true, -- only show menu on manual <C-space>
           draw = {
+            align_to = 'label', -- or 'none' to disable, or 'cursor' to align to the cursor
             columns = { { 'kind_icon' }, { 'label', gap = 1 }, { 'kind' }, { 'source_id' } },
             components = {
               label = { -- label and label_description are combined together in label by colorful-menu.nvim.
                 text      = function(ctx) return require('colorful-menu').blink_components_text(ctx) end,
                 highlight = function(ctx) return require('colorful-menu').blink_components_highlight(ctx) end,
               },
+              source_name = {
+                width = { max = 5 },
+              },
               source_id = {
-                text = function(ctx) return '[' .. ctx.source_id .. ']' end
+                width = { max = 5 },
+                -- text = function(ctx) return '[' .. ctx.source_id .. ']' end
               },
 
               kind_icon = {
