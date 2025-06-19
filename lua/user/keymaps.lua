@@ -73,7 +73,7 @@ vim.keymap.set(nvs, 'i', 'l', { silent = true })
 
 -- map ctrl+l as the Esc key (easier to reach default exit key etc.)
 vim.keymap.set('' , '<C-l>', '<Esc>', {
-  desc = 'ESC', silent = true, buffer = true
+  desc = 'ESC', silent = true
 }) -- Normal, Visual, Select and Operator-pending
 vim.keymap.set('!', '<C-l>', '<C-c>', { -- cancel
   desc = 'ESC', silent = true
