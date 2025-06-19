@@ -62,5 +62,5 @@ require('user.lazy').load({
   },
 })
 
-require 'user.func'
+require 'user.fn'
 require 'user.hi'

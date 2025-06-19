@@ -1,3 +1,6 @@
+-- AUTHOR: 'WANDEX/nvim-conf'
+-- user functions
+
 local M = {}
 
 -- write file preserving old modification time.
@@ -8,7 +11,7 @@ M.wfpmt = function()
   vim.fn.system(string.format('touch -d @%s "%s"', mtime, fpath)) -- set back old mtime
   vim.cmd("edit") -- reload file after it has been changed
 end
-vim.api.nvim_create_user_command('W', "lua require('user.func').wfpmt()", {})
+vim.api.nvim_create_user_command('W', "lua require('user.fn').wfpmt()", {})
 
 -- split string by the separator sequence into a table.
 function string:split_to_table(sep_seq)
