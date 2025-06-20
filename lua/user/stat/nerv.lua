@@ -215,7 +215,7 @@ function M.statusline()
     {
       provider = function()
         if not vim.bo.modifiable or vim.bo.readonly then
-          return " "
+          return "  "
         end
       end,
       hl = { fg = colors.f.red },
@@ -312,7 +312,7 @@ function M.statusline()
         table.insert(names, client.config.name)
         ::continue::
       end
-      return "[" .. table.concat(names, " ") .. "] "
+      return "󰢻 [" .. table.concat(names, " ") .. "] "
     end,
     hl = { fg = colors.f.green, bold = false },
   }
@@ -321,10 +321,10 @@ function M.statusline()
     condition = conditions.has_diagnostics,
 
     static = {
-      erro_icon = ' ',
-      warn_icon = ' ',
-      info_icon = ' ',
-      hint_icon = ' ',
+      erro_sign  =  vim.diagnostic.config().signs.text[vim.diagnostic.severity.ERROR],
+      warn_sign  =  vim.diagnostic.config().signs.text[vim.diagnostic.severity.WARN],
+      info_sign  =  vim.diagnostic.config().signs.text[vim.diagnostic.severity.INFO],
+      hint_sign  =  vim.diagnostic.config().signs.text[vim.diagnostic.severity.HINT],
     },
 
     init = function(self)
@@ -336,25 +336,25 @@ function M.statusline()
 
     {
       provider = function(self)
-        return self.erroc > 0 and (" " .. self.erro_icon .. self.erroc)
+        return self.erroc > 0 and (" " .. self.erro_sign .. self.erroc)
       end,
       hl = { fg = colors.diag_error },
     },
     {
       provider = function(self)
-        return self.warnc > 0 and (" " .. self.warn_icon .. self.warnc)
+        return self.warnc > 0 and (" " .. self.warn_sign .. self.warnc)
       end,
       hl = { fg = colors.diag_warn },
     },
     {
       provider = function(self)
-        return self.infoc > 0 and (" " .. self.info_icon .. self.infoc)
+        return self.infoc > 0 and (" " .. self.info_sign .. self.infoc)
       end,
       hl = { fg = colors.diag_info },
     },
     {
       provider = function(self)
-        return self.hintc > 0 and (" " .. self.hint_icon .. self.hintc)
+        return self.hintc > 0 and (" " .. self.hint_sign .. self.hintc)
       end,
       hl = { fg = colors.diag_hint },
     },
@@ -371,7 +371,7 @@ function M.statusline()
     end,
 
     {
-      provider = "  ", --  
+      provider = " 󰊢 ", --  
       hl = { fg = colors.f.orange },
     },
     {
