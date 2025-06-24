@@ -37,6 +37,7 @@ return {
       { 'xzbdmw/colorful-menu.nvim',   opts = {}, config = true, },
       { 'nvim-tree/nvim-web-devicons', opts = {} },
       { 'onsails/lspkind.nvim', opts = { mode = 'symbol', preset = 'codicons' } },
+      { 'MahanRahmati/blink-nerdfont.nvim' }, -- trigger on colon : symbol name
     },
 
     ---@module 'blink.cmp'
@@ -63,8 +64,14 @@ return {
       signature  = { enabled = true },
       snippets   = { preset = 'luasnip' },
       sources = { -- default list of enabled providers
-        default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'nerdfont', 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
         providers = {
+          nerdfont = { -- trigger on colon : symbol name
+            module = 'blink-nerdfont',
+            name = 'NF',
+            opts = { insert = true }, -- Insert nerdfont icon (default) or complete its name
+            score_offset = 15, -- tune by preference
+          },
           lazydev = {
             name = 'LazyDev',
             module = 'lazydev.integrations.blink',
