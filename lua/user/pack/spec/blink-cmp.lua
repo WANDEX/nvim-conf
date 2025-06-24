@@ -118,7 +118,7 @@ return {
                   else
                     icon = require('lspkind').symbolic(ctx.kind, { mode = 'symbol' })
                   end
-                  return icon .. ctx.icon_gap
+                  return icon .. ' ' -- or ctx.icon_gap
                 end,
                 -- Optionally, use the highlight groups from nvim-web-devicons
                 -- You can also add the same function for `kind.highlight` if you want to
