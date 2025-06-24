@@ -2,6 +2,21 @@
 -- spec 'saghen/blink.cmp'
 
 return {
+  { -- properly configures LuaLS for editing Neovim config. module annotations.
+    'folke/lazydev.nvim', -- :LazyDev debug | :LazyDev lsp - settings for attached LSP servers.
+    ft = 'lua', -- only load on lua files
+    dependencies = {
+      { 'LelouchHe/xmake-luals-addon' }, -- xmake.lua
+    },
+    opts = {
+      library = {
+        -- Load luvit types when the 'vim.uv' word is found
+        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+        -- Load the xmake types when opening file named 'xmake.lua'
+        { path = 'xmake-luals-addon/library', files = { 'xmake.lua' } },
+      },
+    },
+  },
   {
     'saghen/blink.cmp',
     version = '1.*', -- use a release tag to download pre-built binaries
@@ -16,7 +31,7 @@ return {
         'L3MON4D3/LuaSnip', version = 'v2.*',
         opts = {},
         config = function() -- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#lua
-          require('luasnip.loaders.from_lua').load({paths = './lua/user/snip/ft'})
+          require('luasnip.loaders.from_lua').load({ paths = {'./lua/user/snip/ft'} })
         end,
       },
       { 'xzbdmw/colorful-menu.nvim',   opts = {}, config = true, },
@@ -48,9 +63,20 @@ return {
       signature  = { enabled = true },
       snippets   = { preset = 'luasnip' },
       sources = { -- default list of enabled providers
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
         providers = {
-          lsp = { fallbacks = {} } -- always show the buffer source (defaults to { 'buffer' })
+          lazydev = {
+            name = 'LazyDev',
+            module = 'lazydev.integrations.blink',
+            score_offset = 100, -- make lazydev completions top priority (see `:h blink.cmp`)
+          },
+          lsp = {
+            fallbacks = {}, -- always show the buffer source (defaults to { 'buffer' })
+          },
+          buffer = {
+            min_keyword_length = 3,
+            score_offset = -5, -- low priority
+          },
         },
       },
       completion = {
