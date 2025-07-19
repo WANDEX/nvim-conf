@@ -42,6 +42,7 @@
   "telescope-tele-tabby.nvim": { "branch": "main", "commit": "e58710e9ef5aecbf7b16e0c2e5d7959d46ec55fc" },
   "telescope.nvim": { "branch": "master", "commit": "a0bbec21143c7bc5f8bb02e0005fa0b982edc026" },
   "tidy.nvim": { "branch": "main", "commit": "31f95306ffd408ed4bb5185e8ec3bab9516ad34c" },
+  "true-zen.nvim": { "branch": "main", "commit": "3958221b9eab7a1c93e1c159fa0bc334f3525187" },
   "vim-bbye": { "branch": "master", "commit": "25ef93ac5a87526111f43e5110675032dbcacf56" },
   "vim-coiled-snake": { "branch": "master", "commit": "ce50abca6c3533cb9bf48e910f87ae91f2969740" },
   "vim-fugitive": { "branch": "master", "commit": "4a745ea72fa93bb15dd077109afbb3d1809383f2" },

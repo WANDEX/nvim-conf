@@ -146,11 +146,6 @@ return {
       { "<leader>xs", group = "ses" },
       { "<leader>xt", group = "tab" },
 
-      { "<localleader>z", group = "zen" },
-      { "<localleader>zA", "<cmd>TZAtaraxis l10 r10 t3 b1<CR>", desc = "Ataraxis wide" },
-      { "<localleader>zc", "<cmd>TZAtaraxis<CR>", desc = "centered" },
-      { "<localleader>zf", "<cmd>TZFocus<CR>", desc = "focus" },
-      { "<localleader>zm", "<cmd>TZMinimalist<CR>", desc = "minimalist" },
     }, -- END spec
   },
 }

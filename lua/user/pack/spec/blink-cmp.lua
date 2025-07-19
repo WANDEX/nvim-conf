@@ -2,7 +2,7 @@
 -- spec 'saghen/blink.cmp'
 
 return {
-  { -- properly configures LuaLS for editing Neovim config. module annotations.
+  { -- neovim api, docs support, module annotations | properly configures LuaLS for editing Neovim config.
     'folke/lazydev.nvim', -- :LazyDev debug | :LazyDev lsp - settings for attached LSP servers.
     ft = 'lua', -- only load on lua files
     dependencies = {

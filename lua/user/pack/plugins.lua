@@ -257,7 +257,7 @@ return {
   { -- STATUS BAR
     'rebelot/heirline.nvim',
     lazy = false, -- load during startup
-    priority = 1, -- load after all other plugins (colorscheme)
+    priority = 2, -- load after all other plugins (colorscheme)
     opts = function(_, opts)
       local stat = require('user.stat.nerv')
       opts.statusline = stat.statusline()
