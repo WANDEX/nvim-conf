@@ -343,3 +343,7 @@ flamegraph
 neovim
 EOF
 globals
+keymap
+keymaps
+boolean
+nodiscard
