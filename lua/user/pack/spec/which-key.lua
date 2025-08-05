@@ -62,26 +62,7 @@ return {
       { "<leader>L", group = "List/Diag/Toggle" },
       { "<leader>LD", group = "Diag" },
 
-      { "<C-k>", desc = "[LSP] signature help" }, -- LSP - just a label. don't create any mappings
-      { "gD", desc = "[LSP] declaration" },
-      { "gd", desc = "[LSP] definition" },
-      { "gi", desc = "[LSP] implementation" },
-      { "gr", desc = "[LSP] references" },
-      { "[d", desc = "[LSP] prev diag" },
-      { "]d", desc = "[LSP] next diag" },
-
       { "<leader>l",  group = "lsp" },
-      { "<leader>lD",  desc = "type definition" },
-      { "<leader>la",  desc = "action" },
-      { "<leader>le",  desc = "show/enter line diag" },
-      { "<leader>lf",  desc = "formatting" },
-      { "<leader>lh",  desc = "hover" },
-      { "<leader>ll",  desc = "list diag" },
-      { "<leader>lr",  desc = "rename" },
-      { "<leader>lw",  group = "workspace" },
-      { "<leader>lwa",  desc = "add workspace folder" },
-      { "<leader>lwl",  desc = "list workspace folders" },
-      { "<leader>lwr",  desc = "remove workspace folder" },
 
       { "<leader>M", group = "Magit" },
       { "<leader>Mh", "<cmd>call magit#show_magit('h')<CR>", desc = "hrz" },
