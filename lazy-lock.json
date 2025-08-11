@@ -1,5 +1,6 @@
 {
   "FastFold": { "branch": "master", "commit": "fff6d05064dec4d7e1398aa507db35fcd57edfb4" },
+  "FloatTerm.nvim": { "branch": "trunk", "commit": "b7739e1af8c2c43550c811a3e1bb30caed8f3c06" },
   "LuaSnip": { "branch": "master", "commit": "458560534a73f7f8d7a11a146c801db00b081df0" },
   "alternate-toggler": { "branch": "main", "commit": "819800304d3e8e575fd6aa461a8bcf2217e1cfb6" },
   "auto-session": { "branch": "main", "commit": "00334ee24b9a05001ad50221c8daffbeedaa0842" },
