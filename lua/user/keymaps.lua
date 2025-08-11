@@ -117,6 +117,10 @@ vim.keymap.set('n', 'gQ', '<nop>', {
 -- window keymaps
 --============================================================================
 
+vim.keymap.set('n', '<C-w>Q', '<cmd>Bwipeout!<CR><C-w>c', {
+  desc = 'Bwipeout!', silent = true
+})
+
 -- go to window in direction
 vim.keymap.set('n', '<C-w>n', '<C-w>j', { silent = true })
 vim.keymap.set('n', '<C-w>e', '<C-w>k', { silent = true })
@@ -247,6 +251,16 @@ vim.keymap.set('n', '<localleader>b', '<cmd>call BgToggle()<CR>', {
 vim.keymap.set('n', '<localleader>ct', '<cmd>call ColumnToggle()<CR>', {
   desc = 'ColumnToggle()', silent = true
 }) -- toggle colored column at lines which character length exceed N
+
+vim.keymap.set('n', '<localleader>T', function()
+  vim.cmd.new()
+  vim.cmd.wincmd('J') -- spawn at the very bottom of the screen
+  vim.api.nvim_win_set_height(0, 12) -- fixed height
+  vim.wo.winfixheight = true
+  vim.cmd.term()
+end, {
+  desc = 'Term spawn bot', silent = true
+}) -- spawn term at the bottom of the screen
 
 vim.keymap.set('n', '<localleader>ww', ':%s/\\s\\+$//gc ', {
   desc = 'ws trim substitute'
