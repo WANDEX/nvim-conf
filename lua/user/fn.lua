@@ -24,11 +24,14 @@ end
 vim.api.nvim_create_user_command('W', "lua require('user.fn').wfpmt()", {})
 
 -- split string by the separator sequence into a table.
+---@nodiscard
+---@param sep_seq string
+---@return string[]
 function string:split_to_table(sep_seq)
-    local seps = sep_seq or ","
+    local seps = sep_seq or ','
     local result = {}
     local i = 1
-    for c in (self..seps):gmatch(string.format("([^%s]+)", seps)) do
+    for c in (self..seps):gmatch(string.format('([^%s]+)', seps)) do
         result[i] = c
         i = i + 1
     end
@@ -36,6 +39,8 @@ function string:split_to_table(sep_seq)
 end
 
 -- get clipboard content as table.
+---@nodiscard
+---@return string[]
 M.get_clip_content_as_table_split_by_nl = function()
   -- multiline string must be converted to table of lines (req. by luasnip snippets etc.)
   return vim.fn.system('xsel -bo'):split_to_table('\n')
