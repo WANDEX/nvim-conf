@@ -25,5 +25,6 @@ require('user.lazy').load({
   },
 })
 
+require 'user.au'
 require 'user.fn'
 require 'user.hi'

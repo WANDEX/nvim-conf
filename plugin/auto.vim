@@ -13,12 +13,6 @@ if !exists('autocommands_loaded')
     "     au CmdlineLeave * call EmptyMessTimer(5)
     " aug END
 
-    aug OverrideHighlights
-        au!
-        "" nvim builtin yank highlight :h lua-highlight
-        au TextYankPost * silent! lua vim.highlight.on_yank {timeout=1500}
-    aug END
-
     aug MiscGroup
         au!
         "" Disables automatic commenting on newline:
