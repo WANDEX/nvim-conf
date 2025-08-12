@@ -20,4 +20,4 @@ nnoremap <silent> <localleader>P :call Paste('')<Left><Left>
 cnoremap <C-w> execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " Encode visual selection into qr code
-vnoremap Q !curl -s -F-=\<- https://qrenco.de
+vnoremap <silent> <localleader>Q !curl -s -F-=\<- https://qrenco.de
