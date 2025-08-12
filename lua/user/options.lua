@@ -1,3 +1,10 @@
+-- AUTHOR: 'WANDEX/nvim-conf'
+
+-- good idea to set following early in the config, because otherwise
+-- any mappings set BEFORE doing this, will be set to the OLD Leader key.
+vim.g.mapleader = ' '
+vim.g.maplocalleader = '\\'
+
 --============================================================================
 -- GENERAL
 --============================================================================

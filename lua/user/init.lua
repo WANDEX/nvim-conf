@@ -1,16 +1,5 @@
 -- AUTHOR: 'WANDEX/nvim-conf'
 
--- good idea to set following early in the config, because otherwise
--- any mappings set BEFORE doing this, will be set to the OLD Leader key.
-vim.g.mapleader = ' '
-vim.g.maplocalleader = '\\'
-
-vim.g.python3_host_prog = '/usr/bin/python'
-
--- set some global variables to use as configuration throughout the config.
--- these do not have any special meaning.
-vim.g.snippets = 'luasnip'
-
 require 'user.options'
 require 'user.keymaps'
 
