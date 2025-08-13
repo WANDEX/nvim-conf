@@ -1,3 +1,4 @@
+-- AUTHOR: 'WANDEX/nvim-conf'
 -- spec 'nvim-telescope/telescope.nvim'
 
 return {

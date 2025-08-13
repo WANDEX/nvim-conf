@@ -1,5 +1,5 @@
 -- AUTHOR: 'WANDEX/nvim-conf'
--- user snippets
+-- user snippets for all file types
 
 local ls = require('luasnip')
 

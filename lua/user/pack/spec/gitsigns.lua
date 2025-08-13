@@ -1,4 +1,5 @@
--- 'lewis6991/gitsigns spec
+-- AUTHOR: 'WANDEX/nvim-conf'
+-- spec 'lewis6991/gitsigns
 
 return {
   'lewis6991/gitsigns.nvim',

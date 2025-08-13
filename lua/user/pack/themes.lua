@@ -1,3 +1,4 @@
+-- AUTHOR: 'WANDEX/nvim-conf'
 -- themes configuration, lazy-load & etc.
 
 return {

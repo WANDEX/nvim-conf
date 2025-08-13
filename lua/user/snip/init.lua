@@ -1,3 +1,5 @@
+-- AUTHOR: 'WANDEX/nvim-conf'
+
 local ls = require("luasnip")
 
 local snippet = ls.snippet

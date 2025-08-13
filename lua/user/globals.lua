@@ -1,3 +1,5 @@
+-- AUTHOR: 'WANDEX/nvim-conf'
+
 local ok, plenary_reload = pcall(require, "plenary.reload")
 if not ok then
   reloader = require

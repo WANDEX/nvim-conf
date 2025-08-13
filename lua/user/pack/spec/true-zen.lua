@@ -1,4 +1,5 @@
 -- AUTHOR: 'WANDEX/nvim-conf'
+-- spec 'Pocco81/true-zen.nvim'
 
 return {
   -- 'Pocco81/true-zen.nvim', -- original upstream (but no issue fixes)

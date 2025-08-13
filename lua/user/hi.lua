@@ -1,3 +1,4 @@
+-- AUTHOR: 'WANDEX/nvim-conf'
 -- source this file, to override default highlights
 -- to make it across all colorschemes: au ColorScheme * nested source this_file_path
 -- (https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f)

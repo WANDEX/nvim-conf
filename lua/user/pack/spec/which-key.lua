@@ -1,4 +1,5 @@
--- 'folke/which-key.nvim' spec
+-- AUTHOR: 'WANDEX/nvim-conf'
+-- spec 'folke/which-key.nvim'
 
 return {
   'folke/which-key.nvim',

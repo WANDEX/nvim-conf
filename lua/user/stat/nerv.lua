@@ -1,5 +1,5 @@
+-- AUTHOR: 'WANDEX/nvim-conf'
 -- nerv statusline for 'rebelot/heirline.nvim'
--- AUTHOR: WANDEX
 
 local M = {}
 

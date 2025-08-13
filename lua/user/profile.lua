@@ -1,3 +1,5 @@
+-- AUTHOR: 'WANDEX/nvim-conf'
+
 PROFILE_LOAD = false
 
 if PROFILE_LOAD then -- see: 'jonhoo/inferno' - (flamegraph format)
