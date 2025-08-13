@@ -16,13 +16,26 @@ end
 
 -- local fn = require('user.fn')
 
+local ft_comment_str = function(comment_str)
+  comment_str = comment_str or '' -- vim.bo.commentstring == '-- %s'
+  return string.gsub(vim.bo.commentstring, " %%s", comment_str)
+end
+
 return {
 
-  -- TODO: 1 - comment string based on ft = { lua = '--', cpp = '//' }
-  -- TODO: 2 - take user/repo from .git config - remote
+  -- TODO: take user/repo from .git config - remote
   s("AUTHOR", fmt("{} AUTHOR: '{}'\n", {
-    i(1, "--"),
-    i(2, "WANDEX/nvim-conf")
+    f(function() return ft_comment_str() end),
+    i(2, "WANDEX/nvim-conf"),
   })),
+
+  -- date: 2025-08-12 13:37:30 UTC
+  s({ trig = "date" }, {
+    f(function()
+      return string.format(
+        ft_comment_str(" date: %%s"), os.date("!%F %T UTC")
+      )
+    end),
+  }),
 
 }
