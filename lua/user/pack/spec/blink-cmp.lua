@@ -24,7 +24,6 @@ return {
     -- https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
     -- build = 'cargo build --release',
     dependencies = {
-      { 'rafamadriz/friendly-snippets' }, -- snippets collection
       -- !Important! Make sure you're using the latest release of LuaSnip
       -- `main` does not work at the moment
       { -- snippets engine
@@ -32,7 +31,13 @@ return {
         opts = {},
         config = function() -- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#lua
           require('luasnip.loaders.from_lua').load({ paths = {'./lua/user/snip/ft'} })
+          require('luasnip.loaders.from_vscode').lazy_load({ -- non lazy - slower startup-time!
+            exclude = { 'javascript' },
+          })
         end,
+        dependencies = {
+          { 'rafamadriz/friendly-snippets' }, -- snippets collection "from_vscode"
+        },
       },
       { 'xzbdmw/colorful-menu.nvim',   opts = {}, config = true, },
       { 'nvim-tree/nvim-web-devicons', opts = {} },
@@ -72,10 +77,13 @@ return {
             opts = { insert = true }, -- Insert nerdfont icon (default) or complete its name
             score_offset = 15, -- tune by preference
           },
+          snippets = {
+            score_offset = 100, -- make snippets completions top priority (see `:h blink.cmp`)
+          },
           lazydev = {
             name = 'LazyDev',
             module = 'lazydev.integrations.blink',
-            score_offset = 100, -- make lazydev completions top priority (see `:h blink.cmp`)
+            score_offset = 90,
           },
           lsp = {
             fallbacks = {}, -- always show the buffer source (defaults to { 'buffer' })
