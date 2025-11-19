@@ -92,6 +92,7 @@ return {
       },
     },
   },
+  { 'fei6409/log-highlight.nvim', opts = {}, },
 
   {
     'iamcco/markdown-preview.nvim', ft = { 'markdown' },
