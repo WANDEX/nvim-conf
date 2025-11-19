@@ -347,3 +347,10 @@ keymap
 keymaps
 boolean
 nodiscard
+readonly
+drmemory
+WIN32
+cryptographic
+unparsed
+minimalistic
+UI
