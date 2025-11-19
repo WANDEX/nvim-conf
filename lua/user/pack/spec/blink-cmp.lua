@@ -50,23 +50,29 @@ return {
     opts = {
       keymap = { -- See :h blink-cmp-config-keymap for defining your own keymap
         preset = 'none', -- set to 'none' to disable the 'default' preset
-        ['<Down>']  = { 'select_next', 'fallback' },
-        ['<Up>']    = { 'select_prev', 'fallback' },
-        ['<C-n>']   = { 'select_next', 'fallback_to_mappings' },
-        ['<C-e>']   = { 'select_prev', 'fallback_to_mappings' },
-        ['<C-k>']   = { 'scroll_documentation_down', 'fallback' },
-        ['<C-j>']   = { 'scroll_documentation_up',   'fallback' },
+        ['<Down>']  = { 'select_next' },
+        ['<Up>']    = { 'select_prev' },
+        ['<C-n>']   = { 'select_next' },
+        ['<C-e>']   = { 'select_prev' },
+        ['<C-k>']   = { 'scroll_documentation_down' },
+        ['<C-j>']   = { 'scroll_documentation_up' },
         ['<C-y>']   = { 'select_and_accept' },
-        ['<C-l>']   = { 'cancel', 'fallback' },
+        ['<C-l>']   = { 'cancel', 'fallback_to_mappings' },
         ['<Tab>']   = { 'snippet_forward',  'fallback' },
         ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
+        ['<M-s>']   = { 'show_signature', 'hide_signature', 'fallback' },
         ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
       },
       cmdline = {
         keymap = { preset = 'inherit' }, -- inherit from top level keymap
+        completion = { menu = { auto_show = false }, },
       },
       appearance = { nerd_font_variant = 'mono' },
-      signature  = { enabled = true },
+      signature = {
+        enabled = true,
+        window  = { max_height = 50, max_width = 200, },
+        trigger = { enabled = true, },
+      },
       snippets   = { preset = 'luasnip' },
       sources = { -- default list of enabled providers
         default = { 'nerdfont', 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
@@ -75,28 +81,32 @@ return {
             module = 'blink-nerdfont',
             name = 'NF',
             opts = { insert = true }, -- Insert nerdfont icon (default) or complete its name
-            score_offset = 15, -- tune by preference
+            min_keyword_length = 3,
+            score_offset = -20, -- tune by preference (low priority)
+          },
+          buffer = {
+            min_keyword_length = 3,
+            score_offset = -5,
           },
           snippets = {
-            score_offset = 100, -- make snippets completions top priority (see `:h blink.cmp`)
+            min_keyword_length = 2,
+            score_offset = -2,
           },
           lazydev = {
             name = 'LazyDev',
             module = 'lazydev.integrations.blink',
-            score_offset = 90,
+            score_offset = 1,
           },
           lsp = {
             fallbacks = {}, -- always show the buffer source (defaults to { 'buffer' })
-          },
-          buffer = {
-            min_keyword_length = 3,
-            score_offset = -5, -- low priority
+            score_offset = 0,
           },
         },
       },
       completion = {
         documentation = { auto_show = true },
         ghost_text = { enabled = true, show_without_menu = true, show_with_menu = true },
+        keyword = { range = 'full' }, -- 'prefix'
         menu = { -- TODO: enable/show menu if word length > 3 chars, otherwise ghost_text only
           auto_show = true, -- only show menu on manual <C-space>
           draw = {
