@@ -2,10 +2,10 @@
 " configuration for the plugin Konfekt/FastFold
 
 " To ensure that sessions do not override the default fold method of the buffer file type (by the value manual)
-set sessionoptions-=folds
+" set sessionoptions-=folds
 
 " does not add default normal mode mapping that updates folds (zuz)
-nmap <SID>(DisableFastFoldUpdate) <Plug>(FastFoldUpdate)
+" nmap <SID>(DisableFastFoldUpdate) <Plug>(FastFoldUpdate)
 
 " fold mappings: go to next/prev folding and unfold it
 nnoremap <silent>zn zczjza
