@@ -1,12 +1,5 @@
 -- AUTHOR: 'WANDEX/nvim-conf'
 
-vim.keymap.set('n', '[d', function()
-  return vim.diagnostic.jump({count=-1, float=false})
-end, { desc = "[LSP] prev diag" })
-vim.keymap.set('n', ']d', function()
-  return vim.diagnostic.jump({count=1,  float=false})
-end, { desc = "[LSP] next diag" })
-
 vim.keymap.set('n', "gK",    function() return vim.lsp.buf.signature_help() end, { desc = "[LSP] Signature Help"})
 vim.keymap.set('i', "<c-k>", function() return vim.lsp.buf.signature_help() end, { desc = "[LSP] Signature Help"})
 

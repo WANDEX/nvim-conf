@@ -177,14 +177,6 @@ vim.keymap.set('n', '[l', '<cmd>lp<CR>', {
   desc = 'Llist prev', silent = true
 })
 
--- MEMO: create Qlist with word :vim bar %
-vim.keymap.set('n', ']q', '<cmd>cn<CR>', {
-  desc = 'Qlist next', silent = true
-}) -- jump to next/prev Quickfix list item :cn,:cp
-vim.keymap.set('n', '[q', '<cmd>cp<CR>', {
-  desc = 'Qlist prev', silent = true
-})
-
 vim.keymap.set('v', '<', '<gv', {
   desc = 'indent selection  left', silent = true
 }) -- easier moving of code blocks, without losing the selection block

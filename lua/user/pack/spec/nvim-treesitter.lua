@@ -14,18 +14,6 @@
 -- https://github.com/latex-lsp/tree-sitter-latex
 
 return {
-  {
-    'ghostbuster91/nvim-next',
-    lazy = false,
-    opts = {
-      default_mappings = {
-        repeat_style = "original",
-      },
-    },
-    config = function(_, opts)
-      require('nvim-next').setup(opts)
-    end,
-  },
 
   {
     'nvim-treesitter/nvim-treesitter',
