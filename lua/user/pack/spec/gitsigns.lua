@@ -38,17 +38,17 @@ return {
       end
 
       -- Navigation
-      map('n', ']c', function()
+      map('n', ']h', function()
         if vim.wo.diff then
-          vim.cmd.normal({']c', bang = true})
+          vim.cmd.normal({']h', bang = true})
         else
           gs.nav_hunk('next')
         end
       end, {desc='gs.nav_hunk("next")'})
 
-      map('n', '[c', function()
-        if vim.wo.diff then
-          vim.cmd.normal({'[c', bang = true})
+      map('n', '[h', function()
+        if vim.wo.diff then --
+          vim.cmd.normal({'[h', bang = true})
         else
           gs.nav_hunk('prev')
         end
@@ -88,8 +88,11 @@ return {
       map('n', '<leader>ab', gs.toggle_current_line_blame, {desc='gs.toggle_current_line_blame'})
       map('n', '<leader>aw', gs.toggle_word_diff, {desc='gs.toggle_word_diff'})
 
-      -- Text object
-      map({'o', 'x'}, 'ih', gs.select_hunk, {desc='gs.select_hunk'})
+      -- Text object (with greedy=false behavior is strange - feels useless!)
+      -- map({'o', 'x'}, 'kh', function() gs.select_hunk({greedy=false}) end, {desc='gs.select_hunk'})
+      -- map({'o', 'x'}, 'ah', function() gs.select_hunk({greedy=true})  end, {desc='gs.select_hunk'})
+      map({'o', 'x'}, 'ah', gs.select_hunk, {desc='gs.select_hunk'})
+      map({'o', 'x'}, 'kh', gs.select_hunk, {desc='gs.select_hunk'})
     end,
   },
 }
