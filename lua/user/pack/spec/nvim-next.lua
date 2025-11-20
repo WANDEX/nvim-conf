@@ -20,21 +20,33 @@ M.map = function(mode, lhs, rhs, opts)
 end
 
 ---wrapper: 'nvim-next.move' make repeatable pair.
----@param cmd_prev string
----@param cmd_next string
+---@param p_rhs string|function
+---@param n_rhs string|function
 ---@return string|function, string|function
-M.make_repeatable_pair_cmd = function(cmd_prev, cmd_next)
+M.make_repeatable_pair = function(p_rhs, n_rhs)
   local _ok, _ = pcall(require,'nvim-next')
   if not _ok then -- => fallback: use standard - not repeatable cmd.
-    return cmd_prev, cmd_next ---@return string, string
+    return p_rhs, n_rhs ---@return string, string
   end -- END sanity checks
   local prev_item, next_item = require('nvim-next.move').make_repeatable_pair(function(_)
-    local ok, err = pcall(vim.cmd, cmd_prev)
+    local ok, _ = false, nil
+    if type(p_rhs) == 'string' then
+      ok, _ = pcall(vim.cmd, p_rhs)
+    end
+    if type(p_rhs) == 'function' then
+      ok, _ = pcall(p_rhs)
+    end
     if not ok then
       vim.notify("[RM] no prev item", vim.log.levels.INFO)
     end
   end, function(_)
-    local ok, err = pcall(vim.cmd, cmd_next)
+    local ok, _ = false, nil
+    if type(n_rhs) == 'string' then
+      ok, _ = pcall(vim.cmd, n_rhs)
+    end
+    if type(n_rhs) == 'function' then
+      ok, _ = pcall(n_rhs)
+    end
     if not ok then
       vim.notify("[RM] no next item", vim.log.levels.INFO)
     end
@@ -46,12 +58,12 @@ end
 ---@param mode  string|string[] -- Mode "short-name" (see |nvim_set_keymap()|), or a list thereof.
 ---@param p_lhs string          -- Left-hand side  |{lhs}| of the mapping.
 ---@param n_lhs string          -- Left-hand side  |{lhs}| of the mapping.
----@param p_rhs string          -- cmd_prev Right-hand side |{rhs}| of the mapping, can be a Lua function.
----@param n_rhs string          -- cmd_next Right-hand side |{rhs}| of the mapping, can be a Lua function.
+---@param p_rhs string|function -- Right-hand side |{rhs}| of the mapping, can be a Lua function.
+---@param n_rhs string|function -- Right-hand side |{rhs}| of the mapping, can be a Lua function.
 ---@param opts  vim.keymap.set.Opts
 ---Do not add surrounding <cmd>COMMAND<CR> -- will not work!
-M.make_repeatable_pair_cmd_map = function(mode, p_lhs, n_lhs, p_rhs, n_rhs, opts)
-  local p_fun, n_fun = M.make_repeatable_pair_cmd(p_rhs, n_rhs)
+M.make_repeatable_pair_map = function(mode, p_lhs, n_lhs, p_rhs, n_rhs, opts)
+  local p_fun, n_fun = M.make_repeatable_pair(p_rhs, n_rhs)
   M.map(mode, p_lhs, p_fun, vim.tbl_extend('force', opts, {desc = opts.desc .. ' prev'}))
   M.map(mode, n_lhs, n_fun, vim.tbl_extend('force', opts, {desc = opts.desc .. ' next'}))
 end
@@ -59,15 +71,14 @@ end
 M.main = function()
   local n = 'n' -- mode: normal
   -- jump to next/prev Quickfix list item :cn,:cp | MEMO: create Qlist with word :vim bar %
-  M.make_repeatable_pair_cmd_map(n, '[q', ']q', 'cp', 'cn', {desc = 'Qlist'})
-  M.make_repeatable_pair_cmd_map(n, '[q', ']q', 'cp', 'cn', {desc = 'Qlist'})
+  M.make_repeatable_pair_map(n, '[q', ']q', 'cp', 'cn', {desc = 'Qlist'})
 
-  vim.keymap.set('n', '[d', function()
+  M.make_repeatable_pair_map('n', '[d', ']d', function()
     return vim.diagnostic.jump({count=-1, float=false})
-  end, { desc = "[LSP] prev diag" })
-  vim.keymap.set('n', ']d', function()
+  end, -- jump to diag prev/next
+  function()
     return vim.diagnostic.jump({count=1,  float=false})
-  end, { desc = "[LSP] next diag" })
+  end, { desc = "[LSP] diag" })
 
 
 end
