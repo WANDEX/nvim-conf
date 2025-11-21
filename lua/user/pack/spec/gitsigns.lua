@@ -5,7 +5,10 @@ return {
   'lewis6991/gitsigns.nvim',
   version = '*',
   lazy = false,
-  dependencies = { 'nvim-lua/plenary.nvim' },
+  dependencies = {
+    { 'nvim-lua/plenary.nvim' },
+    { 'ghostbuster91/nvim-next' }, -- repeat prev/next hunk movements using: ';' ','.
+  },
   opts = {
     signs = {
       add          = { text = '│' },
@@ -37,22 +40,36 @@ return {
         vim.keymap.set(mode, l, r, opts)
       end
 
-      -- Navigation
-      map('n', ']h', function()
-        if vim.wo.diff then
-          vim.cmd.normal({']h', bang = true})
-        else
-          gs.nav_hunk('next')
-        end
-      end, {desc='gs.nav_hunk("next")'})
-
-      map('n', '[h', function()
-        if vim.wo.diff then --
-          vim.cmd.normal({'[h', bang = true})
-        else
-          gs.nav_hunk('prev')
-        end
-      end, {desc='gs.nav_hunk("prev")'})
+      -- navigation next/prev hunk
+      local nvim_next_ok, _ = pcall(require,'nvim-next')
+      if nvim_next_ok then
+        local nngs = require('nvim-next.integrations').gitsigns(gs)
+        map('n', ']h', function()
+          if vim.wo.diff then return ']h' end
+          vim.schedule(function() nngs.next_hunk() end)
+          return '<Ignore>'
+        end, { desc='[RS] hunk next', expr=true })
+        map('n', '[h', function()
+          if vim.wo.diff then return '[h' end
+          vim.schedule(function() nngs.prev_hunk() end)
+          return '<Ignore>'
+        end, { desc='[RS] hunk prev', expr=true })
+      else
+        map('n', ']h', function()
+          if vim.wo.diff then
+            vim.cmd.normal({']h', bang = true})
+          else
+            gs.nav_hunk('next')
+          end
+        end, { desc='gs.nav_hunk("next")' })
+        map('n', '[h', function()
+          if vim.wo.diff then --
+            vim.cmd.normal({'[h', bang = true})
+          else
+            gs.nav_hunk('prev')
+          end
+        end, { desc='gs.nav_hunk("prev")' })
+      end
 
       -- Actions
       map('n', '<leader>hs', gs.stage_hunk, {desc='gs.stage_hunk'})
