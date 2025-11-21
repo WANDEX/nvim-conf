@@ -64,7 +64,11 @@ return {
         ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
       },
       cmdline = {
-        keymap = { preset = 'inherit' }, -- inherit from top level keymap
+        keymap = {
+          preset = 'inherit',
+          ['<C-n>'] = { 'select_next', 'fallback_to_mappings' }, -- fallback fixes this mapping!
+          ['<C-e>'] = { 'select_prev', 'fallback_to_mappings' }, -- fallback fixes this mapping!
+        }, -- inherit from top level keymap
         completion = { menu = { auto_show = false }, },
       },
       appearance = { nerd_font_variant = 'mono' },
