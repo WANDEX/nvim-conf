@@ -12,6 +12,14 @@
 -- https://github.com/alex-pinkus/tree-sitter-swift
 -- https://github.com/euclidianAce/tree-sitter-teal
 -- https://github.com/latex-lsp/tree-sitter-latex
+--
+-- NOTE:
+-- You can pass a query group to use query from
+-- `queries/<lang>/<query_group>.scm file in your runtime path.
+-- Below example nvim-treesitter's `locals.scm` and `folds.scm`.
+-- They also provide highlights.scm and indent.scm.
+-- ["]s"] = { query = "@local.scope", query_group = "locals", desc = "Next scope" },
+-- ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
 
 return {
 
@@ -129,6 +137,15 @@ return {
     lazy = false,
     opts = {
       textobjects = {
+        lsp_interop = {
+          enable = true,
+          border = 'rounded',
+          floating_preview_opts = {},
+          peek_definition_code = {
+            ["<leader>lf"] = { query = "@function.outer", desc = "[LSP] peek function" },
+            ["<leader>lF"] = { query = "@class.outer",    desc = "[LSP] peek class" },
+          },
+        },
         select = {
           enable = true,
           lookahead = true, -- automatically jump forward to textobj, similar to targets.vim
@@ -154,39 +171,36 @@ return {
           move = {
             enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
-            goto_next_start = {
-              ["]m"] = "@function.outer",
-              ["]]"] = { query = "@class.outer", desc = "Next class start" },
-              --
-              -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queries.
-              ["]o"] = "@loop.*",
-              -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
-              --
-              -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
-              -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
-              ["]s"] = { query = "@local.scope", query_group = "locals", desc = "Next scope" },
-              ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
-            },
-            goto_next_end = {
-              ["]M"] = "@function.outer",
-              ["]["] = "@class.outer",
+            goto_next_start = { -- FIXME: dunno why, but: ]m ]M are still mapped!
+              ["]c"] = { query = "@class.outer", desc = "next class start" },
+              ["]f"] = { query = "@function.outer", desc = "next func start" },
+              ["]z"] = { query = "@fold", query_group = "folds", desc = "next fold" },
             },
             goto_previous_start = {
-              ["[m"] = "@function.outer",
-              ["[["] = "@class.outer",
+              ["[c"] = { query = "@class.outer", desc = "prev class start" },
+              ["[f"] = { query = "@function.outer", desc = "prev func start" },
+              ["[z"] = { query = "@fold", query_group = "folds", desc = "prev fold"  },
+            },
+            goto_next_end = {
+              ["]C"] = { query = "@class.outer", desc = "next class end" },
+              ["]F"] = { query = "@function.outer", desc = "next func end" },
             },
             goto_previous_end = {
-              ["[M"] = "@function.outer",
-              ["[]"] = "@class.outer",
+              ["[C"] = { query = "@class.outer", desc = "prev class end" },
+              ["[F"] = { query = "@function.outer", desc = "prev func end" },
             },
             -- Below will go to either the start or the end, whichever is closer.
             -- Use if you want more granular movements
             -- Make it even more gradual by adding multiple queries and regex.
             goto_next = {
-              ["]c"] = "@conditional.outer",
+              ["]o"] = { query = "@conditional.outer", desc = "next cond" },
+              ["]O"] = { query = { "@loop.outer", "@loop.inner" }, desc = "next loop" }, -- same ["]O"] = "@loop.*",
+              ["]s"] = { query = "@local.scope", query_group = "locals", desc = "next scope" },
             },
             goto_previous = {
-              ["[c"] = "@conditional.outer",
+              ["[o"] = { query = "@conditional.outer", desc = "prev cond" },
+              ["[O"] = { query = { "@loop.outer", "@loop.inner" }, desc = "prev loop" }, -- same ["]O"] = "@loop.*",
+              ["[s"] = { query = "@local.scope", query_group = "locals", desc = "prev scope" },
             }
           }, -- END nvim_next.textobjects.move
         }, -- END nvim_next.textobjects
