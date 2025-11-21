@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
       if not ok_name then
         return ''
       end -- original window title, before modification by the vim.opt.titlestring.
-      return win_wm_name:split_to_table(' = "')[2]
+      return win_wm_name:split_to_table(' = "')[2] ---@diagnostic disable-line: param-type-mismatch
     end
     local orig_title = xorg_get_win_title()
     if orig_title == '' then
