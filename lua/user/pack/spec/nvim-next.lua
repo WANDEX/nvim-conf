@@ -1,10 +1,7 @@
 -- AUTHOR: 'WANDEX/nvim-conf'
+-- spec 'ghostbuster91/nvim-next'
 
 local M = {}
-
-M.def_map_tbl = {
-  desc = '',
-}
 
 ---wrapper: vim.keymap.set() - Defines a |mapping| of |keycodes| to a function or keycodes.
 ---@param mode  string|string[] -- Mode "short-name" (see |nvim_set_keymap()|), or a list thereof.
@@ -19,9 +16,9 @@ M.map = function(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, mrg_opts)
 end
 
----wrapper: 'nvim-next.move' make repeatable pair.
----@param p_rhs string|function
----@param n_rhs string|function
+---wrapper: 'nvim-next.move' make repeatable pair cmd/function.
+---@param p_rhs string|function -- prev Right-hand side |{rhs}| of the mapping, can be a Lua function.
+---@param n_rhs string|function -- next Right-hand side |{rhs}| of the mapping, can be a Lua function.
 ---@return string|function, string|function
 M.make_repeatable_pair = function(p_rhs, n_rhs)
   local _ok, _ = pcall(require,'nvim-next')
@@ -31,7 +28,7 @@ M.make_repeatable_pair = function(p_rhs, n_rhs)
   local prev_item, next_item = require('nvim-next.move').make_repeatable_pair(function(_)
     local ok, _ = false, nil
     if type(p_rhs) == 'string' then
-      ok, _ = pcall(vim.cmd, p_rhs)
+      ok, _ = pcall(vim.cmd, p_rhs) ---@diagnostic disable-line: param-type-mismatch
     end
     if type(p_rhs) == 'function' then
       ok, _ = pcall(p_rhs)
@@ -42,7 +39,7 @@ M.make_repeatable_pair = function(p_rhs, n_rhs)
   end, function(_)
     local ok, _ = false, nil
     if type(n_rhs) == 'string' then
-      ok, _ = pcall(vim.cmd, n_rhs)
+      ok, _ = pcall(vim.cmd, n_rhs) ---@diagnostic disable-line: param-type-mismatch
     end
     if type(n_rhs) == 'function' then
       ok, _ = pcall(n_rhs)
@@ -54,12 +51,12 @@ M.make_repeatable_pair = function(p_rhs, n_rhs)
   return prev_item, next_item
 end
 
----make repeatable pair cmd and map.
+---make repeatable pair cmd/function and map it.
 ---@param mode  string|string[] -- Mode "short-name" (see |nvim_set_keymap()|), or a list thereof.
----@param p_lhs string          -- Left-hand side  |{lhs}| of the mapping.
----@param n_lhs string          -- Left-hand side  |{lhs}| of the mapping.
----@param p_rhs string|function -- Right-hand side |{rhs}| of the mapping, can be a Lua function.
----@param n_rhs string|function -- Right-hand side |{rhs}| of the mapping, can be a Lua function.
+---@param p_lhs string          -- prev Left-hand side  |{lhs}| of the mapping.
+---@param n_lhs string          -- next Left-hand side  |{lhs}| of the mapping.
+---@param p_rhs string|function -- prev Right-hand side |{rhs}| of the mapping, can be a Lua function.
+---@param n_rhs string|function -- next Right-hand side |{rhs}| of the mapping, can be a Lua function.
 ---@param opts  vim.keymap.set.Opts
 ---Do not add surrounding <cmd>COMMAND<CR> -- will not work!
 M.make_repeatable_pair_map = function(mode, p_lhs, n_lhs, p_rhs, n_rhs, opts)
@@ -70,6 +67,7 @@ end
 
 M.main = function()
   local n = 'n' -- mode: normal
+
   -- jump to next/prev Quickfix list item :cn,:cp | MEMO: create Qlist with word :vim bar %
   M.make_repeatable_pair_map(n, '[q', ']q', 'cp', 'cn', {desc = 'Qlist'})
 
@@ -79,7 +77,6 @@ M.main = function()
   function()
     return vim.diagnostic.jump({count=1,  float=false})
   end, { desc = "[LSP] diag" })
-
 
 end
 
