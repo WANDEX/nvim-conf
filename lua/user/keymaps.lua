@@ -145,7 +145,7 @@ vim.keymap.set('n', '<C-w>L', '<nop>')
 -- END [DISABLE_DEFAULT_MAPPING]
 
 --============================================================================
--- next/prev keymaps
+-- prev/next keymaps
 --============================================================================
 
 vim.keymap.set('!', '<C-n>', '<C-n>', {
@@ -153,28 +153,6 @@ vim.keymap.set('!', '<C-n>', '<C-n>', {
 }) -- Insert, Command -- next/prev -- command, completion, etc.
 vim.keymap.set('!', '<C-e>', '<C-p>', {
   desc = 'prev', silent = false
-})
-
-vim.keymap.set('n', ']b', '<cmd>bn<CR>', {
-  desc = 'buf next', silent = true
-}) -- move to next/prev bufpage :bnext,:bprev
-vim.keymap.set('n', '[b', '<cmd>bp<CR>', {
-  desc = 'buf prev', silent = true
-})
-
-vim.keymap.set('n', ']t', '<cmd>tabn<CR>', {
-  desc = 'tab next', silent = true
-}) -- move to next/prev tab :tabnext,:tabprevious
-vim.keymap.set('n', '[t', '<cmd>tabp<CR>', {
-  desc = 'tab prev', silent = true
-})
-
--- MEMO: create Llist with word :lvim bar %
-vim.keymap.set('n', ']l', '<cmd>lne<CR>', {
-  desc = 'Llist next', silent = true
-}) -- jump to next/prev Location list item :lne,:lp
-vim.keymap.set('n', '[l', '<cmd>lp<CR>', {
-  desc = 'Llist prev', silent = true
 })
 
 vim.keymap.set('v', '<', '<gv', {

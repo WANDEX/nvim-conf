@@ -65,13 +65,25 @@ M.make_repeatable_pair_map = function(mode, p_lhs, n_lhs, p_rhs, n_rhs, opts)
   M.map(mode, n_lhs, n_fun, vim.tbl_extend('force', opts, {desc = opts.desc .. ' next'}))
 end
 
+--============================================================================
+-- repeatable prev/next keymaps
+--============================================================================
 M.main = function()
   local n = 'n' -- mode: normal
 
-  -- jump to next/prev Quickfix list item :cn,:cp | MEMO: create Qlist with word :vim bar %
-  M.make_repeatable_pair_map(n, '[q', ']q', 'cp', 'cn', {desc = 'Qlist'})
+  -- move to prev/next bufpage :bprev, :bnext
+  M.make_repeatable_pair_map(n, '[b', ']b', 'bp', 'bn',     {desc='buf'})
 
-  M.make_repeatable_pair_map('n', '[d', ']d', function()
+  -- move to prev/next tab :tabprevious, :tabnext
+  M.make_repeatable_pair_map(n, '[t', ']t', 'tabp', 'tabn', {desc='tab'})
+
+  -- jump to prev/next Location list item :lp, :lne | MEMO: create Llist with word :lvim bar %
+  M.make_repeatable_pair_map(n, '[l', ']l', 'lp', 'lne',    {desc='Llist'})
+
+  -- jump to prev/next Quickfix list item :cn,:cp | MEMO: create Qlist with word :vim bar %
+  M.make_repeatable_pair_map(n, '[q', ']q', 'cp', 'cn',     {desc='Qlist'})
+
+  M.make_repeatable_pair_map(n, '[d', ']d', function()
     return vim.diagnostic.jump({count=-1, float=false})
   end, -- jump to diag prev/next
   function()
