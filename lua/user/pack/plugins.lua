@@ -16,7 +16,6 @@ return {
   },
 
   -- format
-  { 'sbdchd/neoformat' },
   { 'scrooloose/nerdcommenter' },
 
   -- syntax
