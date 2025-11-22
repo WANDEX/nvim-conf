@@ -13,6 +13,7 @@ function M.load(opts)
     spec = {
       { import = 'user.pack' },
       { import = 'user.pack.spec' },
+      { import = 'user.pack.spec.fmt' },
     },
     git = {
       log = { '-8' }, -- show last 8 commits
