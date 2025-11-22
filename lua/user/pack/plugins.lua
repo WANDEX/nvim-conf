@@ -15,9 +15,6 @@ return {
     -- enabled = false, -- FIXME throws error if enabled & setup{}
   },
 
-  -- format
-  { 'scrooloose/nerdcommenter' },
-
   -- syntax
   { 'justinmk/vim-syntax-extra' },
   { 'kovetskiy/sxhkd-vim', ft='sxhkd', },

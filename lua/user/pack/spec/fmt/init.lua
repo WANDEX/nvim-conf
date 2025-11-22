@@ -37,5 +37,18 @@ return {
     },
   },
 
+  -- { 'scrooloose/nerdcommenter' }, -- replaced by another comments plugin
+
+  {
+    'folke/ts-comments.nvim',
+    lazy = false,
+    opts = {},
+    enabled = vim.fn.has('nvim-0.10.0') == 1,
+    dependencies = {
+      { 'nvim-treesitter/nvim-treesitter' }, -- treesitter-parsers must be installed!
+      -- { 'JoosepAlviste/nvim-ts-context-commentstring' }, -- XXX: not sure that it is needed
+    },
+  },
+
   -- { },
 }
