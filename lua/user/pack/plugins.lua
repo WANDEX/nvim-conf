@@ -19,53 +19,6 @@ return {
   { 'sbdchd/neoformat' },
   { 'scrooloose/nerdcommenter' },
 
-  { -- trim_trailing_whitespace respecting .editorconfig rules. (editorconfig support is built-in neovim).
-    'mcauley-penney/tidy.nvim',
-    -- commit = '31f95306ffd408ed4bb5185e8ec3bab9516ad34c', -- 2025 April 14
-    lazy = false,
-    opts = {
-      enabled_on_save = true,
-      -- variable name is misleading! Without it tidy.nvim.toggle() not works!
-      provide_undefined_editorconfig_behavior = true, -- trim ws at EOF
-      -- this exclude - not overrides rules defined in .editorconfig!
-      filetype_exclude = { 'diff', 'markdown' },
-    },
-    config = true,
-    keys = {
-      { -- buffer toggle trimming of whitespaces at the EOF
-        mode = 'n', '<localleader>we', function()
-          local tidy = require('tidy')
-          local opts = tidy.opts
-          local new_state = not opts.provide_undefined_editorconfig_behavior
-          opts.provide_undefined_editorconfig_behavior = new_state
-          tidy.setup(opts)
-          vim.notify("ws trim at EOF = " .. string.format("%s", new_state),
-            vim.log.levels.INFO, {title = "WNDX"}
-          )
-        end, desc = 'ws toggle  at EOF buf',
-      },
-      { -- buffer force one-shot/manual whitespaces trim
-        mode = 'n', '<localleader>wf', function()
-          require('tidy').run({trim_ws = true})
-        end, desc = 'ws force one-shot buf',
-      },
-      { -- buffer toggle trim of whitespaces + toggle built-in neovim property per buffer
-        mode = 'n', '<localleader>wt', function(bufnr)
-          local tidy = require('tidy')
-          if vim.b.editorconfig.trim_trailing_whitespace == nil then
-            return -- cancel => ^ variable not specified in .editorconfig
-          end
-          tidy.toggle()
-          local be_ttw_str = string.format("%s", tidy.opts.enabled_on_save)
-          require('editorconfig').properties.trim_trailing_whitespace(bufnr, be_ttw_str)
-          vim.notify("trim_trailing_whitespace = " .. be_ttw_str,
-            vim.log.levels.INFO, {title = "WNDX"}
-          )
-        end, desc = 'ws toggle trim ws buf',
-      },
-    },
-  },
-
   -- syntax
   { 'justinmk/vim-syntax-extra' },
   { 'kovetskiy/sxhkd-vim', ft='sxhkd', },
@@ -113,27 +66,6 @@ return {
     },
   },
 
-  -- motion
-  { 'justinmk/vim-sneak', -- replace f/F t/T with one-character Sneak
-    lazy = false,
-    keys = { -- not map in Select mode (to not break snippets expansion)
-      { mode = { 'n', 'x', 'o' }, 'f', '<Plug>Sneak_f', },
-      { mode = { 'n', 'x', 'o' }, 'F', '<Plug>Sneak_F', },
-      { mode = { 'n', 'x', 'o' }, 't', '<Plug>Sneak_t', },
-      { mode = { 'n', 'x', 'o' }, 'T', '<Plug>Sneak_T', },
-    },
-  },
-  { 'christoomey/vim-sort-motion' },
-  { 'christoomey/vim-titlecase' },
-  { 'tpope/vim-surround' },
-  { 'tpope/vim-repeat' },
-  { 'glts/vim-radical', dependencies = { 'glts/vim-magnum' } }, -- gA, crd, crx, cro, crb
-
-  -- folding
-  -- FIXME: pin -> to not try updating it. Till fix arrive (kalekundert/vim-coiled-snake/issues/33)
-  { 'kalekundert/vim-coiled-snake', pin=true, ft='python', }, -- python code folding
-  { 'Konfekt/FastFold' }, -- remove default: 'zj', 'zk' movements -> breaks vim-sneak dz.. yz.. mappings!
-
   -- other
   { 'airblade/vim-rooter' }, -- auto cwd to the project root
   { 'voldikss/vim-translator' },
@@ -175,32 +107,6 @@ return {
   },
 
   { 'windwp/nvim-autopairs', event = 'InsertEnter', config = true, enabled = false }, -- XXX
-
-  {
-    'rmagatti/auto-session',
-    lazy = false,
-    enabled = true,
-    ---enables autocomplete for opts
-    ---@module "auto-session"
-    ---@type AutoSession.Config
-    opts = {
-      enabled = true,
-      root_dir = require('user.fn').path.concat({ vim.fn.stdpath('data'), 'sessions' }),
-      auto_save = true,
-      auto_restore = true,
-      auto_create = false,
-      log_level = 'error',
-      session_lens = {
-        previewer = false,
-        path_display = { 'shorten' },
-        theme_conf = { border = false },
-      },
-    },
-    config = function(_, opts) -- Recommended sessionoptions config
-      vim.o.sessionoptions='blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
-      require('auto-session').setup(opts)
-    end,
-  },
 
   -- completion
   { 'neovim/nvim-lspconfig' }, -- Collection of configurations for built-in LSP client

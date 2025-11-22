@@ -102,6 +102,7 @@ return {
       { "<leader>Tvp", "<cmd>lua require'telescope.builtin'.oldfiles{}<CR>", desc = "prev opened files" },
       { "<leader>Tvr", "<cmd>lua require'telescope.builtin'.registers{}<CR>", desc = "registers" },
       { "<leader>Tvs", "<cmd>lua require'telescope.builtin'.search_history{}<CR>", desc = "search history" },
+      { "<leader>TG", group = "GrugFar" },
 
       { -- translate normal mode
         mode = { "n" },
