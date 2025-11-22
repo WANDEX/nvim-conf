@@ -156,6 +156,9 @@ local function highlights()
 
   mod_hl("IndentGuidesOdd",  te(nobg, {fg='#282a36', ctermfg=238, nocombine=true}))
   mod_hl("IndentGuidesEven", te(nobg, {fg='#383a46', ctermfg=242, nocombine=true}))
+
+  mod_hl("DRED",  te(nobg, w.dred, rvrs))
+  mod_hl("LRED",  te(nobg, w.lred, rvrs))
 end
 
 vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
