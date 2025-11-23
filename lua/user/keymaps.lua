@@ -173,10 +173,6 @@ vim.keymap.set('n', '<M-O>', 'mjO<Esc>`j', {
 -- Function keys
 --============================================================================
 
-vim.keymap.set('n', '<F3>', '<cmd>TagbarToggle<CR>', {
-  desc = 'TagbarToggle'
-})
-
 vim.keymap.set('n', '<F4>', '<cmd>set relativenumber!<CR>', {
   desc = 'set relativenumber!'
 })

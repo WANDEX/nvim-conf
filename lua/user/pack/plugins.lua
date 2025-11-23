@@ -70,7 +70,6 @@ return {
       vim.cmd('silent! XTabMode buffers') -- fix: set default mode to buffers
     end,
   },
-  { 'preservim/tagbar' },
   { 'justinmk/vim-gtfo', enabled = false }, -- XXX
   { 'farmergreg/vim-lastplace' },
 
