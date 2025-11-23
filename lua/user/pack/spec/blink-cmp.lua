@@ -39,9 +39,9 @@ return {
           { 'rafamadriz/friendly-snippets' }, -- snippets collection "from_vscode"
         },
       },
-      { 'xzbdmw/colorful-menu.nvim',   opts = {}, config = true, },
+      { 'xzbdmw/colorful-menu.nvim',   opts = {}, config = true },
       { 'nvim-tree/nvim-web-devicons', opts = {} },
-      { 'onsails/lspkind.nvim', opts = { mode = 'symbol', preset = 'codicons' } },
+      { 'onsails/lspkind.nvim' },
       { 'MahanRahmati/blink-nerdfont.nvim' }, -- trigger on colon : symbol name
     },
 
@@ -140,7 +140,8 @@ return {
                   else
                     icon = require('lspkind').symbolic(ctx.kind, { mode = 'symbol' })
                   end
-                  return icon .. ' ' -- or ctx.icon_gap
+                  -- return icon .. ' ' -- or ctx.icon_gap
+                  return icon -- in my lspkind conf I already appended ' ' to the each symbol
                 end,
                 -- Optionally, use the highlight groups from nvim-web-devicons
                 -- You can also add the same function for `kind.highlight` if you want to
