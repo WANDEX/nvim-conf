@@ -49,19 +49,6 @@ return {
     build = ':call mkdp#util#install()', -- else run manually :Lazy build markdown-preview.nvim
   },
 
-  { -- new text objects | more info: 'https://github.com/kana/vim-textobj-user/wiki'
-    'kana/vim-textobj-user', lazy = false, -- CORE plugin
-    enabled = false, -- XXX
-    dependencies = {
-      { 'glts/vim-textobj-comment'  }, -- ac/ic aC
-      { 'kana/vim-textobj-diff'     }, -- adh/idh
-      { 'kana/vim-textobj-entire'   }, -- ae/ie
-      { 'kana/vim-textobj-indent'   }, -- ai/ii aI/iI
-      { 'kana/vim-textobj-line'     }, -- al/il
-      { 'bps/vim-textobj-python', ft='python' }, -- af/if ac/ic [pf/]pf [pc/]pc
-    },
-  },
-
   -- other
   { 'airblade/vim-rooter' }, -- auto cwd to the project root
   { 'voldikss/vim-translator' },
