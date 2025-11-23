@@ -18,6 +18,8 @@
 "
 " See ':help listtoggle' for more information.
 
+finish "<< finish file processing here -- replaced by 'stevearc/quicker.nvim'
+
 if exists('g:loaded_listtoggle')
   finish
 endif
