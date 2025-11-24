@@ -11,9 +11,11 @@ function M.load(opts)
       root = require('user.fn').path.concat({ vim.fn.stdpath('data'), 'pack', 'lazy', 'lazy-rocks' }),
     },
     spec = {
-      { import = 'user.pack' },
-      { import = 'user.pack.spec' },
       { import = 'user.pack.spec.fmt' },
+      { import = 'user.pack.spec.git' },
+      { import = 'user.pack.spec.int' },
+      { import = 'user.pack.spec.oth' },
+      { import = 'user.pack.spec.vis' },
     },
     git = {
       log = { '-8' }, -- show last 8 commits
@@ -22,7 +24,7 @@ function M.load(opts)
     diff = { -- diff command <d> can be one of:
       -- * git: will run git diff and open a buffer with filetype git
       -- * diffview.nvim: will open Diffview to show the diff
-      cmd = 'git',
+      cmd = 'diffview.nvim',
     },
     performance = {
       rtp = {
