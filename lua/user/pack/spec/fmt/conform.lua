@@ -1,5 +1,7 @@
 -- AUTHOR: 'WANDEX/nvim-conf'
 -- spec 'stevearc/conform.nvim'
+--
+-- MEMO: install formatters via :Mason 'mason-org/mason.nvim'
 
 return {
   'stevearc/conform.nvim',
@@ -12,10 +14,10 @@ return {
       bash        = { 'shfmt' },
       c           = { 'clang-format' },
       cpp         = { 'clang-format' },
-      -- javascript  = { 'prettierd', 'prettier', stop_after_first = true },
+      javascript  = { 'prettierd', 'prettier', stop_after_first = true },
       lua         = { 'stylua' },
       mksh        = { 'shfmt' },
-      python      = { 'ruff', 'ruff_organize_imports', 'ruff_fix', 'ruff_format' }, -- maybe just 'ruff'?
+      python      = { 'ruff_organize_imports', 'ruff_format' },
       sh          = { 'shfmt' },
     },
     default_format_opts = { -- Set default options
@@ -44,7 +46,7 @@ return {
   end,
   keys = {
     {
-      mode = 'n', '<leader>af', function()
+      mode = {'n', ''}, '<leader>af', function()
         require('conform').format({ async = true })
       end, desc = 'format one-shot buf',
     },
