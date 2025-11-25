@@ -4,7 +4,7 @@
 -- copied from lspkind src, but, added a modified *_mod kinds!
 -- added extra ' ' after each icon, to properly fit without cutting the symbol.
 -- meant for the nerd fonts with explicitly bigger icons size! ~2 term cols width.
-KIND_PRESETS = {
+local kind_presets = {
   default = {
     Text = "󰉿 ",
     Method = "󰆧 ",
@@ -94,6 +94,6 @@ return {
   opts = {
     mode = 'symbol',
     -- preset = 'codicons',
-    symbol_map = KIND_PRESETS.codicons_mod,
+    symbol_map = kind_presets.codicons_mod,
   },
 }
