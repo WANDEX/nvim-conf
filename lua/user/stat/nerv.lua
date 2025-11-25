@@ -3,6 +3,33 @@
 
 local M = {}
 
+function M.lsp_attached()
+  local bufnr = vim.api.nvim_get_current_buf()
+  return next(vim.lsp.get_clients({ bufnr = bufnr })) ~= nil
+end
+
+function M.formatters_attached()
+  local conform_ok, conform = pcall(require, 'conform')
+  if not conform_ok then
+    return false
+  end
+  local bufnr = vim.api.nvim_get_current_buf()
+  return next(conform.list_formatters_for_buffer(bufnr)) ~= nil
+end
+
+function M.linters_attached()
+  local lint_ok, lint = pcall(require, 'lint')
+  if not lint_ok then
+    return false
+  end
+  local bufnr = vim.api.nvim_get_current_buf()
+  local linters = lint.get_running(bufnr) ---@type string[]
+  if #linters == 0 then
+    return false
+  end
+  return true
+end
+
 function M.setup_colors()
   local utils = require("heirline.utils")
   return {
@@ -291,15 +318,42 @@ function M.statusline()
     provider = "%3(%l%)/%-3(%L%):%2c %3(%p%)%%",
   }
 
-  local LSPActive = {
-    condition = conditions.lsp_attached,
-    provider = function(bufnr)
-      local names = {}
-      local clients = vim.lsp.get_clients({bufnr}) ---@class vim.lsp.Client
-      if not clients then
-        return "❓" -- unexpected as conditions.lsp_attached is used!
-      -- else return "[LSP]" -- uncomment - might be as simple as this
+  local FormattersActive = {
+    condition = M.formatters_attached,
+    provider = function()
+      local bufnr = vim.api.nvim_get_current_buf()
+      local formatters = require('conform').list_formatters_for_buffer(bufnr)
+      local sico = ' ' --  
+      if vim.g.autoformat then -- autoformat on save is enabled
+        sico = sico .. '󱡝 ' -- indicator: global
       end
+      if vim.b[bufnr].autoformat then
+        sico = sico .. '󰚤 ' -- indicator: buffer-local
+      end
+      return sico .. table.concat(formatters, ' ') .. ' '
+    end,
+    hl = { fg = colors.f.orange, bold = false },
+  }
+
+  local LintersActive = {
+    condition = M.linters_attached,
+    provider = function()
+      local bufnr = vim.api.nvim_get_current_buf()
+      local linters = require('lint').get_running(bufnr) ---@type string[]
+      if #linters == 0 then
+        return '󰦕 '
+      end
+      return '󰦕 ' .. table.concat(linters, ' ') .. ' '
+    end,
+    hl = { fg = colors.f.fg_green, bold = false },
+  }
+
+  local LSPActive = {
+    condition = M.lsp_attached,
+    provider = function()
+      local bufnr = vim.api.nvim_get_current_buf()
+      local names = {}
+      local clients = vim.lsp.get_clients({bufnr = bufnr}) ---@class vim.lsp.Client
       for _, client in ipairs(clients) do
         if not client.config then
           table.insert(names, "💀") -- unexpected!
@@ -312,7 +366,7 @@ function M.statusline()
         table.insert(names, client.config.name)
         ::continue::
       end
-      return "󰢻 [" .. table.concat(names, " ") .. "] "
+      return ' ' .. table.concat(names, ' ') .. ' '
     end,
     hl = { fg = colors.f.green, bold = false },
   }
@@ -529,9 +583,9 @@ function M.statusline()
     Space, -- for the same indent from right as with RSD in DefaultStatusline
   }
 
-  ViMode = utils.surround({ "", "" }, colors.f.black, { ViMode })
-  LSD    = utils.surround({ "", "" }, colors.f.black, { LS })
-  RSD    = utils.surround({ "", "" }, colors.f.black, { RS })
+  ViMode    = utils.surround({ '', '' }, colors.f.black, { ViMode })
+  local LSD = utils.surround({ '', '' }, colors.f.black, { LS })
+  local RSD = utils.surround({ '', '' }, colors.f.black, { RS })
 
   local DefaultStatusline = {
     ViMode,
@@ -543,6 +597,8 @@ function M.statusline()
     Align,
     DAPMessages,
     Align,
+    FormattersActive,
+    LintersActive,
     LSPActive,
     RSD,
   }
