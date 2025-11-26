@@ -23,7 +23,7 @@ function M.path.concat(path_components)
 end
 
 --- write file preserving old modification time.
-M.wfpmt = function()
+function M.wfpmt()
   local fpath = vim.api.nvim_buf_get_name(0) -- current buffer file full path
   local mtime = vim.fn.getftime(fpath)       -- file modification time
   vim.cmd("write")
@@ -67,7 +67,7 @@ end
 --- get clipboard content, split multiline string by NL and return as array of strings.
 ---@nodiscard
 ---@return string[]
-M.get_clip_content_as_table_split_by_nl = function()
+function M.get_clip_content_as_table_split_by_nl()
   -- multiline string must be converted to table of lines (req. by luasnip snippets etc.)
   -- unlike with vim.fn.system(), multiline string is split by NL into |List| (array of strings).
   return vim.fn.systemlist('xsel -bo')
