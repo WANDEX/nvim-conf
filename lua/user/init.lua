@@ -3,7 +3,7 @@
 require 'user.options'
 require 'user.keymaps'
 
-require 'user.globals' -- setup globals expected to be always available.
+require 'user.globals'
 require 'user.lsp'
 require 'user.pack'
 

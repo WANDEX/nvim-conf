@@ -7,7 +7,7 @@ local lazy_path = function()
   return require('user.lib.fn').path.concat({ vim.fn.stdpath('data'), 'pack', 'lazy', 'lazy.nvim' })
 end
 
--- bootstrap lazy.nvim
+--- bootstrap lazy.nvim
 local download_lazy_nvim = function()
   if vim.fn.input "Download lazy.nvim? (y for yes): " ~= "y" then
     return
@@ -32,7 +32,8 @@ local download_lazy_nvim = function()
   end
 end
 
----@return boolean result lazy.nvim plugin not found.
+---@nodiscard
+---@return boolean bootstrap if package manager plugin not found.
 return function()
   vim.opt.rtp:prepend(lazy_path())
   if not pcall(require, 'lazy') then
