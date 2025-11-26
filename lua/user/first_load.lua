@@ -4,7 +4,7 @@
 ---@return string path lazy.nvim plugin.
 local lazy_path = function()
   -- return vim.fn.stdpath('data') .. '/pack/lazy/lazy.nvim'
-  return require('user.fn').path.concat({ vim.fn.stdpath('data'), 'pack', 'lazy', 'lazy.nvim' })
+  return require('user.lib.fn').path.concat({ vim.fn.stdpath('data'), 'pack', 'lazy', 'lazy.nvim' })
 end
 
 -- bootstrap lazy.nvim

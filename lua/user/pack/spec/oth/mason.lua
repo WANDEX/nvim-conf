@@ -5,7 +5,7 @@ return {
   'mason-org/mason.nvim',
   opts = {
     -- the directory in which to install packages.
-    install_root_dir = require('user.fn').path.concat({ vim.fn.stdpath('data'), 'pack', 'mason' }),
+    install_root_dir = require('user.lib.fn').path.concat({ vim.fn.stdpath('data'), 'pack', 'mason' }),
 
     ---@type '"prepend"' | '"append"' | '"skip"'
     PATH = "prepend",

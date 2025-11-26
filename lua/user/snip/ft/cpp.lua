@@ -14,7 +14,7 @@ local nl = function(text) -- new line
   return t { '', text }
 end
 
-local fn = require('user.fn')
+local fn = require('user.lib.fn')
 
 
 ls.filetype_extend('c', { 'cpp' }) -- to have the same snippets in ft=c

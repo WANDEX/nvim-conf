@@ -123,7 +123,7 @@ return {
         additional_vim_regex_highlighting = false, -- +syntax => slow down / duplicate highlights
       },
       -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-      -- parser_install_dir = require('user.fn').path.concat({ vim.fn.stdpath('data'), 'pack', 'parser' }),
+      -- parser_install_dir = require('user.lib.fn').path.concat({ vim.fn.stdpath('data'), 'pack', 'parser' }),
     },
     config = function(_, opts)
       require('nvim-treesitter.configs').setup(opts)

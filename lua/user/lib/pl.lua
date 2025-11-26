@@ -1,7 +1,7 @@
 -- AUTHOR: 'WANDEX/nvim-conf'
 -- platform specific code
 
-local ufn = require 'user.fn'
+local ufn = require 'user.lib.fn'
 
 local M = {
   os = {}, -- Operating System

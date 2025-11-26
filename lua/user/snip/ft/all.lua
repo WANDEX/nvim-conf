@@ -14,7 +14,7 @@ local nl = function(text) -- new line
   return t { '', text }
 end
 
--- local fn = require('user.fn')
+-- local fn = require('user.lib.fn')
 
 local ft_comment_str = function(comment_str)
   comment_str = comment_str or '' -- vim.bo.commentstring == '-- %s'

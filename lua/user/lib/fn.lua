@@ -30,7 +30,6 @@ function M.wfpmt()
   vim.fn.system(string.format('touch -d @%s "%s"', mtime, fpath)) -- set back old mtime
   vim.cmd("edit") -- reload file after it has been changed
 end
-vim.api.nvim_create_user_command('W', "lua require('user.fn').wfpmt()", {})
 
 --- split string by the separator sequence into array of strings.
 --- (global function) version specifically for working with lua string.

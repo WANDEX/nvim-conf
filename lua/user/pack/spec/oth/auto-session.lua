@@ -10,7 +10,7 @@ return {
   ---@type AutoSession.Config
   opts = {
     enabled = true,
-    root_dir = require('user.fn').path.concat({ vim.fn.stdpath('data'), 'sessions' }),
+    root_dir = require('user.lib.fn').path.concat({ vim.fn.stdpath('data'), 'sessions' }),
     auto_save = true,
     auto_restore = true,
     auto_create = false,
