@@ -11,11 +11,11 @@ function M.load(opts)
       root = require('user.lib.fn').path.concat({ vim.fn.stdpath('data'), 'pack', 'lazy', 'lazy-rocks' }),
     },
     spec = {
-      { import = 'user.pack.spec.fmt' },
-      { import = 'user.pack.spec.git' },
-      { import = 'user.pack.spec.int' },
-      { import = 'user.pack.spec.oth' },
-      { import = 'user.pack.spec.vis' },
+      { import = 'user.pack.lazy.fmt' },
+      { import = 'user.pack.lazy.git' },
+      { import = 'user.pack.lazy.int' },
+      { import = 'user.pack.lazy.oth' },
+      { import = 'user.pack.lazy.vis' },
     },
     git = {
       log = { '-8' }, -- show last 8 commits
