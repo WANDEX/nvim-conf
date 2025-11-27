@@ -3,8 +3,6 @@
 
 return {
 
-  { 'voldikss/vim-translator' },
-
   { -- wipe/delete buffers without closing windows or messing up layout.
     'moll/vim-bbye',
     lazy = false,

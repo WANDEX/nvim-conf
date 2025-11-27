@@ -104,26 +104,6 @@ return {
       { "<leader>Tvs", "<cmd>lua require'telescope.builtin'.search_history{}<CR>", desc = "search history" },
       { "<leader>TG", group = "Generate/GrugFar" },
 
-      { -- translate normal mode
-        mode = { "n" },
-        { "<leader>t", group = "trans" },
-        { "<leader>t!l", "<cmd>normal V<CR> | :'<,'>TranslateW!<CR>", desc = "line" },
-        { "<leader>t!r", "<cmd>normal V<CR> | :'<,'>TranslateR!<CR>", desc = "replace line" },
-        { "<leader>t!w", "<cmd>TranslateW!<CR>", desc = "word" },
-        { "<leader>tl", "<cmd>normal V<CR> | :'<,'>TranslateW<CR>", desc = "line" },
-        { "<leader>tr", "<cmd>normal V<CR> | :'<,'>TranslateR<CR>", desc = "replace line" },
-        { "<leader>tw", "<cmd>TranslateW<CR>", desc = "word" },
-      },
-
-      { -- translate visual mode
-        mode = { "v" },
-        { "<leader>t", group = "trans" },
-        { "<leader>t!r", ":'<,'>TranslateR!<CR>", desc = "replace" },
-        { "<leader>t!w", ":'<,'>TranslateW!<CR>", desc = "window" },
-        { "<leader>tr",  ":'<,'>TranslateR<CR>",  desc = "replace" },
-        { "<leader>tw",  ":'<,'>TranslateW<CR>",  desc = "window" },
-      },
-
       { "<leader>x",  group = "xtab" },
       { "<leader>xb", group = "buf" },
       { "<leader>xs", group = "ses" },
