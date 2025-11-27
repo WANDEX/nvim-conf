@@ -1,1 +1,0 @@
-../../conf/plug/limelight.vim

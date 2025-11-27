@@ -5,7 +5,17 @@ return {
 
   -- visual
   -- { 'kyazdani42/nvim-web-devicons' }, -- icons
-  { 'junegunn/limelight.vim', cmd='Limelight' }, -- reading
+  { -- reading
+    'junegunn/limelight.vim',
+    cmd='Limelight',
+    config = function()
+      vim.cmd[[
+        let g:limelight_conceal_ctermfg = 'Gray'
+        let g:limelight_conceal_guifg = 'DarkGray'
+        let g:limelight_priority = -1
+      ]]
+    end,
+  },
 
   -- syntax
   { 'justinmk/vim-syntax-extra' },
