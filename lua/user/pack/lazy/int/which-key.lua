@@ -103,11 +103,6 @@ return {
       { "<leader>Tvs", "<cmd>lua require'telescope.builtin'.search_history{}<CR>", desc = "search history" },
       { "<leader>TG", group = "Generate/GrugFar" },
 
-      { "<leader>x",  group = "xtab" },
-      { "<leader>xb", group = "buf" },
-      { "<leader>xs", group = "ses" },
-      { "<leader>xt", group = "tab" },
-
     }, -- END spec
   },
 }
