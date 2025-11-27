@@ -5,7 +5,6 @@ return {
   'folke/which-key.nvim',
   version = '*',
   lazy = false,
-  event = 'VeryLazy',
   ---@class which-key.Opts
   opts = {
     preset = 'classic',
@@ -17,7 +16,7 @@ return {
         suggestions = 50, -- how many suggestions should be shown in the list?
       },
       presets = {
-        text_objects = false, -- help for text objects triggered after entering an operator
+        text_objects = true, -- help for text objects triggered after entering an operator
         windows = false, -- disable default bindings help on <c-w> -> because default keys are remapped
       },
     },
