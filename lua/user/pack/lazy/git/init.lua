@@ -5,7 +5,6 @@ return {
 
   { 'tpope/vim-fugitive' },
 
-  { 'jreybert/vimagit' }, -- simple: diff, stage, commit msg
   {
     'NeogitOrg/neogit',
     dependencies = {

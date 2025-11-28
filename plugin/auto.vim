@@ -50,29 +50,4 @@ if !exists('autocommands_loaded')
         \ sudo make install && { killall -q dwmblocks;setsid dwmblocks & }
     aug END
 
-    aug magitMappings
-        au!
-        "" regex to match magit items: (modified, untracked, added, new dir, etc.) \C = :noignorecase
-        au FileType magit let g:magit_item_regex = '^\(\C[a-z]\+.[a-z]\+\): \(.\{-\}\)\%( -> .*\)\?$'
-        "" go to next magit item (without folding/unfolding of a hunk)
-        au FileType magit nnoremap <buffer><nowait> gn
-        \ <cmd>let ln = search(g:magit_item_regex, 'wn')<CR> <cmd>call cursor(ln, 1)<CR>
-        "" go to Commit message
-        au FileType magit nnoremap <buffer><nowait> gc
-        \ <cmd>/Commit message\n=<CR> <cmd>CLS<CR> <cmd>exe 'normal }'<CR>
-        "" go to Staged changes
-        au FileType magit nnoremap <buffer><nowait> gs
-        \ <cmd>/Staged changes\n=<CR> <cmd>CLS<CR> <cmd>exe 'normal }'<CR>
-        "" go to Unstaged changes
-        au FileType magit nnoremap <buffer><nowait> gu
-        \ <cmd>/Unstaged changes\n=<CR> <cmd>CLS<CR> <cmd>exe 'normal }'<CR>
-        "" go to Head line in Info and put cursor at the beginning of commit message
-        au FileType magit nnoremap <buffer><nowait> gh
-        \ <cmd>exe 'normal gg'<CR> <cmd>/Head:<CR> <cmd>CLS<CR> <cmd>exe 'normal 2W'<CR>
-        "" go to next found magit item, yank and paste [filename] in git commit message
-        au FileType magit nnoremap <buffer><nowait> gf
-        \ <cmd>let @f='['<CR> <cmd>exe 'normal gnn"FyT/'<CR> <cmd>let @f.=']'<CR>
-        \ <cmd>exe 'normal gce'<CR> <cmd>put F<CR>
-    aug END
-
 endif

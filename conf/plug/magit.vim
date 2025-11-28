@@ -1,5 +1,6 @@
 """ vimagit
 " configuration for the plugin jreybert/vimagit
+finish
 
 let g:magit_show_magit_mapping='<leader>Mv'
 " redefining E-edit -> O-open

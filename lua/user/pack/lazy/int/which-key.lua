@@ -64,11 +64,6 @@ return {
 
       { "<leader>l",  group = "lsp" },
 
-      { "<leader>M", group = "Magit" },
-      { "<leader>Mh", "<cmd>call magit#show_magit('h')<CR>", desc = "hrz" },
-      { "<leader>Mo", "<cmd>call magit#show_magit('c')<CR>", desc = "only" },
-      { "<leader>Mv", desc = "vrt" }, -- magit cannot unbind def mapping
-
       { "<leader>N", group = "Neogit" },
       { "<leader>NS", "<cmd>lua require('neogit').open({ kind = 'split_above' })<CR>", desc = "split above" },
       { "<leader>Nc", "<cmd>lua require('neogit').open({ 'commit' })<CR>", desc = "commit" },
