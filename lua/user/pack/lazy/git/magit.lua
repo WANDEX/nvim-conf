@@ -104,7 +104,7 @@ M.map = function(mode, lhs, rhs, opts)
   } -- default opts if not explicitly provided
   local mrg_opts = vim.tbl_extend('force', def_opts, opts)
   mrg_opts.desc = '[WNDX] ' .. mrg_opts.desc
-  vim.notify(string.format("fire! %s", lhs), vim.log.levels.DEBUG)
+  -- vim.notify(string.format("fire! %s", lhs), vim.log.levels.DEBUG)
   vim.keymap.set(mode, lhs, rhs, mrg_opts)
 end
 
@@ -114,6 +114,7 @@ end
 ---@param desc string
 M.map3 = function(lhs, rhs, desc)
   M.map('n', lhs, rhs, {desc = desc})
+  -- vim.cmd('CLS') -- hide search/yank highlight | XXX: does not work, why?
 end
 
 --- create buffer local mapping for ft=magit
@@ -128,47 +129,34 @@ function M.magit_buf_local_maps_aug(callback)
       if ft ~= "magit" then return end -- guard
       vim.fn.setreg('f', {}) -- clean reg
       callback()
+      -- vim.cmd('CLS') -- hide search/yank highlight | XXX: does not work, why?
     end
   })
 end
 
 function M.magit_buf_local_maps()
-  -- local str_clr_norm = "\n=<CR> <cmd>CLS<CR> <cmd>exe 'normal }'<CR>"
-  local str_clr_norm = "\n=<CR> <cmd>exe 'normal }'<CR>"
-  -- local magit_item_regex = "^([a-z]+.[a-z]+): (.{-})%( -> .*)?$"
-  local magit_item_regex = [[^[a-z]\+: .*$]]
-  local _go_ni='gn'
-  local _go_ne='ge'
-  local _go_cm='gc'
-  local _go_sc='gs'
-  local _go_uc='gu'
-  local _go_gh='gh'
-
-  -- M.map3("<C-n>", function()
-  --     vim.cmd("call magit#jump_hunk('N')")
-  --     vim.api.nvim_input("zz<CR>")
-  --   end,
-  --   "go to next hunk and center line"
-  -- )
-  -- M.map3("<C-e>", function()
-  --     vim.cmd("call magit#jump_hunk('P')") -- with <CR> jumps properly!
-  --     -- vim.api.nvim_input("zz<CR>") -- XXX: async does not work in this case!
-  --     vim.api.nvim_feedkeys("zz<CR>", "n", false) -- XXX: works!
-  --   end,
-  --   "go to prev hunk and center line"
-  -- )
+  local str_clr_norm = "\n=<CR> <cmd>CLS<CR> <cmd>exe 'normal }'<CR>"
+  -- local str_clr_norm = "\n=<CR> <cmd>exe 'normal }'<CR>"
+  local fpath_re = [[[/|a-z|A-Z|\-|_|\.]\+]]
+  local magit_item_re = [[^[a-z]\+: \(]]..fpath_re..[[\)$]] -- perfect
+  local _go_ni='gsn'
+  local _go_ne='gse'
+  local _go_cm='gsc'
+  local _go_sc='gss'
+  local _go_uc='gsu'
+  local _go_gh='gsh'
 
   M.map3("<C-n>", "<cmd>call magit#jump_hunk('N')<CR><cmd>normal zz<CR>", "go to next hunk and center line")
   M.map3("<C-e>", "<cmd>call magit#jump_hunk('P')<CR><cmd>normal zz<CR>", "go to prev hunk and center line")
 
   M.map3(_go_ni, function()
-      local ln, col = vim.fn.searchpos(magit_item_regex, 'wn')
+      local ln, col = vim.fn.searchpos(magit_item_re, 'wn')
       vim.fn.cursor(ln, col)
     end,
     "go to next magit item (without folding/unfolding of a hunk)"
   )
   M.map3(_go_ne, function()
-      local ln, col = vim.fn.searchpos(magit_item_regex, 'wne')
+      local ln, col = vim.fn.searchpos(magit_item_re, 'wne')
       vim.fn.cursor(ln, col)
     end,
     "go to next magit item end (without folding/unfolding of a hunk)"
@@ -192,34 +180,21 @@ function M.magit_buf_local_maps()
     "<cmd>exe 'normal gg'<CR> <cmd>/Head:<CR> <cmd>CLS<CR> <cmd>exe 'normal 2W'<CR>",
     "go to Head: line in Info and put cursor at the beginning of commit message"
   )
-      -- <cmd>exe 'normal gnn"FyT/'<CR>
-  -- M.map3("gf", [[
-  --     <cmd>let @f='['<CR>
-  --   ]]..
-  --   [[
-  --     <cmd>exe 'normal gen"FyT/'<CR>
-  --   ]]..
-  --   [[
-  --     <cmd>let @f.=']'<CR>
-  --     <cmd>exe 'normal gc'<CR>
-  --     <cmd>put F<CR>
-  --   ]],
-  --   "go to next found magit item, yank and paste [filename] in git commit message"
-  -- )
 
-  -- local re_sep = '[\\/|\\|: ]'
   local re_sep = '[/|\\| ]'
   M.map3("gf", function()
     local reg_f = 'f'
     vim.fn.setreg(reg_f, {}) -- clean reg
-    -- vim.api.nvim_feedkeys('gen"'..reg_f..'yT/', 'n', false) -- FIXME
-    vim.api.nvim_input(_go_ne..'"'..reg_f..'y?'..re_sep..'<CR>')
-    vim.fn.setreg(reg_f, '[' .. vim.fn.getreg(reg_f) .. ']')
-    vim.api.nvim_input(_go_cm)
-    ---@diagnostic disable-next-line: redundant-parameter
-    local reg_tbl = vim.fn.getreg(reg_f, 0, true) -- getreg as table
-    ---@diagnostic disable-next-line: param-type-mismatch
-    vim.api.nvim_put(reg_tbl, 'c', false, true)
+    --- yank only basename (back-search from the end)
+    local macro_seq = _go_ne..'<CR>"'..reg_f..'y?'..re_sep..'<CR>'.._go_cm..'<CR>'
+    vim.api.nvim_input(macro_seq)
+    vim.defer_fn(function()
+      local content = vim.fn.getreg(reg_f)
+      --- cleanup: trim one leading c (re_sep)
+      content = string.sub(content, 2, string.len(content))
+      local str_res = '[' .. content .. ']'
+      vim.api.nvim_put({str_res}, 'l', false, false)
+    end, 20)
     end,
     "go to next magit file/item, yank and paste [filename] in git commit message"
   )
