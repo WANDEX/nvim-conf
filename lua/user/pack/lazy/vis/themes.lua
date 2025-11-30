@@ -27,8 +27,8 @@ return {
     'sainnhe/sonokai',
     lazy = true,
     priority = 1000,
-    opts = function(_, _)
-      vim.cmd('let g:sonokai_transparent_background = 2')
+    init = function()
+      vim.g.sonokai_transparent_background = 2
     end,
   },
 

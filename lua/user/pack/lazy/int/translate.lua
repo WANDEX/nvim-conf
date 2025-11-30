@@ -3,12 +3,11 @@
 
 return {
   'voldikss/vim-translator',
-  config = function()
-    vim.cmd[[
-      let g:translator_target_lang = 'ru'
-      let g:translator_source_lang = 'en'
-      let g:translator_default_engines = ['google', 'bing']
-    ]]
+  lazy = false,
+  init = function()
+    vim.g.translator_target_lang = 'ru'
+    vim.g.translator_source_lang = 'en'
+    vim.g.translator_default_engines = { 'google', 'bing' }
   end,
   keys = {
     { mode = "v", "<leader>t",   "", desc = "trans" }, -- group annotation

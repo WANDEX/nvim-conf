@@ -8,12 +8,10 @@ return {
   { -- reading
     'junegunn/limelight.vim',
     cmd='Limelight',
-    config = function()
-      vim.cmd[[
-        let g:limelight_conceal_ctermfg = 'Gray'
-        let g:limelight_conceal_guifg = 'DarkGray'
-        let g:limelight_priority = -1
-      ]]
+    init = function()
+      vim.g.limelight_conceal_ctermfg = 'Gray'
+      vim.g.limelight_conceal_guifg = 'DarkGray'
+      vim.g.limelight_priority = -1
     end,
   },
 
