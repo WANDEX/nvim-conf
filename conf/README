@@ -1,0 +1,8 @@
+# conf/ | conf/plug/
+
+Used only for storing old .vim plugin configs.
+
+This is not a standard vim dir!
+Purpose - prevent their auto loading by vim.
+
+read more: `:h vimfiles`
