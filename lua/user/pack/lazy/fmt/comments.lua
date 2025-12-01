@@ -29,6 +29,17 @@ M.map_comment_key_tests = function()
   if false then M.map_comment_key_test('\31') end ---works with: st-256color
 end
 
+---@nodiscard
+---@param rhs string
+---@return string|function
+M.rhs = function(rhs)
+  -- fix: E5108: Error executing lua/vim/_comment.lua:210: Buffer is not 'modifiable'
+  if vim.bo.commentstring == '' or not vim.bo.modifiable or vim.bo.readonly then
+    return function() end -- => do nothing - to avoid receiving obvious error.
+  end
+  return rhs -- => map to gc/gcc
+end
+
 --- vim.keymap.set wrapper - actually map onto default neovim comment keys,
 --- recursive mapping: remap=true required!
 ---@param lhs string
@@ -36,9 +47,9 @@ end
 --- neovim internals impl & orig vim.keymap.set:
 --- https://github.com/neovim/neovim/blob/e82aef2e22a57688dcc19a978cbe083349ad8a2a/runtime/lua/vim/_defaults.lua#L174
 M.map_comment_keys = function(lhs)
-  vim.keymap.set({ 'n', 'x' }, lhs, 'gc',  { remap = true, desc = 'comment toggle' })
-  vim.keymap.set({ 'n' },      lhs, 'gcc', { remap = true, desc = 'comment toggle line' })
-  vim.keymap.set({ 'o' },      lhs, 'gc',  { remap = true, desc = 'comment textobject' })
+  vim.keymap.set({ 'n', 'x' }, lhs, M.rhs('gc'),  { remap = true, desc = 'comment toggle' })
+  vim.keymap.set({ 'n' },      lhs, M.rhs('gcc'), { remap = true, desc = 'comment toggle line' })
+  vim.keymap.set({ 'o' },      lhs, M.rhs('gc'),  { remap = true, desc = 'comment textobject' })
 end
 
 --- map 'C-/' which is a standard comment toggle key in many text editors
