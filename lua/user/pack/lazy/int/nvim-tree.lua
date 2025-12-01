@@ -85,11 +85,13 @@ local function wndx_nvim_tree_on_attach(bufnr)
   vim.keymap.set('n', 'p',        api.fs.paste,                         opts 'Paste' )
   vim.keymap.set('n', '<C-c>',    api.fs.print_clipboard,               opts 'Clipboard Content' )
 
-  -- tree
+  --- tree
+  --- NOTE: <C-[> key has the same key code as ESC, thus do not map on it,
+  --- to avoid accidetal ESC key press behavior.
+  --- vim.keymap.set('n', '<C-[>',api.tree.change_root_to_parent,       opts 'CD Parent' )
+  vim.keymap.set('n', '<C-]>',    api.tree.change_root_to_node,         opts 'CD' )
   vim.keymap.set('n', 'tc',       api.tree.collapse_all,                opts 'Collapse' )
   vim.keymap.set('n', 'te',       api.tree.expand_all,                  opts 'Expand All' )
-  vim.keymap.set('n', '<C-]>',    api.tree.change_root_to_node,         opts 'CD' )
-  vim.keymap.set('n', '<C-[>',    api.tree.change_root_to_parent,       opts 'CD Parent' )
   vim.keymap.set('n', '?',        api.tree.toggle_help,                 opts 'Help' )
   vim.keymap.set('n', 'q',        api.tree.close,                       opts 'Close' )
   vim.keymap.set('n', 's',        api.tree.search_node,                 opts 'Search node regex' )
@@ -138,7 +140,10 @@ return {
       indent_width = 2,
       symlink_destination = true,
       icons = {
-        symlink_arrow = ' -> ',
+        symlink_arrow = '  ',
+        show = {
+          git = false, -- removes weird indentation before the dir which contains git changes
+        },
       },
     },
     filters = {
@@ -153,14 +158,7 @@ return {
       enable = true,
     },
     notify = {
-      threshold = vim.log.levels.WARNING,
-    },
-    renderer = {
-      icons = {
-        show = {
-          git = false, -- removes weird indentation before the dir which contains git changes
-        },
-      },
+      threshold = vim.log.levels.WARN,
     },
   },
   config = true,
