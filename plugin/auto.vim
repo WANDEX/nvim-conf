@@ -13,11 +13,11 @@ if !exists('autocommands_loaded')
     "     au CmdlineLeave * call EmptyMessTimer(5)
     " aug END
 
-    aug MiscGroup
-        au!
-        "" Disables automatic commenting on newline:
-        au FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-    aug END
+    " aug MiscGroup
+    "     au!
+    "     "" Disables automatic commenting on newline:
+    "     au FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+    " aug END
 
     aug HelpPages
         au!
@@ -25,13 +25,13 @@ if !exists('autocommands_loaded')
     aug END
 
     "" close loclist/Quickfix - window when buffer is closed
-    aug CloseLoclistWindowGroup
-        au!
-        "" Close the window showing the location list for the current window
-        au QuitPre * if empty(&buftype) | lclose | endif
-        "" Close the Quickfix window.
-        au QuitPre * if empty(&buftype) | cclose | endif
-    aug END
+    " aug CloseLoclistWindowGroup
+    "     au!
+    "     "" Close the window showing the location list for the current window
+    "     au QuitPre * if empty(&buftype) | lclose | endif
+    "     "" Close the Quickfix window.
+    "     au QuitPre * if empty(&buftype) | cclose | endif
+    " aug END
 
     aug AutoCompileGroup
         au!
