@@ -55,10 +55,25 @@ vim.opt.sidescrolloff = 5   -- Show next 5 columns while side-scrolling
 
 vim.opt.clipboard:append { 'unnamedplus' }
 
-vim.opt.list = true         -- Show problematic characters
-vim.opt.listchars = {
-  trail='~', tab='> ', extends='>', precedes='<', nbsp='+'
-}
+vim.opt.list  = true         -- Show problematic characters
+local unicode = true
+if unicode then
+  vim.opt.listchars = {
+    extends  = '›',
+    nbsp     = '·', -- '␣'
+    precedes = '‹',
+    tab      = '↦ ',
+    trail    = '~',
+  }
+else -- ascii
+  vim.opt.listchars = {
+    extends  = '>',
+    nbsp     = '+',
+    precedes = '<',
+    tab      = '> ',
+    trail    = '~',
+  }
+end
 
 vim.opt.wildignore:append {
   '*.pyc', 'node_modules', '*build/*', '*/coverage/*', '*.swp'
@@ -70,19 +85,12 @@ vim.opt.wildmode = { 'list' , 'full' }
 -- ADVANCED
 --============================================================================
 
-vim.opt.encoding      = 'utf-8'
+vim.opt.fileencodings = 'ucs-bom,utf-8,default,cp1251,koi8-r,latin1,cp1250,cp866'
 vim.opt.fileencoding  = 'utf-8'
-vim.opt.fileencodings = 'ucs-bom,utf-8,default,cp1251,cp866,koi8-r,latin1,cp1250'
+vim.opt.encoding      = 'utf-8'
 
 vim.opt.lazyredraw    = false -- T R U E => S P E E D ?
 vim.opt.termguicolors = true
 
--- if has('conceal')
---   vim.opt.conceallevel  = 2
---   vim.opt.concealcursor = 'niv'
--- endif
+require 'user.wndx.unicode'
 
--- fix: to be able to override formatoptions inherited from ftplugins
--- ':verbose set formatoptions?' - to check for current filetype
--- (https://github.com/neovim/neovim/issues/4684)
-vim.cmd [[ filetype plugin indent on ]]
