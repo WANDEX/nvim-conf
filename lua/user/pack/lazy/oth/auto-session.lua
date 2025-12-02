@@ -6,7 +6,7 @@ return {
   lazy = false,
   enabled = true,
   ---enables autocomplete for opts
-  ---@module "auto-session"
+  ---@module 'auto-session'
   ---@type AutoSession.Config
   opts = {
     enabled = true,
@@ -15,8 +15,9 @@ return {
     auto_restore = true,
     auto_create = false,
     log_level = 'error',
+    ---@type SessionLens
     session_lens = {
-      previewer = false,
+      previewer = nil,
       path_display = { 'shorten' },
       theme_conf = { border = false },
     },
@@ -25,4 +26,7 @@ return {
     vim.o.sessionoptions='blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
     require('auto-session').setup(opts)
   end,
+  keys = {
+    { mode = 'n', '<leader>TS', '<cmd>AutoSession search<CR>', desc = 'Session' },
+  },
 }

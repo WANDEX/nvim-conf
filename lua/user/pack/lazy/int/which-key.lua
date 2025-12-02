@@ -75,7 +75,6 @@ return {
       { "<leader>TB", "<cmd>lua require'telescope.builtin'.buffers{}<CR>", desc = "buffers w preview" },
       { "<leader>TD", ":lua require'telescope.builtin'.live_grep({search_dirs={ '', }})<C-Left><C-Left><Right>", desc = "grep in list of dirs" },
       { "<leader>TF", "<cmd>lua require'telescope'.extensions.file_browser.file_browser{ hidden=false, respect_gitignore=false, }<CR>", desc = "Filesystem" },
-      { "<leader>TS", "<cmd>SessionSearch<CR>", desc = "Session" },
       { "<leader>Tb", "<cmd>Telescope buffers theme=dropdown previewer=false border=false<CR>", desc = "buffers" },
       { "<leader>Tc", "<cmd>lua require'telescope.builtin'.grep_string{}<CR>", desc = "grep under Cursor at cwd" },
       { "<leader>Td", "<cmd>Telescope diagnostics<CR>", desc = "diagnostics" },
