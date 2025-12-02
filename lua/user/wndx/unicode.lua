@@ -11,29 +11,21 @@
 -- $ curl -o ucd_blocks.txt https://www.unicode.org/Public/UCD/latest/ucd/Blocks.txt && \
 -- $ echo "# vim:set noma:" >> ucd_blocks.txt
 --
--- extra lookup ref: https://symbl.cc/en/unicode/blocks/
+-- extra lookup ref:
+-- https://symbl.cc/en/unicode/blocks/
+-- https://en.wikipedia.org/wiki/Unicode_block
 
 --- For the CJK & Nerd Fonts (2 term cells width)
 --- :h setcellwidths | :h ambiwidth | test/adjust with:
 --- $ nvim -c ':e $VIMRUNTIME/scripts/emoji_list.lua | :source %'
 vim.fn.setcellwidths({
 
-  -- FIXME: these symbols must be 1 term cell width
-  -- |⌚| 2
-  -- |⌛| 2
-  -- |⏩| 2
-  -- |⏪| 2
-  -- |⏫| 2
-  -- |⏬| 2
-  -- |⏰| 2
-  -- |⏳| 2
-  -- |◽| 2
-  -- |◾| 2
-
-  -- Nerd Fonts add several glyphs to this area (e.g., pokeball, weather icons).
-  -- Dingbats block is heavily used for various icon glyphs in Nerd Fonts.
-  { 0x2600, 0x26FF, 1 }, -- Miscellaneous Symbols (includes some icons)
-  { 0x2700, 0x27BF, 1 }, -- Dingbats
+  -- XXX: maybe this blocks range should not touch the blocks in between
+  { 0x2300, 0x27BF, 1 }, -- combined range: [Miscellaneous Technical..Dingbats]
+  -- { 0x2300, 0x23FF, 1 }, -- Miscellaneous Technical
+  -- { 0x25A0, 0x25FF, 1 }, -- Geometric Shapes
+  -- { 0x2600, 0x26FF, 1 }, -- Miscellaneous Symbols (includes some icons)
+  -- { 0x2700, 0x27BF, 1 }, -- Dingbats
 
   -- CJK combined into one huge block
   { 0x2E00, 0xA4CF, 2 }, -- range: [Supplemental Punctuation..Yi Radicals]
@@ -51,6 +43,7 @@ vim.fn.setcellwidths({
   -- Emojis typically have width 2 in terminals. Many Nerd Fonts icons reuse these emoji blocks.
   -- combined range: [Mahjong Tiles..Supplemental Symbols and Pictographs]
   { 0x1F000, 0x1F9FF, 2 }, -- Huge Chunk of Emojis and Symbols
+  { 0x1FA00, 0x1FA6F, 2 }, -- Chess Symbols
 
   -- More recent emoji/pictograph additions.
   -- Includes many emojis, common in terminals and Nerd Fonts.
