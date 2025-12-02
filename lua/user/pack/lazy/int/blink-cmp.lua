@@ -90,7 +90,7 @@ return {
           },
           buffer = {
             min_keyword_length = 3,
-            score_offset = -5,
+            score_offset = -15,
           },
           snippets = {
             min_keyword_length = 2,
