@@ -1,5 +1,5 @@
 -- AUTHOR: 'WANDEX/nvim-conf'
 
--- require 'user.profile'
+-- require 'user.wndx.profile'
 
 require 'user'

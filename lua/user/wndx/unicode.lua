@@ -7,9 +7,9 @@
 -- [Blocks.txt](https://www.unicode.org/Public/UCD/latest/ucd/Blocks.txt)
 -- [Unicode names list file](https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt)
 --
--- fetch fresh ucd_blocks.txt:
--- $ curl -o ucd_blocks.txt https://www.unicode.org/Public/UCD/latest/ucd/Blocks.txt && \
--- $ echo "# vim:set noma:" >> ucd_blocks.txt
+-- fetch fresh data/ucd_blocks.txt:
+-- $ curl -o data/ucd_blocks.txt https://www.unicode.org/Public/UCD/latest/ucd/Blocks.txt && \
+-- $ echo "# vim:set noma:" >> data/ucd_blocks.txt
 --
 -- extra lookup ref:
 -- https://symbl.cc/en/unicode/blocks/

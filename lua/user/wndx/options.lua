@@ -92,5 +92,3 @@ vim.opt.encoding      = 'utf-8'
 vim.opt.lazyredraw    = false -- T R U E => S P E E D ?
 vim.opt.termguicolors = true
 
-require 'user.wndx.unicode'
-

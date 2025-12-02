@@ -12,6 +12,7 @@ local function mod_hl(hl_name, opts)
   for k, v in pairs(opts) do
     hl_def[k] = v
   end
+  ---@diagnostic disable-next-line: param-type-mismatch
   vim.api.nvim_set_hl(0, hl_name, hl_def)
 end
 
@@ -74,10 +75,6 @@ local function nvim_colors()
 end
 
 local function highlights()
-  -- local rvrs = { cterm={'reverse'},      reverse=true }
-  -- local bold = { bold=true, cterm='bold',   }
-  -- local bold = { bold=true, cterm={'bold'}, }
-  -- local nobg = { bg='',     ctermbg='NONE', }
   local rvrs = { reverse=true }
   local bold = { bold=true    }
   local nobg = { bg=''        }
