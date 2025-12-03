@@ -9,6 +9,7 @@
   "blink.cmp": { "branch": "main", "commit": "b19413d214068f316c78978b08264ed1c41830ec" },
   "blink.indent": { "branch": "main", "commit": "69499c0167cc48e8bfc98d3b97a58c14ff8df0a8" },
   "catppuccin": { "branch": "main", "commit": "da33755d00e09bff2473978910168ff9ea5dc453" },
+  "cheat.sh-vim": { "branch": "master", "commit": "e0fe468d872025477462ac5d96432f5c1aee3a0d" },
   "colorful-menu.nvim": { "branch": "master", "commit": "932d589a55816063051ad9e599516a6e70a1c63f" },
   "conform.nvim": { "branch": "master", "commit": "6208aefd675939cc7c8f1a57176135974dad269f" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
