@@ -9,8 +9,8 @@ menu Encoding.default       <cmd>e ++enc=default<CR>
 menu Encoding.koi8-r        <cmd>e ++enc=koi8-r ++ff=unix<CR>
 menu Encoding.windows-1251  <cmd>e ++enc=cp1251 ++ff=dos<CR>
 menu Encoding.cp866         <cmd>e ++enc=cp866  ++ff=dos<CR>
-" use TAB to cycle between menu variants
-nnoremap <F8> :emenu Encoding.
+" <C-F1>==<F25> | use TAB to cycle between menu variants
+nnoremap <F25> :emenu Encoding.
 
 
 " execute command and paste output in current buffer

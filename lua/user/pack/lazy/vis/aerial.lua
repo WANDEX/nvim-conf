@@ -7,7 +7,7 @@ return {
     enabled = false,
     keys = {
       {
-        mode = 'n', '<F3>', '<cmd>TagbarToggle<CR>',
+        mode = 'n', '<localleader>A', '<cmd>TagbarToggle<CR>',
         desc = 'TagbarToggle', silent = true
       },
     },
@@ -33,7 +33,7 @@ return {
     },
     keys = {
       {
-        mode = 'n', '<F3>', '<cmd>AerialToggle!<CR>',
+        mode = 'n', '<localleader>A', '<cmd>AerialToggle!<CR>',
         desc = 'AerialToggle!', silent = true
       },
     },

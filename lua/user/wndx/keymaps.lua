@@ -173,23 +173,6 @@ vim.keymap.set('n', '<M-O>', 'mjO<Esc>`j', {
 -- Function keys
 --============================================================================
 
-vim.keymap.set('n', '<F4>', '<cmd>set relativenumber!<CR>', {
-  desc = 'set relativenumber!'
-})
-
-vim.keymap.set('n', '<F7>', '<cmd>setlocal spell! spelllang=en_us,ru_yo,ru_ru<CR>', {
-  desc = 'spell en,ru'
-}) -- toggle spell check
-vim.keymap.set('n', '<F19>', '<cmd>setlocal spell! spelllang=en_us<CR>', {
-  desc = 'spell en' -- S-F7
-})
-vim.keymap.set('n', '<F31>', '<cmd>setlocal spell! spelllang=ru_yo,ru_ru<CR>', {
-  desc = 'spell ru' -- C-F7
-})
-
-vim.keymap.set('n', '<F12>', "gg=G''", {
-  desc = 'fix/re-indent file' -- or only selection: V -> =
-})
 
 --============================================================================
 -- extra keymaps -- leader, localleader, etc.
@@ -218,6 +201,24 @@ vim.keymap.set('n', '<localleader>ct', '<cmd>call ColumnToggle()<CR>', {
   desc = 'ColumnToggle()', silent = true
 }) -- toggle colored column at lines which character length exceed N
 
+vim.keymap.set('n', '<localleader>G', "gg=G''", {
+  desc = 'fix/re-indent file' -- or only selection: V -> =
+})
+
+vim.keymap.set('n', '<localleader>R', '<cmd>set relativenumber!<CR>', {
+  desc = 'set relativenumber!'
+})
+
+vim.keymap.set('n', '<localleader>ss', '<cmd>setlocal spell! spelllang=en_us,ru_yo,ru_ru<CR>', {
+  desc = 'spell en,ru'
+}) -- toggle spell check
+vim.keymap.set('n', '<localleader>se', '<cmd>setlocal spell! spelllang=en_us<CR>', {
+  desc = 'spell en'
+})
+vim.keymap.set('n', '<localleader>sr', '<cmd>setlocal spell! spelllang=ru_yo,ru_ru<CR>', {
+  desc = 'spell ru'
+})
+
 vim.keymap.set('n', '<localleader>T', function()
   vim.cmd.new()
   vim.cmd.wincmd('J') -- spawn at the very bottom of the screen
@@ -231,10 +232,3 @@ end, {
 vim.keymap.set('n', '<localleader>ww', ':%s/\\s\\+$//gc ', {
   desc = 'ws trim substitute'
 }) -- trim trailing whitespace using substitute cmd
-
--- CDC = Change to Directory of Current file [[ command CDC cd %:p:h ]]
-vim.api.nvim_create_user_command('CDC', "cd %:p:h", {})
-
--- TODO: how to reload lazy.nvim config?
--- " Reload vim configuration (old)
--- nnoremap <localleader>rc <cmd>ReloadConfig<CR>
