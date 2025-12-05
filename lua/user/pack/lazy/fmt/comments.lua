@@ -34,7 +34,7 @@ end
 --- wrapper: vim.keymap.set() - Defines a |mapping| of |keycodes| to a function or keycodes.
 ---@param mode  string|string[] -- Mode 'short-name' (see |nvim_set_keymap()|), or a list thereof.
 ---@param lhs   string          -- Left-hand side  |{lhs}| of the mapping.
----@param rhs   string          -- Right-hand side |{rhs}| of the mapping, can be a Lua function.
+---@param rhs   string|function -- Right-hand side |{rhs}| of the mapping, can be a Lua function.
 ---@param opts? vim.keymap.set.Opts
 function M.map(mode, lhs, rhs, opts)
   local def_opts = {
@@ -85,6 +85,8 @@ M.bind_comment_keys = function()
   -- M.map_comment_key_tests()
   M.map_comment_keys('<leader>ac') -- always working fallback
   M.map_comment_keys('\31') -- works with: st-256color
+  --- ^ default not binds for the insert mode
+  M.map({ 'i' }, '\31', function() vim.cmd.normal({'gcc', bang = false}) end, { desc = 'comment toggle line' })
 end
 
 M.spec = {
