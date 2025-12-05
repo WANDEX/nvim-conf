@@ -23,13 +23,30 @@ return {
     require('lint').linters_by_ft = opts.linters_by_ft
     -- vim.api.nvim_create_autocmd({ 'BufWritePost' }, { -- InsertLeave or TextChanged
     -- vim.api.nvim_create_autocmd({ 'BufWritePost', 'TextChanged', 'InsertLeave' }, {
-    vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter', 'BufWritePost' }, {
+    -- vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter', 'BufWritePost' }, {
+    vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost' }, {
       pattern = '*',
-      group = vim.api.nvim_create_augroup('custom-lint', {}),
-      -- callback = function(args)
-      --   local ft = vim.bo.filetype
-      --   local bufnr = args.buf
+      group = vim.api.nvim_create_augroup('custom-lint', { clear = true }),
       callback = function()
+        local ft = vim.bo.filetype
+        local linters = opts.linters_by_ft[ft] ---@type string[]
+        if linters == nil then -- guard - linters were not specified for the ft
+          return
+        end
+        local at_path = require('user.lib.fn').at_path
+        local err_cnt = 0
+        for idx, linter in pairs(linters) do
+          if not at_path(linter) then
+            err_cnt = err_cnt + 1
+            vim.notify(string.format("[lint]: linter[%d]='%s' not found at $PATH!", idx, linter),
+              -- vim.log.levels.WARN
+              vim.log.levels.INFO
+            )
+          end
+        end
+        if err_cnt then -- linter was not found at_path
+          return
+        end
         require('lint').try_lint()
       end,
     })

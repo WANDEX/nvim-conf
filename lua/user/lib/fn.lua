@@ -72,4 +72,12 @@ function M.get_clip_content_as_table_split_by_nl()
   return vim.fn.systemlist('xsel -bo')
 end
 
+--- check whether or not executable name is found at $PATH.
+---@nodiscard
+---@param name string -- executable name
+---@return boolean
+function M.at_path(name)
+  return vim.fn.executable(name) == 1
+end
+
 return M
