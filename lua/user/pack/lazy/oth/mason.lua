@@ -11,6 +11,7 @@
 --
 -- look into ref with additional comments:
 -- https://github.com/nvim-lua/kickstart.nvim
+-- ^ NOTE: use vim.lsp.config -> handlers were removed in mason-lspconfig.nvim@2.0.0
 
 local M = {}
 
@@ -78,9 +79,11 @@ M.spec = {
       --- Whether installed servers should automatically be enabled via `:h vim.lsp.enable()`.
       ---@type boolean | string[] | { exclude: string[] }
       automatic_enable = true,
+      --[[ XXX: handlers were removed in mason-lspconfig.nvim@2.0.0 -> use vim.lsp.config
       handlers = {
         function(server_name)
           local server = require('user.lsp.serv').servers[server_name] or {}
+          vim.notify(P(server), vim.log.levels.WARN)
           local capabilities = require('blink.cmp').get_lsp_capabilities()
           --- This handles overriding only values explicitly passed
           --- by the server configuration above. Useful when disabling
@@ -89,11 +92,15 @@ M.spec = {
           require('lspconfig')[server_name].setup(server)
         end,
       },
+      --]]
     },
+    -- config = function(_, opts)
+    --   require('mason-lspconfig').setup(opts)
+    -- end,
     dependencies = { -- for the proper loading order of dependencies & configuration requirements
       { 'mason-org/mason.nvim' },
       { 'neovim/nvim-lspconfig' },
-      { 'saghen/blink.cmp' },
+      { 'saghen/blink.cmp' }, -- get_lsp_capabilities()
     },
   },
 
