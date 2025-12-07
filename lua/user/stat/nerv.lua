@@ -1,6 +1,9 @@
 -- AUTHOR: 'WANDEX/nvim-conf'
 -- nerv statusline for 'rebelot/heirline.nvim'
 
+--- to make sure that vim.diagnostic.config() is pre-configured.
+require 'user.lsp.diag'
+
 local M = {}
 
 function M.lsp_attached()

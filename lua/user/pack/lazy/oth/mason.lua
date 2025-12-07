@@ -22,7 +22,7 @@ local M = {}
 --- mason-tool-installer's list of all tools you want to ensure are installed upon start.
 ---@return table
 function M.ensure_installed_tbl()
-  local tbl = vim.tbl_keys(require('user.lsp.serv').servers or {})
+  local tbl = vim.tbl_keys(require('user.lsp.serv').servers() or {})
   vim.list_extend(tbl, {
     --- DAP:
     --- linters:
@@ -64,10 +64,14 @@ M.spec = {
       auto_update = false, --- auto check each tool for updates & update.
       run_on_start = true, --- auto install / update on startup.
       debounce_hours = 5,  --- at least N hours between attempts to install/update.
-      ensure_installed = M.ensure_installed_tbl(),
     },
-    dependencies = {
+    config = function(_, opts)
+      opts.ensure_installed = M.ensure_installed_tbl()
+      require('mason-tool-installer').setup(opts)
+    end,
+    dependencies = { -- for the proper loading order of dependencies & configuration requirements
       { 'mason-org/mason.nvim' },
+      { 'mason-org/mason-lspconfig.nvim' },
     },
   },
 

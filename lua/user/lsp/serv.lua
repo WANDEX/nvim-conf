@@ -7,79 +7,110 @@
 
 local M = {}
 
--- add default neocmake LSP conf (seems it does not exist in lspconfig)
-vim.lsp.config.neocmake = {
-  cmd = { 'neocmakelsp', 'stdio' }, -- fix: stdio command not --stdio!
-  filetypes = { 'cmake' },
-  --- (field) vim.lsp.Config.root_dir: (string|fun(bufnr: integer, on_dir: fun(root_dir?: string)))?
-  --- function (bufnr: integer, on_dir: fun(root_dir?: string))
-  root_dir = function(bufnr, on_dir) ---@diagnostic disable-line: unused-local
-    local cwd = vim.fn.getcwd()
-    local dir = vim.fs.find({ '.git', }, { path = cwd, type='directory', upward = true })[1]
-    return on_dir(dir)
-    -- return vim.fn.getcwd()
-  end,
-  single_file_support = true,-- suggested
-  -- on_attach = on_attach, -- on_attach is the on_attach function you defined
-  init_options = {
-    format = {
-      enable = false,
-    },
-    lint = {
-      enable = true,
-    },
-    --- it will deeply check the cmake file which found when search cmake packages.
-    scan_cmake_in_package = true,
-    --- semantic_token heighlight. if you use treesitter highlight, it is suggested to set with false.
-    --- it can be used to make better highlight for vscode which only has textmate highlight
-    semantic_token = false,
-  },
-}
+--- extend vim.lsp.Config with lspconfig.util.default_config.
+--- NOTE: I am not sure that this is needed since nvim 0.11.
+--- If I understand subject properly, servers are initialized with this by default.
+--- If loading order of the lspconfig plugin is ordered before vim.lsp.config().
+--- Is this true, is this done by default?
+--- https://github.com/neovim/neovim/discussions/35942
+---@param s_cfg? table LSP server config
+---@return vim.lsp.Config?
+function M.lspconfig_default_config(s_cfg)
+  -- local ok, lspconfig = pcall(require, 'lspconfig')
+  -- if not ok then return end -- guard
+  local lspconfig = require('lspconfig') -- if plugins loading order is wrong this will throw error.
+  local default_config = vim.deepcopy(lspconfig.util.default_config or {}) -- copy to avoid mutation
+  if s_cfg == nil then
+    return default_config
+  else
+    s_cfg = vim.tbl_deep_extend('force', {}, default_config, s_cfg or {})
+  end
+end
 
---[[
---- properly configured via 'folke/lazydev.nvim'.
---- overrides only values explicitly passed, changes will be merged.
-vim.lsp.config.lua_ls = {
-  settings = {
-    Lua = {
-      runtime = { -- tell the language server which version of Lua you're using
-        version = 'LuaJIT', -- (most likely LuaJIT in the case of Neovim)
-      },
-      diagnostics = {
-        globals = {
-          'vim', -- get the language server to recognize the `vim` global
-          'require'
-        },
-      },
-      workspace = { -- make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file('', true),
-      },
-      telemetry = {
-        enable = false, -- do not send telemetry data containing a randomized but unique identifier
-      },
-    },
-    -- flags = {
-    --   debounce_text_changes = 150,
-    -- },
-  },
-}
---]]
+--- extend lsp.ClientCapabilities with blink_cmp capabilities.
+---@param s_cfg? table LSP server config
+---@return lsp.ClientCapabilities?
+function M.blink_cmp_capabilities(s_cfg)
+  local ok, blink_cmp = pcall(require, 'blink.cmp')
+  if not ok then return end -- guard
+  local default_config = true --- whether to include nvim's default cap. (param include_nvim_defaults)
+  --- if true - gives very similar config as M.lspconfig_default_config()
+  local capabilities = blink_cmp.get_lsp_capabilities({}, default_config) ---@type lsp.ClientCapabilities
+  if s_cfg == nil then
+    return { capabilities = capabilities }
+  else
+    s_cfg.capabilities = vim.tbl_deep_extend('force', {}, capabilities, s_cfg.capabilities or {})
+  end
+end
 
---- Enable the following language servers
---- Feel free to add/remove any LSPs that you want here. They will automatically be installed.
+--- merge tables into one vim.lsp.Config table for specific LSP server name
+---@nodiscard
+---@param name string LSP server name
+---@param ... table (0 or more, variadic)
+---@return vim.lsp.Config
+function M.tbl_srv_mrg_cfg(name, ...)
+  local srv_cfg_def = vim.deepcopy(vim.lsp.config[name] or {}) -- copy to avoid mutation
+
+  -- M.lspconfig_default_config(srv_cfg_def)
+  -- M.blink_cmp_capabilities(srv_cfg_def)
+
+  local nargs = select('#', ...)
+  if nargs == 0 then
+    return vim.tbl_deep_extend('force', {}, srv_cfg_def)
+  else
+    return vim.tbl_deep_extend('force', {}, srv_cfg_def, ...)
+  end
+end
+
+--- (field) vim.lsp.Config.root_dir: (string|fun(bufnr: integer, on_dir: fun(root_dir?: string)))?
+--- function (bufnr: integer, on_dir: fun(root_dir?: string))
+function M.root_dir(bufnr, on_dir) ---@diagnostic disable-line: unused-local
+  local cwd = vim.fn.getcwd()
+  local path_found = vim.fs.find(
+    { '.git', 'cmake', 'build', '.editorconfig' },
+    { path = cwd, upward = true }
+  )[1]
+  local path = vim.fs.abspath(path_found)
+  if not vim.fn.isdirectory(path) then
+    path = vim.fs.dirname(path)
+  end
+  on_dir(path)
+end
+
+function M.common_srv_mrg_cfg()
+  --- XXX: default lspconfig.util.default_config (not sure that this is needed since nvim 0.11)
+  ---      NOT needed with param include_nvim_defaults in blink_cmp.get_lsp_capabilities.
+  -- vim.lsp.config('*', M.tbl_srv_mrg_cfg('*', M.lspconfig_default_config()))
+  -- vim.lsp.config('*', M.tbl_srv_mrg_cfg('*', M.lspconfig_default_config(), M.blink_cmp_capabilities()))
+
+  --- add additional capabilities to all clients from blink_cmp
+  vim.lsp.config('*', M.tbl_srv_mrg_cfg('*', M.blink_cmp_capabilities()))
+
+  vim.lsp.config('*', {
+    root_dir = M.root_dir,
+  })
+end
+
+--- add additional LSP server features to build-in LSP configurations of nvim.
+--- merge LSP configs to later auto enable these servers.
+--- these servers will be automatically installed via mason.
 ---
---- Add any additional override configuration in the following tables. Available keys are:
+--- add any additional override configuration in the following tables. Available keys are:
 --- - cmd (table): Override the default command used to start the server
 --- - filetypes (table): Override the default list of associated filetypes for the server
 --- - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
 --- - settings (table): Override the default settings passed when initializing the server.
 ---       For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
-M.servers = { --- LSP
-  clangd            = vim.lsp.config.clangd   or {},
-  lua_ls            = vim.lsp.config.lua_ls   or {},
-  neocmake          = vim.lsp.config.neocmake or {},
-  pyright           = vim.lsp.config.pyright  or {},
-  ts_ls             = vim.lsp.config.ts_ls    or {},
-}
+---@return vim.lsp.Config[] vim.lsp.config[] list of tables
+function M.servers()
+  M.common_srv_mrg_cfg()
+  return {
+    clangd      = M.tbl_srv_mrg_cfg('clangd'),
+    lua_ls      = M.tbl_srv_mrg_cfg('lua_ls'),
+    neocmake    = M.tbl_srv_mrg_cfg('neocmake'),
+    pyright     = M.tbl_srv_mrg_cfg('pyright'),
+    ts_ls       = M.tbl_srv_mrg_cfg('ts_ls'),
+  }
+end
 
 return M
