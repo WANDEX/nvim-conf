@@ -21,13 +21,11 @@ return {
   config = function(_, opts)
     -- setup - plugin does not have setup() function!
     require('lint').linters_by_ft = opts.linters_by_ft
-    -- vim.api.nvim_create_autocmd({ 'BufWritePost' }, { -- InsertLeave or TextChanged
-    -- vim.api.nvim_create_autocmd({ 'BufWritePost', 'TextChanged', 'InsertLeave' }, {
-    -- vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter', 'BufWritePost' }, {
-    vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost' }, {
+    vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
       pattern = '*',
       group = vim.api.nvim_create_augroup('custom-lint', { clear = true }),
       callback = function()
+        if not vim.bo.modifiable then return end -- guard
         local ft = vim.bo.filetype
         local linters = opts.linters_by_ft[ft] ---@type string[]
         if linters == nil then -- guard - linters were not specified for the ft
