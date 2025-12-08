@@ -154,6 +154,11 @@ local function highlights()
   mod_hl("IndentGuidesOdd",  te(nobg, {fg='#282a36', ctermfg=238, nocombine=true}))
   mod_hl("IndentGuidesEven", te(nobg, {fg='#383a46', ctermfg=242, nocombine=true}))
 
+	--- |hl-NonText| highlighting will be used for "eol", "extends" and "precedes".
+  mod_hl("NonText",    { link="IndentGuidesOdd" })
+  --- |hl-Whitespace| for "nbsp", "space", "tab", "multispace", "lead" and "trail".
+  mod_hl("Whitespace", { link="IndentGuidesEven" })
+
   mod_hl("DRED",  te(nobg, w.dred, rvrs))
   mod_hl("LRED",  te(nobg, w.lred, rvrs))
 end

@@ -59,14 +59,16 @@ vim.opt.list  = true         -- Show problematic characters
 local unicode = true
 if unicode then
   vim.opt.listchars = {
+    lead     = '·',
     extends  = '›',
-    nbsp     = '·', -- '␣'
+    nbsp     = '+', -- '␣'
     precedes = '‹',
-    tab      = '↦ ',
+    tab      = '↦ ', -- '→ '
     trail    = '~',
   }
 else -- ascii
   vim.opt.listchars = {
+    lead     = '.',
     extends  = '>',
     nbsp     = '+',
     precedes = '<',

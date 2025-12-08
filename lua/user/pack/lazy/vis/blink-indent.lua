@@ -7,42 +7,67 @@ return {
   --- @module 'blink.indent'
   --- @type blink.indent.Config
   opts = {
-    -- or disable with `vim.g.indent_guide = false` (global) or `vim.b.indent_guide = false` (per-buffer)
     blocked = {
-      buftypes  = { 'nofile', 'terminal', 'quickfix', 'prompt' }, -- :se bt
+      buftypes  = { -- :se bt
+        include_defaults = true,
+        'nofile',
+        'prompt',
+        'quickfix',
+        'terminal',
+      },
       filetypes = { -- :se ft
-        'lspinfo',
-        'packer',
-        'checkhealth',
-        'help',
-        'man',
-        'gitcommit',
+        include_defaults = true,
+        '',
         'TelescopePrompt',
         'TelescopeResults',
+        'checkhealth',
         'dashboard',
-        '',
+        'gitcommit',
+        'help',
+        'lspinfo',
+        'man',
+        'packer',
       },
     },
     static = {
       enabled = true,
       char = '▎',
+      whitespace_char = nil,
       priority = 1,
-      highlights = { 'IndentGuidesOdd' }
-      -- highlights = { 'IndentGuidesOdd', 'IndentGuidesEven', }
+      highlights = { 'IndentGuidesOdd' },
     },
     scope = {
       enabled = true,
-      priority = 1024,
-      highlights = { 'IndentGuidesEven', }
-    },
-    underline = {
-      enabled = false,
+      priority = 1000,
+      highlights = { 'IndentGuidesEven', },
+      underline = {
+        enabled = false,
+      },
     },
   },
-  config = true,
-  -- config = function(_, opts)
-  --   vim.api.nvim_set_hl(0, "IndentGuidesOdd",  {fg='#282a36', ctermfg=238, nocombine=true})
-  --   vim.api.nvim_set_hl(0, "IndentGuidesEven", {fg='#383a46', ctermfg=242, nocombine=true})
-  --   require('blink.indent').setup(opts)
-  -- end,
+  keys = {
+    { --- also via vim.g.indent_guide or (per-buffer) vim.b[bufnr].indent_guide = false
+      mode = 'n', '<localleader>sl', function()
+        local indent = require('blink.indent')
+        local ff = vim.bo.fileformat --- :h fileformat
+        local eol = '' --      
+        if ff == 'unix' then
+          eol = '' -- 'U' --- <NL>
+        elseif ff == 'mac' then
+          eol = '' -- 'M' --- <CR>
+        elseif ff == 'dos' then
+          eol = '' -- 'D' --- <CR><NL>
+        else
+          vim.notify("vim.bo.fileformat unexpected result!", vim.log.levels.ERROR)
+        end
+        if indent.is_enabled() then
+          vim.opt.listchars:append({ eol = eol })
+          indent.enable(false)
+        else
+          vim.opt.listchars:append({ eol = ' ' })
+          indent.enable(true)
+        end
+      end, desc = 'show listchars/toggle indent guides'
+    },
+  },
 }
