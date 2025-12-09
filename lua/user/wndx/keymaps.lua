@@ -71,6 +71,13 @@ vim.keymap.set(nvs, 'i', 'l', { silent = true })
 -- essential global / safe disable by redefining keymap
 --============================================================================
 
+vim.keymap.set('' , 's', '<nop>', {
+  desc = '', silent = true
+}) -- disable useless vim default: s/S keymaps
+vim.keymap.set('' , 'S', '<nop>', {
+  desc = '', silent = true
+})
+
 -- map ctrl+l as the Esc key (easier to reach default exit key etc.)
 vim.keymap.set('' , '<C-l>', '<Esc>', {
   desc = 'ESC', silent = true
