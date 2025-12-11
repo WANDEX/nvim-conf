@@ -47,7 +47,7 @@ vim.opt.foldlevel   = 2     -- how much levels of folding are open by default
 vim.opt.joinspaces  = true  -- Use one space, not two, after punctuation etc
 
 vim.opt.timeout     = false -- disable timeout -> fixes 'q:' '<nop>' rebind!
-vim.opt.timeoutlen  = 800   -- timeout before something
+vim.opt.timeoutlen  = 250   -- timeout before something
 vim.opt.undolevels  = 1000  -- Number of undo levels
 
 vim.opt.scrolloff     = 5   -- Show next 5 lines   while      scrolling
