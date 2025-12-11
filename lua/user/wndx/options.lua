@@ -55,7 +55,7 @@ vim.opt.sidescrolloff = 5   -- Show next 5 columns while side-scrolling
 
 vim.opt.clipboard:append { 'unnamedplus' }
 
-vim.opt.list  = true         -- Show problematic characters
+vim.opt.list  = true        -- show listchars (problematic characters)
 local unicode = true
 if unicode then
   vim.opt.listchars = {
@@ -63,7 +63,7 @@ if unicode then
     extends  = '›',
     nbsp     = '+', -- '␣'
     precedes = '‹',
-    tab      = '↦ ', -- '→ '
+    tab      = '↦ ', -- '→ ' '» '
     trail    = '~',
   }
 else -- ascii
