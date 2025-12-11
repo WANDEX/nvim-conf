@@ -73,32 +73,6 @@ return {
 
       { "<leader>n", group = "nvim-tree" },
 
-      { "<leader>T", group = "Telescope" },
-      { "<leader>TB", "<cmd>lua require'telescope.builtin'.buffers{}<CR>", desc = "buffers w preview" },
-      { "<leader>TD", ":lua require'telescope.builtin'.live_grep({search_dirs={ '', }})<C-Left><C-Left><Right>", desc = "grep in list of dirs" },
-      { "<leader>TF", "<cmd>lua require'telescope'.extensions.file_browser.file_browser{ hidden=false, respect_gitignore=false, }<CR>", desc = "Filesystem" },
-      { "<leader>Tb", "<cmd>Telescope buffers theme=dropdown previewer=false border=false<CR>", desc = "buffers" },
-      { "<leader>Tc", "<cmd>lua require'telescope.builtin'.grep_string{}<CR>", desc = "grep under Cursor at cwd" },
-      { "<leader>Td", "<cmd>Telescope diagnostics<CR>", desc = "diagnostics" },
-      { "<leader>Tf", "<cmd>lua require'telescope.builtin'.find_files{}<CR>", desc = "find file at cwd" },
-      { "<leader>Tg", "<cmd>lua require'telescope.builtin'.live_grep{}<CR>", desc = "grep at cwd" },
-      { "<leader>To", "<cmd>lua require'telescope.builtin'.live_grep{ grep_open_files=true }<CR>", desc = "grep Opened files" },
-      { "<leader>Tt", "<cmd>Telescope tele_tabby list theme=dropdown previewer=false border=false<CR>", desc = "tabs" },
-      { "<leader>Tv", group = "vim" },
-      { "<leader>TvC", "<cmd>lua require'telescope.builtin'.colorscheme{}<CR>", desc = "colorscheme" },
-      { "<leader>TvH", "<cmd>lua require'telescope.builtin'.highlights{}<CR>", desc = "Highlights" },
-      { "<leader>TvT", "<cmd>lua require'telescope.builtin'.current_buffer_tags{}<CR>", desc = "tags buf" },
-      { "<leader>Tvc", "<cmd>lua require'telescope.builtin'.command_history{}<CR>", desc = "command history" },
-      { "<leader>Tvf", "<cmd>lua require'telescope.builtin'.current_buffer_fuzzy_find{}<CR>", desc = "fuzzy find buf" },
-      { "<leader>Tvh", "<cmd>lua require'telescope.builtin'.help_tags{}<CR>", desc = "help tags" },
-      { "<leader>Tvk", "<cmd>Telescope keymaps<CR>", desc = "keymaps" },
-      { "<leader>Tvm", "<cmd>lua require'telescope.builtin'.man_pages{}<CR>", desc = "man pages" },
-      { "<leader>Tvo", "<cmd>lua require'telescope.builtin'.vim_options{}<CR>", desc = "options vim edit" },
-      { "<leader>Tvp", "<cmd>lua require'telescope.builtin'.oldfiles{}<CR>", desc = "prev opened files" },
-      { "<leader>Tvr", "<cmd>lua require'telescope.builtin'.registers{}<CR>", desc = "registers" },
-      { "<leader>Tvs", "<cmd>lua require'telescope.builtin'.search_history{}<CR>", desc = "search history" },
-      { "<leader>TG", group = "Generate/GrugFar" },
-
     }, -- END spec
   },
   keys = {
