@@ -4,12 +4,12 @@
 return {
   'folke/which-key.nvim',
   version = '*',
-  lazy = false,
-  ---@class which-key.Opts
+  event = { 'VeryLazy' }, -- https://github.com/folke/lazy.nvim/discussions/518
+  ---@class wk.Opts
   opts = {
     preset = 'classic',
-    delay = 800,
-    notify = true, -- TODO: toggle after updates | show a warning when issues were detected with your mappings
+    delay = vim.opt.timeoutlen:get() * 2, --- @diagnostic disable-line undefined-field get()
+    notify = true, -- show a warning when issues were detected with your mappings
     plugins = {
       spelling = {
         enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
@@ -71,6 +71,8 @@ return {
       { "<leader>Nt", "<cmd>lua require('neogit').open({ kind = 'tab' })<CR>", desc = "tab" },
       { "<leader>Nv", "<cmd>lua require('neogit').open({ kind = 'vsplit' })<CR>", desc = "vsplit" },
 
+      { "<leader>n", group = "nvim-tree" },
+
       { "<leader>T", group = "Telescope" },
       { "<leader>TB", "<cmd>lua require'telescope.builtin'.buffers{}<CR>", desc = "buffers w preview" },
       { "<leader>TD", ":lua require'telescope.builtin'.live_grep({search_dirs={ '', }})<C-Left><C-Left><Right>", desc = "grep in list of dirs" },
@@ -98,5 +100,12 @@ return {
       { "<leader>TG", group = "Generate/GrugFar" },
 
     }, -- END spec
+  },
+  keys = {
+    {
+      '<localleader>?', function()
+        require('which-key').show({ global = false })
+      end, desc = 'Buffer Local Keymaps (which-key)',
+    },
   },
 }
