@@ -133,8 +133,7 @@ M.spec = {
     -- stylua: ignore
     keys = {
 
-      { 's', mode = { 'n', 'x', 'o' }, M.jump1, desc = 'Flash 1' },
-      { 'S', mode = { 'n' },           M.jump2, desc = 'Flash 2' },
+      { 's', mode = { 'n', 'x', 'o' }, M.jump1, desc = 'Flash' },
 
       { '<c-s>', mode = 'n', function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
       { '<c-s>', mode = 'c', function() require('flash').toggle() end, desc = 'Toggle Flash Search' },
