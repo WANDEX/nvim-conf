@@ -79,11 +79,12 @@ M.spec = {
       --- https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-hipatterns.md
       require('mini.hipatterns').setup({
         highlighters = {
-          --- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
+          --- Highlight standalone 'FIXME', 'HACK', 'NOTE', 'TODO', 'XXX'
           fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
           hack  = { pattern = '%f[%w]()HACK()%f[%W]',  group = 'MiniHipatternsHack'  },
-          todo  = { pattern = '%f[%w]()TODO()%f[%W]',  group = 'MiniHipatternsTodo'  },
           note  = { pattern = '%f[%w]()NOTE()%f[%W]',  group = 'MiniHipatternsNote'  },
+          todo  = { pattern = '%f[%w]()TODO()%f[%W]',  group = 'MiniHipatternsTodo'  },
+          xxx   = { pattern = '%f[%w]()XXX()%f[%W]',   group = 'DRED'  },
           --- Highlight hex color strings (`#rrggbb`) using that color
           --- NOTE: 'norcalli/nvim-colorizer.lua' currently used for this purpose!
           -- hex_color = hipatterns.gen_highlighter.hex_color(),
