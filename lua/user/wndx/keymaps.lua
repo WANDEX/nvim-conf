@@ -71,6 +71,17 @@ vim.keymap.set(nvs, 'i', 'l', { silent = true })
 -- essential global / safe disable by redefining keymap
 --============================================================================
 
+--- fix: for the space key as a <leader> (not move by one char each key press)
+---
+--- maybe it also fixes first invocation showing of the which-key.nvim window
+--- in a new buffer, when <space> is a <leader> key.
+--- without this fix: key code <20> was shown => window not appeared.
+--- not sure that exactly this fixes this issue, behavior changed after system
+--- reboot, it may be some lazy.nvim undefined-behavior/cache problem etc.
+---
+--- OR, it can be undefined-behavior of the system after 200+ days of uptime.
+vim.keymap.set('' , ' ', '<nop>', { silent = true, desc = 'fixed <space>' })
+
 vim.keymap.set('' , 's', '<nop>', {
   desc = '', silent = true
 }) -- disable useless vim default: s/S keymaps
