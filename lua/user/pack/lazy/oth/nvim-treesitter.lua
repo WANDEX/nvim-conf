@@ -18,8 +18,8 @@
 -- `queries/<lang>/<query_group>.scm file in your runtime path.
 -- Below example nvim-treesitter's `locals.scm` and `folds.scm`.
 -- They also provide highlights.scm and indent.scm.
--- ["]s"] = { query = "@local.scope", query_group = "locals", desc = "Next scope" },
--- ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+-- [']s'] = { query = '@local.scope', query_group = 'locals', desc = 'Next scope' },
+-- [']z'] = { query = '@fold', query_group = 'folds', desc = 'Next fold' },
 
 return {
 
@@ -122,7 +122,7 @@ return {
         enable = true,
         additional_vim_regex_highlighting = false, -- +syntax => slow down / duplicate highlights
       },
-      -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+      -- Remember to run vim.opt.runtimepath:append('/some/path/to/store/parsers')!
       -- parser_install_dir = require('user.lib.fn').path.concat({ vim.fn.stdpath('data'), 'pack', 'parser' }),
     },
     config = function(_, opts)
@@ -142,20 +142,20 @@ return {
           border = 'rounded',
           floating_preview_opts = {},
           peek_definition_code = {
-            ["<leader>lf"] = { query = "@function.outer", desc = "[LSP] peek function" },
-            ["<leader>lF"] = { query = "@class.outer",    desc = "[LSP] peek class" },
+            ['<leader>lf'] = { query = '@function.outer', desc = '[LSP] peek function' },
+            ['<leader>lF'] = { query = '@class.outer',    desc = '[LSP] peek class' },
           },
         },
         select = {
           enable = true,
           lookahead = true, -- automatically jump forward to textobj, similar to targets.vim
           keymaps = { -- You can use the capture groups defined in textobjects.scm
-            ["af"] = "@function.outer",
-            ["kf"] = "@function.inner",
-            ["ac"] = "@class.outer",
-            ["kc"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+            ['af'] = '@function.outer',
+            ['if'] = '@function.inner',
+            ['ac'] = '@class.outer',
+            ['ic'] = { query = '@class.inner', desc = 'Select inner part of a class region' },
             -- You can also use captures from other query groups like `locals.scm`
-            ["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
+            ['as'] = { query = '@local.scope', query_group = 'locals', desc = 'Select language scope' },
           },
           selection_modes = {
             ['@parameter.outer'] = 'v', -- charwise
@@ -172,35 +172,35 @@ return {
             enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
             goto_next_start = { -- FIXME: dunno why, but: ]m ]M are still mapped!
-              ["]c"] = { query = "@class.outer", desc = "next class start" },
-              ["]f"] = { query = "@function.outer", desc = "next func start" },
-              ["]z"] = { query = "@fold", query_group = "folds", desc = "next fold" },
+              [']c'] = { query = '@class.outer', desc = 'next class start' },
+              [']f'] = { query = '@function.outer', desc = 'next func start' },
+              [']z'] = { query = '@fold', query_group = 'folds', desc = 'next fold' },
             },
             goto_previous_start = {
-              ["[c"] = { query = "@class.outer", desc = "prev class start" },
-              ["[f"] = { query = "@function.outer", desc = "prev func start" },
-              ["[z"] = { query = "@fold", query_group = "folds", desc = "prev fold"  },
+              ['[c'] = { query = '@class.outer', desc = 'prev class start' },
+              ['[f'] = { query = '@function.outer', desc = 'prev func start' },
+              ['[z'] = { query = '@fold', query_group = 'folds', desc = 'prev fold'  },
             },
             goto_next_end = {
-              ["]C"] = { query = "@class.outer", desc = "next class end" },
-              ["]F"] = { query = "@function.outer", desc = "next func end" },
+              [']C'] = { query = '@class.outer', desc = 'next class end' },
+              [']F'] = { query = '@function.outer', desc = 'next func end' },
             },
             goto_previous_end = {
-              ["[C"] = { query = "@class.outer", desc = "prev class end" },
-              ["[F"] = { query = "@function.outer", desc = "prev func end" },
+              ['[C'] = { query = '@class.outer', desc = 'prev class end' },
+              ['[F'] = { query = '@function.outer', desc = 'prev func end' },
             },
             -- Below will go to either the start or the end, whichever is closer.
             -- Use if you want more granular movements
             -- Make it even more gradual by adding multiple queries and regex.
             goto_next = {
-              ["]o"] = { query = "@conditional.outer", desc = "next cond" },
-              ["]O"] = { query = { "@loop.outer", "@loop.inner" }, desc = "next loop" }, -- same ["]O"] = "@loop.*",
-              ["]s"] = { query = "@local.scope", query_group = "locals", desc = "next scope" },
+              [']o'] = { query = '@conditional.outer', desc = 'next cond' },
+              [']O'] = { query = { '@loop.outer', '@loop.inner' }, desc = 'next loop' }, -- same [']O'] = '@loop.*',
+              [']s'] = { query = '@local.scope', query_group = 'locals', desc = 'next scope' },
             },
             goto_previous = {
-              ["[o"] = { query = "@conditional.outer", desc = "prev cond" },
-              ["[O"] = { query = { "@loop.outer", "@loop.inner" }, desc = "prev loop" }, -- same ["]O"] = "@loop.*",
-              ["[s"] = { query = "@local.scope", query_group = "locals", desc = "prev scope" },
+              ['[o'] = { query = '@conditional.outer', desc = 'prev cond' },
+              ['[O'] = { query = { '@loop.outer', '@loop.inner' }, desc = 'prev loop' }, -- same [']O'] = '@loop.*',
+              ['[s'] = { query = '@local.scope', query_group = 'locals', desc = 'prev scope' },
             }
           }, -- END nvim_next.textobjects.move
         }, -- END nvim_next.textobjects
@@ -213,10 +213,9 @@ return {
     dependencies = { 'ghostbuster91/nvim-next' } -- repeat movements using: ';' ','.
   },
 
-  -- { -- automatically add closing tags for HTML and JSX
-  --   'windwp/nvim-ts-autotag',
-  --   event = "LazyFile",
-  --   opts = {},
-  -- },
+  { --- use treesitter to autoclose and autorename tag: html, js, xml and more.
+    'windwp/nvim-ts-autotag',
+    opts = {},
+  },
 
 }
