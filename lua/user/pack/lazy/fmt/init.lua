@@ -2,6 +2,8 @@
 
 return {
 
+  { 'NMAC427/guess-indent.nvim' }, -- detect tabstop and shiftwidth automatically
+
   { 'windwp/nvim-autopairs', enabled = false, event = 'InsertEnter', config = true },
 
   {
