@@ -66,6 +66,11 @@ if unicode then
     tab      = '↦ ', -- '→ ' '» '
     trail    = '~',
   }
+  vim.opt.fillchars = {
+    stl   = '─',
+    stlnc = '─',
+    wbr   = '─',
+  }
 else -- ascii
   vim.opt.listchars = {
     lead     = '.',
@@ -74,6 +79,11 @@ else -- ascii
     precedes = '<',
     tab      = '> ',
     trail    = '~',
+  }
+  vim.opt.fillchars = {
+    stl   = '-',
+    stlnc = '-',
+    wbr   = '-',
   }
 end
 
