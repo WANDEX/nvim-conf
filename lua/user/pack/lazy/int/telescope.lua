@@ -198,6 +198,7 @@ M.spec = {
     { '<leader>Tvm', require('telescope.builtin').man_pages,                  desc = 'man pages' },
     { '<leader>Tvo', require('telescope.builtin').vim_options,                desc = 'options vim edit' },
     { '<leader>Tvp', require('telescope.builtin').oldfiles,                   desc = 'prev opened files' },
+    { '<leader>TvR', require('telescope.builtin').resume,                     desc = 'resume prev picker' },
     { '<leader>Tvr', require('telescope.builtin').registers,                  desc = 'registers' },
     { '<leader>Tvs', require('telescope.builtin').search_history,             desc = 'search history' },
     { '<leader>TG', '', desc = 'Generate/GrugFar' }, -- group annotation
