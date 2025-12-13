@@ -94,7 +94,17 @@ local function highlights()
   -- transparent telescope bg across all themes
   mod_hl("TelescopeNormal", { link="Normal" })
 
-  mod_hl("Tabline",     { link="Folded" })
+  mod_hl("Tabline",  te(nobg, {}))
+  mod_hl("XTFill",   { link="Tabline" })
+  -- mod_hl("XTHidden", { link="Tabline" })
+
+  mod_hl("Statusline", te(nobg, {}))
+  mod_hl("StatusLine",           { link="Statusline" })
+  mod_hl("StatusLineNC",         { link="Statusline" })
+  -- mod_hl("StatusLineTerm",       { link="Statusline" })
+  -- mod_hl("StatusLineTermNC",     { link="Statusline" })
+  -- mod_hl("NvimTreeStatusLine",   { link="Statusline" })
+  -- mod_hl("NvimTreeStatusLineNC", { link="Statusline" })
 
   -- general select highlighting to use as a link
   mod_hl("GeneralSel",  te(nobg, c.lgry, rvrs, bold))
