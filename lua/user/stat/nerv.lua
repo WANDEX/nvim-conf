@@ -102,40 +102,40 @@ function M.statusline()
     -- them at initialisation time.
     static = {
       mode_names = { -- change the strings if yow like it vvvvverbose!
-        n = "N",
-        no = "N?",
-        nov = "N?",
-        noV = "N?",
-        ["no\22"] = "N?",
-        niI = "Ni",
-        niR = "Nr",
-        niV = "Nv",
-        nt = "Nt",
-        v = "V",
-        vs = "Vs",
-        V = "V_",
-        Vs = "Vs",
-        ["\22"] = "^V",
-        ["\22s"] = "^V",
-        s = "S",
-        S = "S_",
-        ["\19"] = "^S",
-        i = "I",
-        ic = "Ic",
-        ix = "Ix",
-        R = "R",
-        Rc = "Rc",
-        Rx = "Rx",
-        Rv = "Rv",
-        Rvc = "Rv",
-        Rvx = "Rv",
-        c = "C",
-        cv = "Ex",
-        r = "...",
-        rm = "M",
-        ["r?"] = "?",
-        ["!"] = "!",
-        t = "T",
+        n         = " N ",
+        no        = " N?",
+        nov       = " N?",
+        noV       = " N?",
+        ["no\22"] = " N?",
+        niI       = " Ni",
+        niR       = " Nr",
+        niV       = " Nv",
+        nt        = " Nt",
+        v         = " V ",
+        vs        = " Vs",
+        V         = " V_",
+        Vs        = " Vs",
+        ["\22"]   = " ^V",
+        ["\22s"]  = " ^V",
+        s         = " S ",
+        S         = " S_",
+        ["\19"]   = " ^S",
+        i         = " I ",
+        ic        = " Ic",
+        ix        = " Ix",
+        R         = " R ",
+        Rc        = " Rc",
+        Rx        = " Rx",
+        Rv        = " Rv",
+        Rvc       = " Rv",
+        Rvx       = " Rv",
+        c         = " C ",
+        cv        = " Ex",
+        r         = " ...",
+        rm        = " M ",
+        ["r?"]    = " ? ",
+        ["!"]     = " ! ",
+        t         = " T ",
       },
       mode_colors = {
         n = colors.red,
@@ -168,9 +168,10 @@ function M.statusline()
         t = colors.f.red,
       },
       d = {
+        nbsp = ' ', spch = '─',
         c_kl = '', c_kr = '',
-        t_ll = '', t_lr = '', t_ul = '', t_ur = '', -- :ple- | :pl-
         sl_f = '', sl_b = '',
+        t_ll = '', t_lr = '', t_ul = '', t_ur = '', -- :ple- | :pl-
       },
     },
     -- We can now access the value of mode() that, by now, would have been
@@ -181,7 +182,7 @@ function M.statusline()
     -- control the padding and make sure our string is always at least 2
     -- characters long
     provider = function(self)
-      return " %-2(" .. self.mode_names[self.mode] .. "%)"
+      return self.mode_names[self.mode]
     end,
     -- Same goes for the highlight. Now the foreground will change according to the current mode.
     hl = function(self)
@@ -189,6 +190,8 @@ function M.statusline()
       return { fg = self.mode_fcolors[mode], bold = true }
     end,
   }
+
+  local sd = ViMode.static.d
 
   local FileNameBlock = {
     -- let's first set up some attributes needed by this component and it's children
@@ -323,7 +326,14 @@ function M.statusline()
     -- %L = number of lines in the buffer
     -- %c = column number
     -- %P|%p = percentage through file of displayed window
-    provider = "%3(%l%)/%-3(%L%):%2c %3(%p%)%%",
+    -- provider = "%3(%l%)/%-3(%L%):%2c %3(%p%)%%",
+    -- FIXME: in format with fillchars stl='-' -> ws chars are replaced by '-'! How to prevent that?
+    provider = function()
+      local fmt = '%3(%l%)/%-3(%L%):%2c %3(%p%)%%' -- FIXME: last %% gives additional '*' char, why?
+      -- local dict = vim.api.nvim_eval_statusline(fmt, {fillchar=' '})
+      local dict = vim.api.nvim_eval_statusline(fmt, {fillchar=sd.nbsp})
+      return dict.str
+    end,
   }
 
   local FormattersActive = {
@@ -560,8 +570,7 @@ function M.statusline()
     hl = { fg = colors.f.red, bold = true },
   }
 
-  local sd = ViMode.static.d
-  local Space   = { provider = ' ' }
+  local Space   = { provider = sd.nbsp }
   local Space_l = { provider = sd.sl_f }
   local Space_r = { provider = sd.sl_b }
   local Align   = { provider = '%=' }
