@@ -26,8 +26,10 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     branch = 'master',
-    lazy = false,
     build = ':TSUpdate',
+    event = 'VeryLazy',
+    cmd = { 'TSUpdate', 'TSInstall', 'TSLog', 'TSUninstall' },
+    opts_extend = { 'ensure_installed' },
     opts = {
       ensure_installed = { -- a list of parser names, or all (MUST always be installed)
         'awk',
@@ -125,16 +127,16 @@ return {
       -- Remember to run vim.opt.runtimepath:append('/some/path/to/store/parsers')!
       -- parser_install_dir = require('user.lib.fn').path.concat({ vim.fn.stdpath('data'), 'pack', 'parser' }),
     },
-    config = function(_, opts)
-      require('nvim-treesitter.configs').setup(opts)
-    end,
+    -- config = function(_, opts)
+    --   require('nvim-treesitter').setup(opts)
+    -- end,
     dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' }
   },
 
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
     branch = 'master',
-    lazy = false,
+    event = 'VeryLazy',
     opts = {
       textobjects = {
         lsp_interop = {
