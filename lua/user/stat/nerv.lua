@@ -167,6 +167,11 @@ function M.statusline()
         ["!"] = colors.f.red,
         t = colors.f.red,
       },
+      d = {
+        c_kl = '', c_kr = '',
+        t_ll = '', t_lr = '', t_ul = '', t_ur = '', -- :ple- | :pl-
+        sl_f = '', sl_b = '',
+      },
     },
     -- We can now access the value of mode() that, by now, would have been
     -- computed by `init()` and use it to index our strings dictionary.
@@ -428,7 +433,7 @@ function M.statusline()
     end,
 
     {
-      provider = " 󰊢 ", --  
+      provider = "󰊢", --  
       hl = { fg = colors.f.orange },
     },
     {
@@ -555,27 +560,31 @@ function M.statusline()
     hl = { fg = colors.f.red, bold = true },
   }
 
-  local Align = { provider = "%=" }
-  local Space = { provider = " " }
+  local sd = ViMode.static.d
+  local Space   = { provider = ' ' }
+  local Space_l = { provider = sd.sl_f }
+  local Space_r = { provider = sd.sl_b }
+  local Align   = { provider = '%=' }
 
   local narrow_FT_ruler = {
-    Space,
+    Space_r,
     FileType,
     Align,
     Ruler,
-    Space,
+    Space_r,
   }
 
   local LS = {
     -- WorkDir,
     FileNameBlock,
+    Space_l,
     { provider = "%<" },
     Git,
   }
 
   local RS = {
     FileType,
-    Space,
+    Space_r,
     Ruler,
   }
 
@@ -583,19 +592,19 @@ function M.statusline()
   local RSO = {
     Align,
     RS,
-    Space, -- for the same indent from right as with RSD in DefaultStatusline
+    Space_r, -- for the same indent from right as with RSD in DefaultStatusline
   }
 
-  ViMode    = utils.surround({ '', '' }, colors.f.black, { ViMode })
-  local LSD = utils.surround({ '', '' }, colors.f.black, { LS })
-  local RSD = utils.surround({ '', '' }, colors.f.black, { RS })
+  ViMode    = utils.surround({ sd.t_lr, sd.t_ul }, colors.f.black, { ViMode })
+  local LSD = utils.surround({ sd.t_lr, sd.t_ul }, colors.f.black, { LS })
+  local RSD = utils.surround({ sd.t_ur, sd.t_ll }, colors.f.black, { RS })
 
   local DefaultStatusline = {
     ViMode,
-    Space,
+    Space_l,
     Spell,
     LSD,
-    Space,
+    Space_l,
     Diagnostics,
     Align,
     DAPMessages,
@@ -603,6 +612,7 @@ function M.statusline()
     FormattersActive,
     LintersActive,
     LSPActive,
+    Space_r,
     RSD,
   }
 
@@ -633,7 +643,7 @@ function M.statusline()
       })
     end,
     FileType,
-    Space,
+    Space_r,
     HelpFilename,
     RSO,
   }
@@ -645,9 +655,9 @@ function M.statusline()
       })
     end,
     hl = { bg = colors.dark_red },
-    { condition = conditions.is_active, ViMode, Space },
-    FileType,
+    { condition = conditions.is_active, ViMode, Space_l },
     Space,
+    FileType,
     TerminalName,
     RSO,
   }
