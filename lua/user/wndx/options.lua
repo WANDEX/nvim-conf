@@ -94,3 +94,7 @@ vim.opt.encoding      = 'utf-8'
 vim.opt.lazyredraw    = false -- T R U E => S P E E D ?
 vim.opt.termguicolors = true
 
+--- explicitly disable pseudo-transparency for the Telescope and other plugins
+--- (for the proper transparency via compositing manager)
+vim.opt.winblend = 0
+
