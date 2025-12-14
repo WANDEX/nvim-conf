@@ -34,25 +34,25 @@ function M.linters_attached()
 end
 
 function M.setup_colors()
-  local utils = require("heirline.utils")
+  local utils = require('heirline.utils')
   return {
-    bright_bg = utils.get_highlight("Folded").bg,
-    bright_fg = utils.get_highlight("Folded").fg,
-    red = utils.get_highlight("DiagnosticError").fg,
-    dark_red = utils.get_highlight("DiffDelete").bg,
-    green = utils.get_highlight("String").fg,
-    blue = utils.get_highlight("Function").fg,
-    gray = utils.get_highlight("NonText").fg,
-    orange = utils.get_highlight("Constant").fg,
-    purple = utils.get_highlight("Statement").fg,
-    cyan = utils.get_highlight("Special").fg,
-    diag_warn = utils.get_highlight("DiagnosticWarn").fg,
-    diag_error = utils.get_highlight("DiagnosticError").fg,
-    diag_hint = utils.get_highlight("DiagnosticHint").fg,
-    diag_info = utils.get_highlight("DiagnosticInfo").fg,
-    git_del = utils.get_highlight("diffDeleted").fg,
-    git_add = utils.get_highlight("diffAdded").fg,
-    git_change = utils.get_highlight("diffChanged").fg,
+    bright_bg = utils.get_highlight('Folded').bg,
+    bright_fg = utils.get_highlight('Folded').fg,
+    red = utils.get_highlight('DiagnosticError').fg,
+    dark_red = utils.get_highlight('DiffDelete').bg,
+    green = utils.get_highlight('String').fg,
+    blue = utils.get_highlight('Function').fg,
+    gray = utils.get_highlight('NonText').fg,
+    orange = utils.get_highlight('Constant').fg,
+    purple = utils.get_highlight('Statement').fg,
+    cyan = utils.get_highlight('Special').fg,
+    diag_warn = utils.get_highlight('DiagnosticWarn').fg,
+    diag_error = utils.get_highlight('DiagnosticError').fg,
+    diag_hint = utils.get_highlight('DiagnosticHint').fg,
+    diag_info = utils.get_highlight('DiagnosticInfo').fg,
+    git_del = utils.get_highlight('diffDeleted').fg,
+    git_add = utils.get_highlight('diffAdded').fg,
+    git_change = utils.get_highlight('diffChanged').fg,
     f = {
       black    = '#000000',
       bg       = '#5C687A',
@@ -73,11 +73,11 @@ end
 
 function M.statusline()
   local error_statusline = {
-    { provider = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":.") },
-    { provider = "%<" },
-    { provider = " | NERV - SOMETHING WENT WRONG | HEIRLINE PLUGIN NOT FOUND" },
-    { provider = "%=" },
-    { provider = "%3(%l%)/%-3(%L%):%2c %3(%p%)%%" },
+    { provider = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':.') },
+    { provider = '%<' },
+    { provider = ' | NERV - SOMETHING WENT WRONG | HEIRLINE PLUGIN NOT FOUND' },
+    { provider = '%=' },
+    { provider = '%3(%l%)/%-3(%L%):%2c %3(%p%)%%' },
   }
 
   local ok, _ = pcall(require, 'heirline')
@@ -85,8 +85,8 @@ function M.statusline()
     return error_statusline
   end
 
-  local conditions = require("heirline.conditions")
-  local utils = require("heirline.utils")
+  local conditions = require('heirline.conditions')
+  local utils = require('heirline.utils')
 
   local colors = M.setup_colors()
 
@@ -102,54 +102,54 @@ function M.statusline()
     -- them at initialisation time.
     static = {
       mode_names = { -- change the strings if yow like it vvvvverbose!
-        n         = " N ",
-        no        = " N?",
-        nov       = " N?",
-        noV       = " N?",
-        ["no\22"] = " N?",
-        niI       = " Ni",
-        niR       = " Nr",
-        niV       = " Nv",
-        nt        = " Nt",
-        v         = " V ",
-        vs        = " Vs",
-        V         = " V_",
-        Vs        = " Vs",
-        ["\22"]   = " ^V",
-        ["\22s"]  = " ^V",
-        s         = " S ",
-        S         = " S_",
-        ["\19"]   = " ^S",
-        i         = " I ",
-        ic        = " Ic",
-        ix        = " Ix",
-        R         = " R ",
-        Rc        = " Rc",
-        Rx        = " Rx",
-        Rv        = " Rv",
-        Rvc       = " Rv",
-        Rvx       = " Rv",
-        c         = " C ",
-        cv        = " Ex",
-        r         = " ...",
-        rm        = " M ",
-        ["r?"]    = " ? ",
-        ["!"]     = " ! ",
-        t         = " T ",
+        n         = ' N ',
+        no        = ' N?',
+        nov       = ' N?',
+        noV       = ' N?',
+        ['no\22'] = ' N?',
+        niI       = ' Ni',
+        niR       = ' Nr',
+        niV       = ' Nv',
+        nt        = ' Nt',
+        v         = ' V ',
+        vs        = ' Vs',
+        V         = ' V_',
+        Vs        = ' Vs',
+        ['\22']   = ' ^V',
+        ['\22s']  = ' ^V',
+        s         = ' S ',
+        S         = ' S_',
+        ['\19']   = ' ^S',
+        i         = ' I ',
+        ic        = ' Ic',
+        ix        = ' Ix',
+        R         = ' R ',
+        Rc        = ' Rc',
+        Rx        = ' Rx',
+        Rv        = ' Rv',
+        Rvc       = ' Rv',
+        Rvx       = ' Rv',
+        c         = ' C ',
+        cv        = ' Ex',
+        r         = ' ...',
+        rm        = ' M ',
+        ['r?']    = ' ? ',
+        ['!']     = ' ! ',
+        t         = ' T ',
       },
       mode_colors = {
         n = colors.red,
         i = colors.green,
         v = colors.cyan,
         V = colors.cyan,
-        ["\22"] = colors.cyan, -- this is an actual ^V, type <C-v><C-v> in insert mode
+        ['\22'] = colors.cyan, -- this is an actual ^V, type <C-v><C-v> in insert mode
         c = colors.orange,
         s = colors.purple,
         S = colors.purple,
-        ["\19"] = colors.purple, -- this is an actual ^S, type <C-v><C-s> in insert mode
+        ['\19'] = colors.purple, -- this is an actual ^S, type <C-v><C-s> in insert mode
         R = colors.orange,
         r = colors.orange,
-        ["!"] = colors.red,
+        ['!'] = colors.red,
         t = colors.red,
       },
       mode_fcolors = {
@@ -157,14 +157,14 @@ function M.statusline()
         i = colors.f.green,
         v = colors.f.blue,
         V = colors.f.blue,
-        ["\22"] = colors.f.blue, -- this is an actual ^V, type <C-v><C-v> in insert mode
+        ['\22'] = colors.f.blue, -- this is an actual ^V, type <C-v><C-v> in insert mode
         c = colors.f.magenta,
         s = colors.f.cyan,
         S = colors.f.cyan,
-        ["\19"] = colors.f.cyan, -- this is an actual ^S, type <C-v><C-s> in insert mode
+        ['\19'] = colors.f.cyan, -- this is an actual ^S, type <C-v><C-s> in insert mode
         R = colors.f.purple,
         r = colors.f.purple,
-        ["!"] = colors.f.red,
+        ['!'] = colors.f.red,
         t = colors.f.red,
       },
       d = {
@@ -204,15 +204,15 @@ function M.statusline()
   local FileIcon = {
     init = function(self)
       local filename = self.filename
-      local extension = vim.fn.fnamemodify(filename, ":e")
-      self.icon, self.icon_color = require("nvim-web-devicons").get_icon_color(
+      local extension = vim.fn.fnamemodify(filename, ':e')
+      self.icon, self.icon_color = require('nvim-web-devicons').get_icon_color(
         filename,
         extension,
         { default = true }
       )
     end,
     provider = function(self)
-      return self.icon and (self.icon .. " ")
+      return self.icon and (self.icon .. ' ')
     end,
     hl = function(self)
       return { fg = self.icon_color }
@@ -221,14 +221,14 @@ function M.statusline()
 
   local FileName = {
     init = function(self)
-      self.lfilename = vim.fn.fnamemodify(self.filename, ":.")
+      self.lfilename = vim.fn.fnamemodify(self.filename, ':.')
       self.home = vim.fn.getenv('HOME')
-      if self.lfilename == "" then
-        self.lfilename = "[NONAME]"
+      if self.lfilename == '' then
+        self.lfilename = '[NONAME]'
       else
         -- replace: '/home/user' -> '~'
-        -- self.lfilename = self.lfilename:gsub("/home/%w+", "~")
-        self.lfilename = self.lfilename:gsub(self.home, "~")
+        -- self.lfilename = self.lfilename:gsub('/home/%w+', '~')
+        self.lfilename = self.lfilename:gsub(self.home, '~')
       end
       if not conditions.width_percent_below(#self.lfilename, 0.27) then
         self.lfilename = vim.fn.pathshorten(self.lfilename)
@@ -253,7 +253,7 @@ function M.statusline()
     {
       provider = function()
         if not vim.bo.modifiable or vim.bo.readonly then
-          return "  "
+          return '  '
         end
       end,
       hl = { fg = colors.f.red },
@@ -275,7 +275,7 @@ function M.statusline()
     FileIcon,
     utils.insert(FileNameModifer, FileName), -- a new table where FileName is a child of FileNameModifier
     unpack(FileFlags) -- A small optimisation, since their parent does nothing
-    -- { provider = "%<" } -- this means that the statusline is cut here when there's not enough space
+    -- { provider = '%<' } -- this means that the statusline is cut here when there's not enough space
   )
 
   local FileType = {
@@ -287,29 +287,29 @@ function M.statusline()
 
   local FileEncoding = {
     provider = function()
-      local enc = (vim.bo.fenc ~= "" and vim.bo.fenc) or vim.o.enc -- :h 'enc'
-      return enc ~= "utf-8" and enc:upper()
+      local enc = (vim.bo.fenc ~= '' and vim.bo.fenc) or vim.o.enc -- :h 'enc'
+      return enc ~= 'utf-8' and enc:upper()
     end,
   }
 
   local FileFormat = {
     provider = function()
       local fmt = vim.bo.fileformat
-      return fmt ~= "unix" and fmt:upper()
+      return fmt ~= 'unix' and fmt:upper()
     end,
   }
 
   local FileSize = {
     provider = function()
       -- stackoverflow, compute human readable file size
-      local suffix = { "b", "k", "M", "G", "T", "P", "E" }
+      local suffix = { 'b', 'k', 'M', 'G', 'T', 'P', 'E' }
       local fsize = vim.fn.getfsize(vim.api.nvim_buf_get_name(0))
       fsize = (fsize < 0 and 0) or fsize
       if fsize <= 0 then
-        return "0" .. suffix[1]
+        return '0' .. suffix[1]
       end
       local i = math.floor((math.log(fsize) / math.log(1024)))
-      return string.format("%.2g%s", fsize / math.pow(1024, i), suffix[i])
+      return string.format('%.2g%s', fsize / math.pow(1024, i), suffix[i])
     end,
   }
 
@@ -317,7 +317,7 @@ function M.statusline()
     -- did you know? Vim is full of functions!
     provider = function()
       local ftime = vim.fn.getftime(vim.api.nvim_buf_get_name(0))
-      return (ftime > 0) and os.date("%c", ftime)
+      return (ftime > 0) and os.date('%c', ftime)
     end,
   }
 
@@ -367,11 +367,11 @@ function M.statusline()
       local clients = vim.lsp.get_clients({bufnr = bufnr}) ---@class vim.lsp.Client
       for _, client in ipairs(clients) do
         if not client.config then
-          table.insert(names, "💀") -- unexpected!
+          table.insert(names, '💀') -- unexpected!
           goto continue -- config structure not exist!
         end
         if not client.config.name then
-          table.insert(names, "☠️") -- unexpected!
+          table.insert(names, '☠️') -- unexpected!
           goto continue -- name string not exist!
         end
         table.insert(names, client.config.name)
@@ -401,25 +401,25 @@ function M.statusline()
 
     {
       provider = function(self)
-        return self.erroc > 0 and (" " .. self.erro_sign .. self.erroc)
+        return self.erroc > 0 and (' ' .. self.erro_sign .. self.erroc)
       end,
       hl = { fg = colors.diag_error },
     },
     {
       provider = function(self)
-        return self.warnc > 0 and (" " .. self.warn_sign .. self.warnc)
+        return self.warnc > 0 and (' ' .. self.warn_sign .. self.warnc)
       end,
       hl = { fg = colors.diag_warn },
     },
     {
       provider = function(self)
-        return self.infoc > 0 and (" " .. self.info_sign .. self.infoc)
+        return self.infoc > 0 and (' ' .. self.info_sign .. self.infoc)
       end,
       hl = { fg = colors.diag_info },
     },
     {
       provider = function(self)
-        return self.hintc > 0 and (" " .. self.hint_sign .. self.hintc)
+        return self.hintc > 0 and (' ' .. self.hint_sign .. self.hintc)
       end,
       hl = { fg = colors.diag_hint },
     },
@@ -436,7 +436,7 @@ function M.statusline()
     end,
 
     {
-      provider = "󰊢", --  
+      provider = '󰊢', --  
       hl = { fg = colors.f.orange },
     },
     {
@@ -449,26 +449,26 @@ function M.statusline()
       condition = function(self)
         return self.has_changes
       end,
-      provider = "(",
+      provider = '(',
     },
     {
       provider = function(self)
         local count = self.status_dict.added or 0
-        return count > 0 and ("+" .. count)
+        return count > 0 and ('+' .. count)
       end,
       hl = { fg = colors.git_add },
     },
     {
       provider = function(self)
         local count = self.status_dict.removed or 0
-        return count > 0 and ("-" .. count)
+        return count > 0 and ('-' .. count)
       end,
       hl = { fg = colors.git_del },
     },
     {
       provider = function(self)
         local count = self.status_dict.changed or 0
-        return count > 0 and ("~" .. count)
+        return count > 0 and ('~' .. count)
       end,
       hl = { fg = colors.git_change },
     },
@@ -476,14 +476,14 @@ function M.statusline()
       condition = function(self)
         return self.has_changes
       end,
-      provider = ")",
+      provider = ')',
     },
   }
 
   local DAPMessages = {
     condition = function()
-      if not pcall(require, "dap") then return false end
-      local session = require("dap").session()
+      if not pcall(require, 'dap') then return false end
+      local session = require('dap').session()
       if session then
         local filename = vim.api.nvim_buf_get_name(0)
         if session.config then
@@ -494,17 +494,17 @@ function M.statusline()
       return false
     end,
     provider = function()
-      if not pcall(require, "dap") then return "" end
-      return " " .. require("dap").status()
+      if not pcall(require, 'dap') then return '' end
+      return ' ' .. require('dap').status()
     end,
-    hl = { fg = utils.get_highlight("Debug").fg },
+    hl = { fg = utils.get_highlight('Debug').fg },
   }
 
   local WorkDir = {
     init = function(self)
-      self.icon = (vim.fn.haslocaldir(0) == 1 and "l" or "g") .. " " .. " "
+      self.icon = (vim.fn.haslocaldir(0) == 1 and 'l' or 'g') .. ' ' .. ' '
       local cwd = vim.fn.getcwd(0)
-      self.cwd = vim.fn.fnamemodify(cwd, ":~")
+      self.cwd = vim.fn.fnamemodify(cwd, ':~')
       if not conditions.width_percent_below(#self.cwd, 0.27) then
         self.cwd = vim.fn.pathshorten(self.cwd)
       end
@@ -514,29 +514,29 @@ function M.statusline()
     flexible = 1,
     {
       provider = function(self)
-        local trail = self.cwd:sub(-1) == "/" and "" or "/"
-        return self.icon .. self.cwd .. trail .. " "
+        local trail = self.cwd:sub(-1) == '/' and '' or '/'
+        return self.icon .. self.cwd .. trail .. ' '
       end,
     },
     {
       provider = function(self)
         local cwd = vim.fn.pathshorten(self.cwd)
-        local trail = self.cwd:sub(-1) == "/" and "" or "/"
-        return self.icon .. cwd .. trail .. " "
+        local trail = self.cwd:sub(-1) == '/' and '' or '/'
+        return self.icon .. cwd .. trail .. ' '
       end,
     },
     {
-      provider = "",
+      provider = '',
     },
   }
 
   local HelpFilename = {
     condition = function()
-      return vim.bo.filetype == "help"
+      return vim.bo.filetype == 'help'
     end,
     provider = function()
       local filename = vim.api.nvim_buf_get_name(0)
-      return vim.fn.fnamemodify(filename, ":t")
+      return vim.fn.fnamemodify(filename, ':t')
     end,
     hl = { fg = colors.f.blue },
   }
@@ -547,10 +547,10 @@ function M.statusline()
     -- end,
     -- icon = ' ', -- 
     provider = function()
-      -- local tname, _ = vim.api.nvim_buf_get_name(0):gsub(".*:", "")
+      -- local tname, _ = vim.api.nvim_buf_get_name(0):gsub('.*:', '')
       -- replace: '/home/user' -> '~'
-      local tname, _ = vim.api.nvim_buf_get_name(0):gsub(".*:", ""):gsub("/home/%w+", "~")
-      return " " .. tname
+      local tname, _ = vim.api.nvim_buf_get_name(0):gsub('.*:', ''):gsub('/home/%w+', '~')
+      return ' ' .. tname
     end,
     hl = { fg = colors.f.blue, bold = true },
   }
@@ -559,7 +559,7 @@ function M.statusline()
     condition = function()
       return vim.wo.spell
     end,
-    provider = "SPELL ",
+    provider = 'SPELL ',
     hl = { fg = colors.f.red, bold = true },
   }
 
@@ -580,7 +580,7 @@ function M.statusline()
     -- WorkDir,
     FileNameBlock,
     Space_l,
-    { provider = "%<" },
+    { provider = '%<' },
     Git,
   }
 
@@ -624,14 +624,14 @@ function M.statusline()
     end,
     -- { hl = { fg = colors.f.darkblue, force = true }, WorkDir },
     FileNameBlock,
-    { provider = "%<" },
+    { provider = '%<' },
     RSO,
   }
 
   local NarrowStatusline = {
     condition = function()
       return conditions.buffer_matches({
-        filetype = { "NvimTree" },
+        filetype = { 'NvimTree' },
       })
     end,
     narrow_FT_ruler,
@@ -640,8 +640,8 @@ function M.statusline()
   local SpecialStatusline = {
     condition = function()
       return conditions.buffer_matches({
-        buftype  = { "prompt", "quickfix" },
-        filetype = { "^git.*", "fugitive" },
+        buftype  = { 'prompt', 'quickfix' },
+        filetype = { '^git.*', 'fugitive' },
       })
     end,
     FileType,
@@ -653,7 +653,7 @@ function M.statusline()
   local TerminalStatusline = {
     condition = function()
       return conditions.buffer_matches({
-        buftype = { "terminal" }
+        buftype = { 'terminal' }
       })
     end,
     hl = { bg = colors.dark_red },
@@ -671,8 +671,8 @@ function M.statusline()
         }
       else
         return {
-          fg = utils.get_highlight("StatusLineNC").fg,
-          bg = utils.get_highlight("StatusLineNC").bg,
+          fg = utils.get_highlight('StatusLineNC').fg,
+          bg = utils.get_highlight('StatusLineNC').bg,
         }
       end
     end,
