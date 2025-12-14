@@ -168,7 +168,7 @@ function M.statusline()
         t = colors.f.red,
       },
       d = {
-        nbsp = ' ', spch = '─',
+        nbsp = ' ', spch = '─',
         c_kl = '', c_kr = '',
         sl_f = '', sl_b = '',
         t_ll = '', t_lr = '', t_ul = '', t_ur = '', -- :ple- | :pl-
@@ -326,14 +326,7 @@ function M.statusline()
     -- %L = number of lines in the buffer
     -- %c = column number
     -- %P|%p = percentage through file of displayed window
-    -- provider = "%3(%l%)/%-3(%L%):%2c %3(%p%)%%",
-    -- FIXME: in format with fillchars stl='-' -> ws chars are replaced by '-'! How to prevent that?
-    provider = function()
-      local fmt = '%3(%l%)/%-3(%L%):%2c %3(%p%)%%' -- FIXME: last %% gives additional '*' char, why?
-      -- local dict = vim.api.nvim_eval_statusline(fmt, {fillchar=' '})
-      local dict = vim.api.nvim_eval_statusline(fmt, {fillchar=sd.nbsp})
-      return dict.str
-    end,
+    provider = '%3l/%-3L:%2c %3p%%',
   }
 
   local FormattersActive = {
@@ -570,7 +563,7 @@ function M.statusline()
     hl = { fg = colors.f.red, bold = true },
   }
 
-  local Space   = { provider = sd.nbsp }
+  local Space_s = { provider = sd.nbsp }
   local Space_l = { provider = sd.sl_f }
   local Space_r = { provider = sd.sl_b }
   local Align   = { provider = '%=' }
@@ -664,8 +657,7 @@ function M.statusline()
       })
     end,
     hl = { bg = colors.dark_red },
-    { condition = conditions.is_active, ViMode, Space_l },
-    Space,
+    { condition = conditions.is_active, ViMode, Space_l, Space_s, },
     FileType,
     TerminalName,
     RSO,
