@@ -164,6 +164,10 @@ local function highlights()
   mod_hl("IndentGuidesOdd",  te(nobg, {fg='#282a36', ctermfg=238, nocombine=true}))
   mod_hl("IndentGuidesEven", te(nobg, {fg='#383a46', ctermfg=242, nocombine=true}))
 
+  --- set the color of hidden special characters. But not 'listchars' whitespace.
+  --- unprintable characters: Text displayed differently from what it really is.
+  mod_hl("SpecialKey", te(c.lred, rvrs))
+
 	--- |hl-NonText| highlighting will be used for "eol", "extends" and "precedes".
   mod_hl("NonText",    { link="IndentGuidesOdd" })
   --- |hl-Whitespace| for "nbsp", "space", "tab", "multispace", "lead" and "trail".
