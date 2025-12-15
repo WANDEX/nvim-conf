@@ -657,8 +657,9 @@ function M.statusline()
       })
     end,
     hl = { bg = colors.dark_red },
-    { condition = conditions.is_active, ViMode, Space_l, Space_s, },
+    { condition = conditions.is_active, ViMode, Space_l, },
     FileType,
+    Space_l,
     TerminalName,
     RSO,
   }
