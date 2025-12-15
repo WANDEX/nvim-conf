@@ -62,9 +62,11 @@ return {
         end
         if indent.is_enabled() then
           vim.opt.listchars:append({ eol = eol })
+          vim.opt.listchars:append({ space = '·' })
           indent.enable(false)
         else
           vim.opt.listchars:append({ eol = ' ' })
+          vim.opt.listchars:append({ space = ' ' })
           indent.enable(true)
         end
       end, desc = 'show listchars/toggle indent guides'
