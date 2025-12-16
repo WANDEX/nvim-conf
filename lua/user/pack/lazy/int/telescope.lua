@@ -66,6 +66,10 @@ M.spec = {
     { 'nvim-telescope/telescope-dap.nvim' },
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     { 'nvim-telescope/telescope-ui-select.nvim' }, -- sets vim.ui.select to telescope
+    {
+      'rodrigo-sys/telescope-mantoc', -- man pages extension to navigate the table of content
+      commit = 'cdc052565e8896578e55146de9ee11207a90d9d5', -- XXX: just a tmp pin, without meaning
+    },
   },
   opts = {
     defaults = {
@@ -136,6 +140,7 @@ M.spec = {
     pcall(require('telescope').load_extension, 'dap')
     pcall(require('telescope').load_extension, 'fzf')
     pcall(require('telescope').load_extension, 'ui-select')
+    pcall(require('telescope').load_extension, 'mantoc')
     --- maybe also:
     --- https://github.com/nvim-telescope/telescope-live-grep-args.nvim
     --- https://github.com/nvim-telescope/telescope-cheat.nvim
@@ -181,6 +186,7 @@ M.spec = {
     { '<leader>Td', require('telescope.builtin').diagnostics, desc = 'diagnostics' },
     { '<leader>Tf', require('telescope.builtin').find_files,  desc = 'find file at cwd' },
     { '<leader>Tg', require('telescope.builtin').live_grep,   desc = 'grep at cwd' },
+    { '<leader>Tm', '<cmd>Telescope mantoc sorting_strategy=ascending<CR>', desc = 'mantoc' },
     {
       '<leader>To', function()
         require('telescope.builtin').live_grep({ grep_open_files=true })
