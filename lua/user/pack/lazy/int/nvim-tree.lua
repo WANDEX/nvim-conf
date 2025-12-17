@@ -110,7 +110,7 @@ end
 return {
   'nvim-tree/nvim-tree.lua',
   version = '*',
-  lazy = false,
+  event = { 'VeryLazy' },
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   keys = {
     {
@@ -160,6 +160,14 @@ return {
     notify = {
       threshold = vim.log.levels.WARN,
     },
+    --- BEG: for the proper integration with project.nvim
+    --- src: README.md https://github.com/ahmedkhalf/project.nvim
+    sync_root_with_cwd = true,
+    respect_buf_cwd = true,
+    update_focused_file = {
+      enable = true,
+      update_root = true,
+    },
+    --- END: for the proper integration with project.nvim
   },
-  config = true,
 }
