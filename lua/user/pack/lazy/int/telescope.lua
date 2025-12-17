@@ -141,6 +141,7 @@ M.spec = {
     pcall(require('telescope').load_extension, 'fzf')
     pcall(require('telescope').load_extension, 'ui-select')
     pcall(require('telescope').load_extension, 'mantoc')
+    pcall(require('telescope').load_extension, 'projects') -- project.nvim
     --- maybe also:
     --- https://github.com/nvim-telescope/telescope-live-grep-args.nvim
     --- https://github.com/nvim-telescope/telescope-cheat.nvim
@@ -191,6 +192,11 @@ M.spec = {
       '<leader>To', function()
         require('telescope.builtin').live_grep({ grep_open_files=true })
       end, desc = 'grep opened files'
+    },
+    {
+      '<leader>TP', function() -- project.nvim
+        require('telescope').extensions.projects.projects()
+      end, desc = 'Projects'
     },
     { '<leader>Tt', M.tele_tabby, desc = 'tabs' },
     { '<leader>Tv', '', desc = 'vim' }, -- group annotation
