@@ -4,8 +4,6 @@
 return {
   { 'folke/lazy.nvim', version = '*' }, -- lazy - plugin manager for this spec
 
-  { 'airblade/vim-rooter' }, -- auto cd to the project root
-
   { 'farmergreg/vim-lastplace' },
 
   { 'justinmk/vim-gtfo', enabled = false }, -- XXX
