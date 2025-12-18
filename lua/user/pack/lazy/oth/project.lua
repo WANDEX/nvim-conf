@@ -13,9 +13,14 @@ M.spec = {
 
   {
     -- 'ahmedkhalf/project.nvim', -- orig project repo
-    'TheLeoP/project.nvim', -- fork: modern api, win fixes, etc.
+    'TheLeoP/project.nvim', -- fork: modern api, fixes for win os, etc.
+    --- NOTE: project extension for telescope showed several project dirs.
+    ---       Some of those projects were created temporarily, then directories were deleted.
+    ---       Maybe nvim hanged because of the not existing directories?
+    -- event = 'VeryLazy', -- XXX: maybe plugin hanged nvim previously because of this & loading order?
+    -- enabled = false, -- FIXME: try to disable plugin if nvim hangs at startup! (I encountered this!)
     opts = {
-      -- manual_mode = true,
+      -- manual_mode = true, --- XXX: auto mode sometimes causes nvim inf hang at startup?
       silent_chdir = false, --- message when project.nvim changes dir.
       --- all the patterns used to detect root dir,
       --- when **'pattern'** is in detection_methods
@@ -31,7 +36,6 @@ M.spec = {
         'package.json',
       },
     },
-    event = 'VeryLazy',
     config = function(_, opts)
       require('project_nvim').setup(opts)
 
