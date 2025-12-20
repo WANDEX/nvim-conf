@@ -124,6 +124,8 @@ return {
   },
   opts = {
     on_attach = wndx_nvim_tree_on_attach,
+    sync_root_with_cwd = true,
+    respect_buf_cwd = true,
     sort = {
       sorter = 'name',
     },
@@ -160,14 +162,5 @@ return {
     notify = {
       threshold = vim.log.levels.WARN,
     },
-    --- BEG: for the proper integration with project.nvim
-    --- src: README.md https://github.com/ahmedkhalf/project.nvim
-    sync_root_with_cwd = true,
-    respect_buf_cwd = true,
-    update_focused_file = {
-      enable = true,
-      update_root = true,
-    },
-    --- END: for the proper integration with project.nvim
   },
 }
