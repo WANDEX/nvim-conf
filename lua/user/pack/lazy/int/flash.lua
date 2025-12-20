@@ -100,7 +100,7 @@ M.spec = {
 
   {
     'folke/flash.nvim',
-    lazy = false,
+    event = 'VeryLazy',
     ---@type Flash.Config
     opts = {
       -- labels = 'asdfghjklqwertyuiopzxcvbnm', -- default
@@ -130,18 +130,29 @@ M.spec = {
         },
       },
     },
+    config = function(_, opts)
+      require('flash').setup(opts)
+
+      vim.keymap.set({ 'n', 'x', 'o' }, 's', M.jump1, { desc = 'Flash' })
+
+      vim.keymap.set('n', '<c-s>', function() require('flash').treesitter() end, { desc = 'Flash Treesitter' })
+      vim.keymap.set('c', '<c-s>', function() require('flash').toggle() end,  { desc = 'Toggle Flash Search' })
+
+      vim.keymap.set('x', '<c-space>', M.ts_inc_sel, { desc = 'Treesitter Incremental Selection' })
+      vim.keymap.set('x',      '<BS>', M.ts_inc_sel, { desc = 'Treesitter Incremental Selection' })
+    end,
+    --[[
     -- stylua: ignore
     keys = {
+      { mode = { 'n', 'x', 'o' }, 's', M.jump1, desc = 'Flash' },
 
-      { 's', mode = { 'n', 'x', 'o' }, M.jump1, desc = 'Flash' },
+      { mode = 'n', '<c-s>', function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
+      { mode = 'c', '<c-s>', function() require('flash').toggle() end,  desc = 'Toggle Flash Search' },
 
-      { '<c-s>', mode = 'n', function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
-      { '<c-s>', mode = 'c', function() require('flash').toggle() end, desc = 'Toggle Flash Search' },
-
-      { '<c-space>', mode = 'x', M.ts_inc_sel, desc = 'Treesitter Incremental Selection' },
-      { '<BS>',      mode = 'x', M.ts_inc_sel, desc = 'Treesitter Incremental Selection' },
-
+      { mode = 'x', '<c-space>', M.ts_inc_sel, desc = 'Treesitter Incremental Selection' },
+      { mode = 'x', '<BS>',      M.ts_inc_sel, desc = 'Treesitter Incremental Selection' },
     },
+    --]]
   },
 
 }
