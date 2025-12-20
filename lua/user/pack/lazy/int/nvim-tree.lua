@@ -21,6 +21,27 @@ local function wndx_nvim_tree_on_attach(bufnr)
     end
   end
 
+  --- the main difference between orig api.tree.change_root_to_node and this function:
+  --- It calls :tcd instead of :cd or :lcd.
+  local function change_root_to_node(node)
+    if node == nil then
+      node = api.tree.get_node_under_cursor()
+    end
+    if node.type ~= 'directory' then
+      return -- guard
+    end
+
+    local RootNode = require('nvim-tree.node.root')
+    local parent_path = nil
+    if node.name == '..' or node:is(RootNode) then
+      parent_path = vim.fs.dirname(node.absolute_path)
+      api.tree.change_root(parent_path)
+    end
+
+    local new_cwd = parent_path or node.absolute_path
+    vim.cmd.tcd(vim.fn.fnameescape(new_cwd))
+  end
+
   -- colemak
   vim.keymap.set('n', 'h',        api.node.navigate.parent_close,       opts 'Close Directory' )
   vim.keymap.set('n', 'i',        expand_or_edit,                       opts 'Expand Or Edit' )
@@ -89,7 +110,7 @@ local function wndx_nvim_tree_on_attach(bufnr)
   --- NOTE: <C-[> key has the same key code as ESC, thus do not map on it,
   --- to avoid accidetal ESC key press behavior.
   --- vim.keymap.set('n', '<C-[>',api.tree.change_root_to_parent,       opts 'CD Parent' )
-  vim.keymap.set('n', '<C-]>',    api.tree.change_root_to_node,         opts 'CD' )
+  vim.keymap.set('n', '<C-]>',    change_root_to_node,                  opts 'CD' )
   vim.keymap.set('n', 'tc',       api.tree.collapse_all,                opts 'Collapse' )
   vim.keymap.set('n', 'te',       api.tree.expand_all,                  opts 'Expand All' )
   vim.keymap.set('n', '?',        api.tree.toggle_help,                 opts 'Help' )
