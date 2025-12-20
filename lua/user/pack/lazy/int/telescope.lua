@@ -70,6 +70,7 @@ M.spec = {
       'rodrigo-sys/telescope-mantoc', -- man pages extension to navigate the table of content
       commit = 'cdc052565e8896578e55146de9ee11207a90d9d5', -- XXX: just a tmp pin, without meaning
     },
+    { 'TheLeoP/project.nvim' }, -- project.nvim fork: modern api, fixes for win os, etc.
   },
   opts = {
     defaults = {
@@ -141,7 +142,7 @@ M.spec = {
     pcall(require('telescope').load_extension, 'fzf')
     pcall(require('telescope').load_extension, 'ui-select')
     pcall(require('telescope').load_extension, 'mantoc')
-    pcall(require('telescope').load_extension, 'projects') -- project.nvim
+    pcall(require('telescope').load_extension, 'projects') -- local fork of telescope projects extension
     --- maybe also:
     --- https://github.com/nvim-telescope/telescope-live-grep-args.nvim
     --- https://github.com/nvim-telescope/telescope-cheat.nvim
