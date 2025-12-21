@@ -15,10 +15,10 @@ vim.diagnostic.config({
   },
   signs = {
     text = {
-      [vim.diagnostic.severity.ERROR] = ' ',
-      [vim.diagnostic.severity.WARN]  = ' ',
-      [vim.diagnostic.severity.INFO]  = ' ',
-      [vim.diagnostic.severity.HINT]  = ' ',
+      [vim.diagnostic.severity.ERROR] = vim.g.NF and ' ' or 'E',
+      [vim.diagnostic.severity.WARN]  = vim.g.NF and ' ' or 'W',
+      [vim.diagnostic.severity.INFO]  = vim.g.NF and ' ' or 'I',
+      [vim.diagnostic.severity.HINT]  = vim.g.NF and ' ' or 'H',
     },
   },
   float = { -- options for floating windows

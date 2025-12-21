@@ -3,9 +3,12 @@
 
 return {
 
-  -- visual
-  -- { 'kyazdani42/nvim-web-devicons' }, -- icons
-  { -- reading
+  { --- icons and their colors
+    'nvim-tree/nvim-web-devicons',
+    enabled = vim.g.NF,
+  },
+
+  { --- reading
     'junegunn/limelight.vim',
     cmd='Limelight',
     init = function()

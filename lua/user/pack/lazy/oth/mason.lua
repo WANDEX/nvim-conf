@@ -83,24 +83,7 @@ M.spec = {
       --- Whether installed servers should automatically be enabled via `:h vim.lsp.enable()`.
       ---@type boolean | string[] | { exclude: string[] }
       automatic_enable = true,
-      --[[ XXX: handlers were removed in mason-lspconfig.nvim@2.0.0 -> use vim.lsp.config
-      handlers = {
-        function(server_name)
-          local server = require('user.lsp.serv').servers[server_name] or {}
-          vim.notify(P(server), vim.log.levels.WARN)
-          local capabilities = require('blink.cmp').get_lsp_capabilities()
-          --- This handles overriding only values explicitly passed
-          --- by the server configuration above. Useful when disabling
-          --- certain features of an LSP (for example, turning off formatting for ts_ls)
-          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
-        end,
-      },
-      --]]
     },
-    -- config = function(_, opts)
-    --   require('mason-lspconfig').setup(opts)
-    -- end,
     dependencies = { -- for the proper loading order of dependencies & configuration requirements
       { 'mason-org/mason.nvim' },
       { 'neovim/nvim-lspconfig' },
@@ -113,6 +96,9 @@ M.spec = {
     dependencies = {
       { 'j-hui/fidget.nvim', opts = {} }, -- floating LSP status updates window.
     },
+    config = function() -- only collection of LSP configurations (explicitly no setup function)
+      require('user.lsp.attach').lsp_attach()
+    end,
   },
 
 }

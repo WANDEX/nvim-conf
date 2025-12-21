@@ -39,8 +39,8 @@ return {
           { 'rafamadriz/friendly-snippets' }, -- snippets collection "from_vscode"
         },
       },
-      { 'xzbdmw/colorful-menu.nvim',   opts = {}, config = true },
-      { 'nvim-tree/nvim-web-devicons', opts = {} },
+      { 'xzbdmw/colorful-menu.nvim' },
+      { 'nvim-tree/nvim-web-devicons' },
       { 'onsails/lspkind.nvim' },
       { 'MahanRahmati/blink-nerdfont.nvim' }, -- trigger on colon : symbol name
     },

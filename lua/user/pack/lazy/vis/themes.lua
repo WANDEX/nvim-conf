@@ -36,28 +36,28 @@ return {
 
   { 'nekonako/xresources-nvim', lazy = true, priority = 1000, },
 
-  { -- STATUS BAR
+  { -- STATUSLINE
     'rebelot/heirline.nvim',
     lazy = false, -- load during startup
     priority = 2, -- load after all other plugins (colorscheme)
     opts = function(_, opts)
-      local stat = require('user.stat.nerv')
+      vim.cmd.colorscheme('monokai_pro') --- set default colorscheme at startup
+      local stat = require('user.stat.nerv') --- set statusline
       opts.statusline = stat.statusline()
       opts.colors     = stat.setup_colors()
-      -- re-evaluate on ColorScheme events (upd statusline colors on colorscheme change)
-      vim.api.nvim_create_augroup('Heirline', { clear = true })
+      --- re-evaluate on ColorScheme events (upd statusline colors on colorscheme change)
       vim.api.nvim_create_autocmd('ColorScheme', {
+        group = vim.api.nvim_create_augroup('hi_heirline', { clear = true }),
         callback = function()
           require('heirline.utils').on_colorscheme(
             require('user.stat.nerv').setup_colors()
           )
         end,
-        group = 'Heirline',
       })
       return opts
     end,
     dependencies = {
-      { 'kyazdani42/nvim-web-devicons' }, -- icons and their standard colors
+      { 'nvim-tree/nvim-web-devicons' }, -- icons and their colors
     },
   },
 

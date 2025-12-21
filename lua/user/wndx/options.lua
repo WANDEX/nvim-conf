@@ -5,6 +5,8 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
+vim.g.NF = true -- Nerd Font installed and selected in the terminal
+
 --============================================================================
 -- GENERAL
 --============================================================================
@@ -56,8 +58,7 @@ vim.opt.sidescrolloff = 5   -- Show next 5 columns while side-scrolling
 vim.opt.clipboard:append { 'unnamedplus' }
 
 vim.opt.list  = true        -- show listchars (problematic characters)
-local unicode = true
-if unicode then
+if vim.g.NF then
   vim.opt.listchars = {
     lead     = '·',
     extends  = '›',
