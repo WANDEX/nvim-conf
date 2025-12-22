@@ -11,28 +11,29 @@ return {
     require('neogen').setup(opts)
   end,
   keys = {
+    { mode = 'n', '<leader>ag', '', desc = 'generate' }, -- group neogen annotation
     {
-      mode = 'n', '<leader>TGF', function()
+      mode = 'n', '<leader>agF', function()
         require('neogen').generate({type='file'})
-      end, desc = 'neogen annot File', silent = true
+      end, desc = 'annot File', silent = true
     },
     {
-      mode = 'n', '<leader>TGf', function()
+      mode = 'n', '<leader>agf', function()
         require('neogen').generate({type='func'})
-      end, desc = 'neogen annot func', silent = true
+      end, desc = 'annot func', silent = true
     },
     {
-      mode = 'n', '<leader>TGc', function()
+      mode = 'n', '<leader>agc', function()
         require('neogen').generate({type='class'})
-      end, desc = 'neogen annot class', silent = true
+      end, desc = 'annot class', silent = true
     },
     {
-      mode = 'n', '<leader>TGt', function()
+      mode = 'n', '<leader>agt', function()
         require('neogen').generate({type='type'})
-      end, desc = 'neogen annot type', silent = true
+      end, desc = 'annot type', silent = true
     },
     {
-      mode = 'n', '<leader>TGls', function()
+      mode = 'n', '<leader>agS', function()
         local snippet, row, col = require('neogen').generate({ snippet_engine = 'luasnip' })
         -- local snippet, row, col = require('neogen').generate({ snippet_engine = 'luasnip', return_snippet = true })
         local ls = require('luasnip')
@@ -43,7 +44,7 @@ return {
         -- ls.lsp_expand(snippet, { pos[1]=row, pos[1]=col }) -- is this is the right function? do I call it properly?
         -- vim.notify(("row=%d, col=%d, snippet=\n%s"):format(row, col, snippet), vim.log.levels.DEBUG) -- XXX
         -- vim.notify(("snippet=\n%s"):format(snippet), vim.log.levels.DEBUG) -- XXX
-      end, desc = 'neogen annot gen snip', silent = true
+      end, desc = 'annot snip gen', silent = true
     },
   },
   -- require('neogen').setup({ snippet_engine = "luasnip" })
