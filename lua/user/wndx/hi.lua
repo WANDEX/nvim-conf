@@ -177,13 +177,4 @@ local function highlights()
   mod_hl("LRED",  te(nobg, w.lred, rvrs))
 end
 
-vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
-  group = vim.api.nvim_create_augroup('Color', {}),
-  pattern = "*",
-  callback = function()
-    mod_hl_all_has({ italic=false })
-    highlights()
-  end
-})
 
-vim.cmd [[ silent! colorscheme monokai_pro ]]
