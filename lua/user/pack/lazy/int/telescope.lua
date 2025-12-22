@@ -187,8 +187,18 @@ M.spec = {
     },
     { '<leader>Td', require('telescope.builtin').diagnostics, desc = 'diagnostics' },
     { '<leader>Tf', require('telescope.builtin').find_files,  desc = 'find file at cwd' },
+    { '<leader>TG', '', desc = 'Git/GrugFar' }, -- group annotation
+    { '<leader>TGf', function() require('telescope.builtin').git_files({}) end,     desc = 'git_files' },
+    { '<leader>TGc', function() require('telescope.builtin').git_commits({}) end,   desc = 'git_commits' },
+    { '<leader>TGb', require('telescope.builtin').git_bcommits,       desc = 'git_bcommits', mode = { 'n' } },
+    { '<leader>TGb', require('telescope.builtin').git_bcommits_range, desc = 'git_bcommits_range', mode = { 'v', 'o'} },
+    { '<leader>TGB', function() require('telescope.builtin').git_branches({}) end,  desc = 'git_branches' },
+    { '<leader>TGs', function() require('telescope.builtin').git_status({}) end,    desc = 'git_status' },
+    { '<leader>TGS', function() require('telescope.builtin').git_stash({}) end,     desc = 'git_stash' },
+
     { '<leader>Tg', require('telescope.builtin').live_grep,   desc = 'grep at cwd' },
     { '<leader>Tm', '<cmd>Telescope mantoc sorting_strategy=ascending<CR>', desc = 'mantoc' },
+    { '<leader>TM', require('telescope.builtin').man_pages,                 desc = 'Man pages' },
     {
       '<leader>To', function()
         require('telescope.builtin').live_grep({ grep_open_files=true })
@@ -199,22 +209,24 @@ M.spec = {
         require('telescope').extensions.projects.projects()
       end, desc = 'Projects'
     },
+    { '<leader>Tp', require('telescope.builtin').oldfiles,    desc = 'prev opened files' },
+    { '<leader>Tr', require('telescope.builtin').resume,      desc = 'resume prev picker' },
+    { '<leader>TT', require('telescope.builtin').treesitter,  desc = 'Treesitter' },
     { '<leader>Tt', M.tele_tabby, desc = 'tabs' },
     { '<leader>Tv', '', desc = 'vim' }, -- group annotation
-    { '<leader>TvC', require('telescope.builtin').colorscheme,                desc = 'colorscheme' },
-    { '<leader>TvH', require('telescope.builtin').highlights,                 desc = 'Highlights' },
-    { '<leader>TvT', require('telescope.builtin').current_buffer_tags,        desc = 'tags buf' },
+    { '<leader>TvA', require('telescope.builtin').autocommands,               desc = 'autocommands' },
+    { '<leader>TvC', require('telescope.builtin').colorscheme,                desc = 'Colorscheme' },
     { '<leader>Tvc', require('telescope.builtin').command_history,            desc = 'command history' },
-    { '<leader>Tvf', require('telescope.builtin').current_buffer_fuzzy_find,  desc = 'fuzzy find buf' },
+    { '<leader>TvH', require('telescope.builtin').highlights,                 desc = 'Highlights' },
     { '<leader>Tvh', require('telescope.builtin').help_tags,                  desc = 'help tags' },
     { '<leader>Tvk', require('telescope.builtin').keymaps,                    desc = 'keymaps' },
-    { '<leader>Tvm', require('telescope.builtin').man_pages,                  desc = 'man pages' },
+    { '<leader>Tvm', require('telescope.builtin').marks,                      desc = 'marks' },
     { '<leader>Tvo', require('telescope.builtin').vim_options,                desc = 'options vim edit' },
-    { '<leader>Tvp', require('telescope.builtin').oldfiles,                   desc = 'prev opened files' },
-    { '<leader>TvR', require('telescope.builtin').resume,                     desc = 'resume prev picker' },
+    { '<leader>TvR', require('telescope.builtin').reloader,                   desc = 'reloader' },
     { '<leader>Tvr', require('telescope.builtin').registers,                  desc = 'registers' },
     { '<leader>Tvs', require('telescope.builtin').search_history,             desc = 'search history' },
-    { '<leader>TG', '', desc = 'Generate/GrugFar' }, -- group annotation
+    { '<leader>TvT', require('telescope.builtin').current_buffer_tags,        desc = 'tags buf' },
+    { '<leader>Tz',  require('telescope.builtin').current_buffer_fuzzy_find,  desc = 'fuzzy grep buf' },
   },
 }
 
