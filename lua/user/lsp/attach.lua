@@ -3,6 +3,9 @@
 --
 -- look into ref with additional comments:
 -- https://github.com/nvim-lua/kickstart.nvim
+--
+-- MEMO :h lsp-defaults, :h lsp-defaults-disable
+-- global defaults: { grr, gra, grn, gri, grt, gO, i_CTRL-S }
 
 local M = {}
 
@@ -37,47 +40,35 @@ function M.map(lhs, rhs, opts, mode)
   vim.keymap.set(mode, lhs, rhs, mrg_opts)
 end
 
+--- highlight references of the word under cursor when cursor rests there for a little while.
 --- @param event any (string|array) Event(s) that will trigger the handler (`callback` or `command`).
-local function hi(event)
+local function hi_cursor_refs(event)
   local lsp_b = vim.lsp.buf
-
-  --- The following two autocommands are used to highlight references of the
-  --- word under your cursor when your cursor rests there for a little while.
-  ---    See `:help CursorHold` for information about when this is executed
-  ---
-  --- When you move your cursor, the highlights will be cleared (the second autocommand).
   local client = vim.lsp.get_client_by_id(event.data.client_id)
-  if client and M.client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
-
-    local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
-
+  local doc_hi = vim.lsp.protocol.Methods.textDocument_documentHighlight
+  if client and M.client_supports_method(client, doc_hi, event.buf) then
+    local highlight_augroup = vim.api.nvim_create_augroup('hi_cursor_refs', { clear = false })
     vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
       buffer = event.buf,
       group = highlight_augroup,
       callback = lsp_b.document_highlight,
-    })
-
+    }) --- :h CursorHold - info when it is executed
     vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
       buffer = event.buf,
       group = highlight_augroup,
       callback = lsp_b.clear_references,
-    })
-
+    }) --- clear highlights when CursorMoved
     vim.api.nvim_create_autocmd('LspDetach', {
       group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
       callback = function(event2)
         lsp_b.clear_references()
-        vim.api.nvim_clear_autocmds({ group = 'kickstart-lsp-highlight', buffer = event2.buf })
+        vim.api.nvim_clear_autocmds({ group = 'hi_cursor_refs', buffer = event2.buf })
       end,
     })
   end
 
-  --- The following code creates a keymap to toggle inlay hints in your
-  --- code, if the language server you are using supports them
-  ---
-  --- This may be unwanted, since they displace some of your code
   if client and M.client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
-    M.map('<leader>th', function()
+    M.map('<leader>th', function() --- toggle inlay hints, if LSP supports them
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
     end, { desc = '[T]oggle Inlay [H]ints', buffer = event.buf })
   end
@@ -103,45 +94,60 @@ function M.lsp_attach()
 
       local lsp_b = vim.lsp.buf
       local tel_b = require('telescope.builtin')
+      local use_tel = true
 
-      --- Rename the variable under your cursor.
-      ---  Most Language Servers support renaming across files, etc.
-      l_map('grn', lsp_b.rename, '[R]e[n]ame')
-
+      local ok_live_rename, live_rename = pcall(require, 'live-rename')
+      if    ok_live_rename then
+        l_map('grn', function() live_rename.rename({ cursorpos = -1 }) end, '[R]e[n]ame live')
+      else
+        l_map('grn', lsp_b.rename, '[R]e[n]ame')
+      end
       --- Execute a code action, usually your cursor needs to be on top of an error
       --- or a suggestion from your LSP for this to activate.
       l_map('gra', lsp_b.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
 
-      --- Find references for the word under your cursor.
-      l_map('grr', tel_b.lsp_references, '[G]oto [R]eferences')
+      if use_tel then
+        l_map('grr', tel_b.lsp_references,  '[G]oto [R]eferences')
+      else
+        l_map('grr', lsp_b.references,      '[G]oto [R]eferences')
+      end
 
       --- Jump to the implementation of the word under your cursor.
       ---  Useful when your language has ways of declaring types without an actual implementation.
-      l_map('gri', tel_b.lsp_implementations, '[G]oto [I]mplementation')
+      if use_tel then
+        l_map('gri', tel_b.lsp_implementations, '[G]oto [I]mplementation')
+      else
+        l_map('gri', lsp_b.implementation,      '[G]oto [I]mplementation')
+      end
 
-      --- Jump to the definition of the word under your cursor.
-      ---  This is where a variable was first declared, or where a function is defined, etc.
-      ---  To jump back, press <C-t>.
-      l_map('grd', tel_b.lsp_definitions, '[G]oto [D]efinition')
+      if use_tel then
+        l_map('grt', tel_b.lsp_type_definitions,  '[G]oto [T]ype Definition')
+      else
+        l_map('grt', lsp_b.type_definition,       '[G]oto [T]ype Definition')
+      end
 
-      --- WARN: This is not Goto Definition, this is Goto Declaration.
-      ---  For example, in C this would take you to the header.
-      l_map('grD', lsp_b.declaration, '[G]oto [D]eclaration')
+      if use_tel then
+        l_map('grd', tel_b.lsp_definitions, '[G]oto [D]efinition')
+      else
+        l_map('grd', lsp_b.definition,      '[G]oto [D]efinition')
+      end
+      l_map('grD', lsp_b.declaration,       '[G]oto [D]eclaration')
 
-      --- Fuzzy find all the symbols in your current document.
-      ---  Symbols are things like variables, functions, types, etc.
-      l_map('gO', tel_b.lsp_document_symbols, 'Open Document Symbols')
+      l_map('gO', tel_b.lsp_document_symbols,           'Open Document Symbols')
+      l_map('gW', tel_b.lsp_dynamic_workspace_symbols,  'Open Workspace Symbols')
 
-      --- Fuzzy find all the symbols in your current workspace.
-      ---  Similar to document symbols, except searches over your entire project.
-      l_map('gW', tel_b.lsp_dynamic_workspace_symbols, 'Open Workspace Symbols')
+      l_map('<leader>lC', vim.lsp.codelens.refresh,     'Codelens refresh & display')
+      l_map('<leader>lc', vim.lsp.codelens.run,         'codelens run', { 'n', 'v' })
+      l_map('<leader>le', vim.diagnostic.open_float,    'diag enter/show')
+      l_map('<leader>lh', lsp_b.hover,                  'hover') -- always works unlike signature_help?
+      l_map('<leader>ll', vim.diagnostic.setloclist,    'list diag')
 
-      --- Jump to the type of the word under your cursor.
-      ---  Useful when you're not sure what type a variable is and you want to see
-      ---  the definition of its *type*, not where it was *defined*.
-      l_map('grt', tel_b.lsp_type_definitions, '[G]oto [T]ype Definition')
+      ---XXX: signature help - always works worse that hover?
+      -- l_map('<c-k>',      lsp_b.signature_help, 'signature help', { 'i' }) -- <c-s> default
+      -- l_map('<leader>ls', lsp_b.signature_help, 'signature help', { 'n' })
+      -- l_map('gK',         lsp_b.signature_help, 'signature help', { 'n' })
 
-      hi(event) -- XXX
+      hi_cursor_refs(event) -- XXX
     end,
   })
 end

@@ -32,13 +32,6 @@ return {
     config = function(_, opts)
       require('live-rename').setup(opts)
     end,
-    keys = {
-      {
-        mode = 'n', '<leader>lr', function() -- overrides keymap defined in lsp/keys.lua
-          require('live-rename').rename({ cursorpos = -1 })
-        end, desc = '[LSP] rename-live', silent = true
-      },
-    },
   },
 
 }

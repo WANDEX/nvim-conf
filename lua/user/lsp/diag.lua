@@ -1,7 +1,5 @@
 -- AUTHOR: 'WANDEX/nvim-conf'
 -- configuration for built-in neovim diagnostic.
--- NOTE: source in which DiagnosticSign* highlights are defined
--- vim.api.nvim_command('source ~/.config/nvim/plugin/hi.vim')
 
 vim.diagnostic.config({
   underline = true,
