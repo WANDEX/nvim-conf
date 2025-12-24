@@ -41,6 +41,7 @@ vim.opt.laststatus  = 2               -- Always display the status bar
 vim.opt.ruler       = true            -- Show row and column ruler information
 
 vim.opt.showcmd     = true            -- Display incomplete commands
+vim.opt.showcmdloc  = 'statusline'
 vim.opt.showmode    = false
 
 vim.opt.background  = 'dark'

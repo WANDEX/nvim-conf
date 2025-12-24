@@ -44,13 +44,13 @@ return {
       vim.cmd.colorscheme('monokai_pro') --- set default colorscheme at startup
       local stat = require('user.stat.nerv') --- set statusline
       opts.statusline = stat.statusline()
-      opts.colors     = stat.setup_colors()
+      opts.colors     = stat.sc
       --- re-evaluate on ColorScheme events (upd statusline colors on colorscheme change)
       vim.api.nvim_create_autocmd('ColorScheme', {
         group = vim.api.nvim_create_augroup('hi_heirline', { clear = true }),
         callback = function()
           require('heirline.utils').on_colorscheme(
-            require('user.stat.nerv').setup_colors()
+            require('user.stat.static').setup_colors()
           )
         end,
       })

@@ -1,10 +1,21 @@
 -- AUTHOR: 'WANDEX/nvim-conf'
 -- nerv statusline for 'rebelot/heirline.nvim'
 
+local ok, _ = pcall(require, 'heirline')
+if not ok then
+  return -- return
+end
+
 --- to make sure that vim.diagnostic.config() is pre-configured.
 require 'user.lsp.diag'
 
-local M = {}
+local _static = require('user.stat.static')
+
+local M = {
+  s  = _static.static,
+  sc = _static.colors,
+  sd = _static.static.d,
+}
 
 function M.lsp_attached()
   local bufnr = vim.api.nvim_get_current_buf()
@@ -33,173 +44,48 @@ function M.linters_attached()
   return true
 end
 
-function M.setup_colors()
-  local utils = require('heirline.utils')
-  return {
-    bright_bg = utils.get_highlight('Folded').bg,
-    bright_fg = utils.get_highlight('Folded').fg,
-    red = utils.get_highlight('DiagnosticError').fg,
-    dark_red = utils.get_highlight('DiffDelete').bg,
-    green = utils.get_highlight('String').fg,
-    blue = utils.get_highlight('Function').fg,
-    gray = utils.get_highlight('NonText').fg,
-    orange = utils.get_highlight('Constant').fg,
-    purple = utils.get_highlight('Statement').fg,
-    cyan = utils.get_highlight('Special').fg,
-    diag_warn = utils.get_highlight('DiagnosticWarn').fg,
-    diag_error = utils.get_highlight('DiagnosticError').fg,
-    diag_hint = utils.get_highlight('DiagnosticHint').fg,
-    diag_info = utils.get_highlight('DiagnosticInfo').fg,
-    git_del = utils.get_highlight('diffDeleted').fg,
-    git_add = utils.get_highlight('diffAdded').fg,
-    git_change = utils.get_highlight('diffChanged').fg,
-    f = {
-      black    = '#000000',
-      bg       = '#5C687A',
-      fg       = '#8FBCBB',
-      fg_green = '#65a380',
-      yellow   = '#E5C07B',
-      cyan     = '#70C0BA',
-      darkblue = '#83A598',
-      green    = '#98C378',
-      orange   = '#FF8800',
-      purple   = '#C678DD',
-      magenta  = '#C858E8',
-      blue     = '#73BA9F',
-      red      = '#D54E54',
-    },
-  }
+---@nodiscard
+---@param m string current mode
+---@return boolean current vim-mode is one of the visual modes
+function M.mode_is_v(m)
+  -- return
+  --   m == 'v' or --  v
+  --   m == 'V' or --  V
+  --   m == '\22'  -- ^V
+  return M.s.mode_names[m]:upper():match('V')
 end
 
 function M.statusline()
-  local error_statusline = {
-    { provider = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':.') },
-    { provider = '%<' },
-    { provider = ' | NERV - SOMETHING WENT WRONG | HEIRLINE PLUGIN NOT FOUND' },
-    { provider = '%=' },
-    { provider = '%3(%l%)/%-3(%L%):%2c %3(%p%)%%' },
-  }
-
-  local ok, _ = pcall(require, 'heirline')
-  if not ok then
-    return error_statusline
-  end
-
   local conditions = require('heirline.conditions')
   local utils = require('heirline.utils')
 
-  local colors = M.setup_colors()
+  local Space_s = { provider = M.sd.nbsp }
+  local Space_l = { provider = M.sd.sl_f }
+  local Space_r = { provider = M.sd.sl_b }
+  local Align   = { provider = '%=' }
 
   local ViMode = {
-    -- get vim current mode, this information will be required by the provider
-    -- and the highlight functions, so we compute it only once per component
-    -- evaluation and store it as a component attribute
+    --- get vim current mode, this information will be required by the provider
+    --- and the highlight functions, so we compute it only once per component
+    --- evaluation and store it as a component attribute
     init = function(self)
       self.mode = vim.fn.mode(1) -- :h mode()
     end,
-    -- Now we define some dictionaries to map the output of mode() to the
-    -- corresponding string and color. We can put these into `static` to compute
-    -- them at initialisation time.
-    static = {
-      mode_names = { -- change the strings if yow like it vvvvverbose!
-        n         = ' N ',
-        no        = ' N?',
-        nov       = ' N?',
-        noV       = ' N?',
-        ['no\22'] = ' N?',
-        niI       = ' Ni',
-        niR       = ' Nr',
-        niV       = ' Nv',
-        nt        = ' Nt',
-        v         = ' V ',
-        vs        = ' Vs',
-        V         = ' V_',
-        Vs        = ' Vs',
-        ['\22']   = ' ^V',
-        ['\22s']  = ' ^V',
-        s         = ' S ',
-        S         = ' S_',
-        ['\19']   = ' ^S',
-        i         = ' I ',
-        ic        = ' Ic',
-        ix        = ' Ix',
-        R         = ' R ',
-        Rc        = ' Rc',
-        Rx        = ' Rx',
-        Rv        = ' Rv',
-        Rvc       = ' Rv',
-        Rvx       = ' Rv',
-        c         = ' C ',
-        cv        = ' Ex',
-        r         = ' ...',
-        rm        = ' M ',
-        ['r?']    = ' ? ',
-        ['!']     = ' ! ',
-        t         = ' T ',
-      },
-      mode_colors = {
-        n = colors.red,
-        i = colors.green,
-        v = colors.cyan,
-        V = colors.cyan,
-        ['\22'] = colors.cyan, -- this is an actual ^V, type <C-v><C-v> in insert mode
-        c = colors.orange,
-        s = colors.purple,
-        S = colors.purple,
-        ['\19'] = colors.purple, -- this is an actual ^S, type <C-v><C-s> in insert mode
-        R = colors.orange,
-        r = colors.orange,
-        ['!'] = colors.red,
-        t = colors.red,
-      },
-      mode_fcolors = {
-        n = colors.f.yellow,
-        i = colors.f.green,
-        v = colors.f.blue,
-        V = colors.f.blue,
-        ['\22'] = colors.f.blue, -- this is an actual ^V, type <C-v><C-v> in insert mode
-        c = colors.f.magenta,
-        s = colors.f.cyan,
-        S = colors.f.cyan,
-        ['\19'] = colors.f.cyan, -- this is an actual ^S, type <C-v><C-s> in insert mode
-        R = colors.f.purple,
-        r = colors.f.purple,
-        ['!'] = colors.f.red,
-        t = colors.f.red,
-      },
-      d = {
-        nbsp = ' ', spch = '─',
-        c_kl = '', c_kr = '',
-        sl_f = '', sl_b = '',
-        t_ll = '', t_lr = '', t_ul = '', t_ur = '', -- :ple- | :pl-
-      },
-    },
-    -- We can now access the value of mode() that, by now, would have been
-    -- computed by `init()` and use it to index our strings dictionary.
-    -- note how `static` fields become just regular attributes once the
-    -- component is instantiated.
-    -- To be extra meticulous, we can also add some vim statusline syntax to
-    -- control the padding and make sure our string is always at least 2
-    -- characters long
+    static = M.s,
     provider = function(self)
       return self.mode_names[self.mode]
     end,
-    -- Same goes for the highlight. Now the foreground will change according to the current mode.
     hl = function(self)
       local mode = self.mode:sub(1, 1) -- get only the first mode character
       return { fg = self.mode_fcolors[mode], bold = true }
     end,
   }
 
-  local sd = ViMode.static.d
-
-  local FileNameBlock = {
-    -- let's first set up some attributes needed by this component and it's children
+  local FileNameBlock = { --- let's first set up some attributes needed by this component and it's children
     init = function(self)
       self.filename = vim.api.nvim_buf_get_name(0)
     end,
-  }
-  -- We can now define some children separately and add them later
+  } --- We can now define some children separately and add them later
 
   local FileIcon = {
     init = function(self)
@@ -226,15 +112,13 @@ function M.statusline()
       if self.lfilename == '' then
         self.lfilename = '[NONAME]'
       else
-        -- replace: '/home/user' -> '~'
-        -- self.lfilename = self.lfilename:gsub('/home/%w+', '~')
-        self.lfilename = self.lfilename:gsub(self.home, '~')
+        self.lfilename = self.lfilename:gsub(self.home, '~') --- replace: '/home/user' -> '~'
       end
       if not conditions.width_percent_below(#self.lfilename, 0.27) then
         self.lfilename = vim.fn.pathshorten(self.lfilename)
       end
     end,
-    hl = { fg = colors.f.cyan },
+    hl = { fg = M.sc.f.cyan },
 
     flexible = 2,
     {
@@ -256,21 +140,20 @@ function M.statusline()
           return '  '
         end
       end,
-      hl = { fg = colors.f.red },
+      hl = { fg = M.sc.f.red },
     },
   }
 
   local FileNameModifer = {
     hl = function()
       if vim.bo.modified then
-        -- use `force` because we need to override the child's hl foreground
-        return { fg = colors.f.cyan, bold = true, force = true }
+        --- use `force` because we need to override the child's hl foreground
+        return { fg = M.sc.f.cyan, bold = true, force = true }
       end
     end,
   }
 
-  -- let's add the children to our FileNameBlock component
-  FileNameBlock = utils.insert(
+  FileNameBlock = utils.insert( --- let's add the children to our FileNameBlock component
     FileNameBlock,
     FileIcon,
     utils.insert(FileNameModifer, FileName), -- a new table where FileName is a child of FileNameModifier
@@ -321,6 +204,22 @@ function M.statusline()
     end,
   }
 
+  local ShowCMD = { --- req: showcmdloc='statusline'
+    init = function(self)
+      self.mode = vim.fn.mode(1) -- :h mode()
+    end,
+    conditions = function()
+      return conditions.is_active()
+    end,
+    provider = function(self)
+      if not M.mode_is_v(self.mode) then
+        return -- guard - show only if current mode is one of the visual modes
+      end
+      local cmd_content = '%S'
+      return self.mode .. M.sd.sl_b .. cmd_content .. M.sd.sl_b
+    end,
+  }
+
   local Ruler = {
     -- %l = current line number
     -- %L = number of lines in the buffer
@@ -343,7 +242,7 @@ function M.statusline()
       end
       return sico .. table.concat(formatters, ' ') .. ' '
     end,
-    hl = { fg = colors.f.orange, bold = false },
+    hl = { fg = M.sc.f.orange, bold = false },
   }
 
   local LintersActive = {
@@ -356,7 +255,7 @@ function M.statusline()
       end
       return '󰦕 ' .. table.concat(linters, ' ') .. ' '
     end,
-    hl = { fg = colors.f.fg_green, bold = false },
+    hl = { fg = M.sc.f.fg_green, bold = false },
   }
 
   local LSPActive = {
@@ -379,7 +278,7 @@ function M.statusline()
       end
       return ' ' .. table.concat(names, ' ') .. ' '
     end,
-    hl = { fg = colors.f.green, bold = false },
+    hl = { fg = M.sc.f.green, bold = false },
   }
 
   local Diagnostics = {
@@ -403,25 +302,25 @@ function M.statusline()
       provider = function(self)
         return self.erroc > 0 and (' ' .. self.erro_sign .. self.erroc)
       end,
-      hl = { fg = colors.diag_error },
+      hl = { fg = M.sc.diag_error },
     },
     {
       provider = function(self)
         return self.warnc > 0 and (' ' .. self.warn_sign .. self.warnc)
       end,
-      hl = { fg = colors.diag_warn },
+      hl = { fg = M.sc.diag_warn },
     },
     {
       provider = function(self)
         return self.infoc > 0 and (' ' .. self.info_sign .. self.infoc)
       end,
-      hl = { fg = colors.diag_info },
+      hl = { fg = M.sc.diag_info },
     },
     {
       provider = function(self)
         return self.hintc > 0 and (' ' .. self.hint_sign .. self.hintc)
       end,
-      hl = { fg = colors.diag_hint },
+      hl = { fg = M.sc.diag_hint },
     },
   }
 
@@ -437,7 +336,7 @@ function M.statusline()
 
     {
       provider = '󰊢', --  
-      hl = { fg = colors.f.orange },
+      hl = { fg = M.sc.f.orange },
     },
     {
       provider = function(self)
@@ -456,21 +355,21 @@ function M.statusline()
         local count = self.status_dict.added or 0
         return count > 0 and ('+' .. count)
       end,
-      hl = { fg = colors.git_add },
+      hl = { fg = M.sc.git_add },
     },
     {
       provider = function(self)
         local count = self.status_dict.removed or 0
         return count > 0 and ('-' .. count)
       end,
-      hl = { fg = colors.git_del },
+      hl = { fg = M.sc.git_del },
     },
     {
       provider = function(self)
         local count = self.status_dict.changed or 0
         return count > 0 and ('~' .. count)
       end,
-      hl = { fg = colors.git_change },
+      hl = { fg = M.sc.git_change },
     },
     {
       condition = function(self)
@@ -502,27 +401,36 @@ function M.statusline()
 
   local WorkDir = {
     init = function(self)
-      self.icon = (vim.fn.haslocaldir(0) == 1 and 'l' or 'g') .. ' ' .. ' '
+      local ico = ' ' --  
+      self.icon = ico .. (vim.fn.haslocaldir(0) == 1 and 'l' or 'g') .. ':'
+      -- self.icon = ico .. (vim.fn.haslocaldir(0) == 1 and 'l' or 'g') .. M.sd.sl_f
       local cwd = vim.fn.getcwd(0)
       self.cwd = vim.fn.fnamemodify(cwd, ':~')
       if not conditions.width_percent_below(#self.cwd, 0.27) then
         self.cwd = vim.fn.pathshorten(self.cwd)
       end
     end,
-    hl = { fg = colors.f.blue, bold = true },
+    hl = { fg = M.sc.f.red, bold = false },
 
     flexible = 1,
     {
       provider = function(self)
         local trail = self.cwd:sub(-1) == '/' and '' or '/'
-        return self.icon .. self.cwd .. trail .. ' '
+        return self.icon .. self.cwd .. trail
       end,
     },
     {
       provider = function(self)
         local cwd = vim.fn.pathshorten(self.cwd)
         local trail = self.cwd:sub(-1) == '/' and '' or '/'
-        return self.icon .. cwd .. trail .. ' '
+        return self.icon .. cwd .. trail
+      end,
+    },
+    {
+      provider = function(self)
+        local cwd = vim.fs.basename(self.cwd)
+        local trail = self.cwd:sub(-1) == '/' and '' or '/'
+        return self.icon .. cwd .. trail
       end,
     },
     {
@@ -538,7 +446,7 @@ function M.statusline()
       local filename = vim.api.nvim_buf_get_name(0)
       return vim.fn.fnamemodify(filename, ':t')
     end,
-    hl = { fg = colors.f.blue },
+    hl = { fg = M.sc.f.blue },
   }
 
   local TerminalName = {
@@ -552,21 +460,16 @@ function M.statusline()
       local tname, _ = vim.api.nvim_buf_get_name(0):gsub('.*:', ''):gsub('/home/%w+', '~')
       return ' ' .. tname
     end,
-    hl = { fg = colors.f.blue, bold = true },
+    hl = { fg = M.sc.f.blue, bold = true },
   }
 
   local Spell = {
     condition = function()
       return vim.wo.spell
     end,
-    provider = 'SPELL ',
-    hl = { fg = colors.f.red, bold = true },
+    provider = 'SPELL',
+    hl = { fg = M.sc.f.red, bold = true },
   }
-
-  local Space_s = { provider = sd.nbsp }
-  local Space_l = { provider = sd.sl_f }
-  local Space_r = { provider = sd.sl_b }
-  local Align   = { provider = '%=' }
 
   local narrow_FT_ruler = {
     Space_r,
@@ -576,8 +479,14 @@ function M.statusline()
     Space_r,
   }
 
+  local C_WD = {
+    Space_l,
+    WorkDir,
+    Space_l,
+  }
+
   local LS = {
-    -- WorkDir,
+    C_WD,
     FileNameBlock,
     Space_l,
     { provider = '%<' },
@@ -593,17 +502,17 @@ function M.statusline()
   -- right side of inactive & other statuslines
   local RSO = {
     Align,
+    ShowCMD,
     RS,
     Space_r, -- for the same indent from right as with RSD in DefaultStatusline
   }
 
-  ViMode    = utils.surround({ sd.t_lr, sd.t_ul }, colors.f.black, { ViMode })
-  local LSD = utils.surround({ sd.t_lr, sd.t_ul }, colors.f.black, { LS })
-  local RSD = utils.surround({ sd.t_ur, sd.t_ll }, colors.f.black, { RS })
+  local Mode = utils.surround({ M.sd.t_lr, M.sd.t_ul }, M.sc.f.black, { ViMode })
+  local LSD  = utils.surround({ M.sd.t_lr, M.sd.t_ul }, M.sc.f.black, { LS })
+  local RSD  = utils.surround({ M.sd.t_ur, M.sd.t_ll }, M.sc.f.black, { RS })
 
   local DefaultStatusline = {
-    ViMode,
-    Space_l,
+    Mode,
     Spell,
     LSD,
     Space_l,
@@ -611,6 +520,7 @@ function M.statusline()
     Align,
     DAPMessages,
     Align,
+    ShowCMD,
     FormattersActive,
     LintersActive,
     LSPActive,
@@ -622,7 +532,7 @@ function M.statusline()
     condition = function()
       return not conditions.is_active()
     end,
-    -- { hl = { fg = colors.f.darkblue, force = true }, WorkDir },
+    C_WD,
     FileNameBlock,
     { provider = '%<' },
     RSO,
@@ -644,6 +554,9 @@ function M.statusline()
         filetype = { '^git.*', 'fugitive' },
       })
     end,
+    C_WD,
+    Align,
+    ShowCMD,
     FileType,
     Space_r,
     HelpFilename,
@@ -656,10 +569,10 @@ function M.statusline()
         buftype = { 'terminal' }
       })
     end,
-    hl = { bg = colors.dark_red },
-    { condition = conditions.is_active, ViMode, Space_l, },
+    hl = { bg = M.sc.dark_red },
+    { condition = conditions.is_active, Mode },
     FileType,
-    Space_l,
+    C_WD,
     TerminalName,
     RSO,
   }
@@ -668,7 +581,7 @@ function M.statusline()
     hl = function()
       if conditions.is_active() then
         return {
-          fg = colors.f.fg,
+          fg = M.sc.f.fg,
         }
       else
         return {
