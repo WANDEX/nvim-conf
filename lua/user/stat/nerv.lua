@@ -532,6 +532,7 @@ function M.statusline()
     condition = function()
       return not conditions.is_active()
     end,
+    Spell,
     C_WD,
     FileNameBlock,
     { provider = '%<' },
@@ -551,14 +552,11 @@ function M.statusline()
     condition = function()
       return conditions.buffer_matches({
         buftype  = { 'prompt', 'quickfix' },
-        filetype = { '^git.*', 'fugitive' },
+        filetype = { '^git.*', 'fugitive', 'magit' },
       })
     end,
+    Spell,
     C_WD,
-    Align,
-    ShowCMD,
-    FileType,
-    Space_r,
     HelpFilename,
     RSO,
   }
@@ -569,8 +567,8 @@ function M.statusline()
         buftype = { 'terminal' }
       })
     end,
-    hl = { bg = M.sc.dark_red },
     { condition = conditions.is_active, Mode },
+    Spell,
     FileType,
     C_WD,
     TerminalName,
