@@ -17,6 +17,19 @@ local M = {
   sd = _static.static.d,
 }
 
+--- dynamically adjust component width respecting amount of free space in percents.
+---@param short string
+---@param long string
+---@param thresh? any
+---@return string
+function M.dyn_width(short, long, thresh)
+  thresh = thresh or 50.0
+  if not require('heirline.conditions').width_percent_below(#long, thresh) then
+    return short
+  end
+  return long
+end
+
 function M.lsp_attached()
   local bufnr = vim.api.nvim_get_current_buf()
   return next(vim.lsp.get_clients({ bufnr = bufnr })) ~= nil
@@ -84,6 +97,8 @@ function M.statusline()
   local FileNameBlock = { --- let's first set up some attributes needed by this component and it's children
     init = function(self)
       self.filename = vim.api.nvim_buf_get_name(0)
+      self.home = vim.fn.getenv('HOME') --- to replace: '/home/user' -> '~'
+      self.lfilename = vim.fn.fnamemodify(self.filename, ':.'):gsub(self.home, '~')
     end,
   } --- We can now define some children separately and add them later
 
@@ -107,17 +122,10 @@ function M.statusline()
 
   local FileName = {
     init = function(self)
-      self.lfilename = vim.fn.fnamemodify(self.filename, ':.')
-      self.home = vim.fn.getenv('HOME')
       if self.lfilename == '' then
         self.lfilename = '[NONAME]'
-      else
-        self.lfilename = self.lfilename:gsub(self.home, '~') --- replace: '/home/user' -> '~'
       end
-      if not conditions.width_percent_below(#self.lfilename, 0.27) then
-        self.lfilename = vim.fn.pathshorten(self.lfilename)
-      end
-    end,
+end,
     hl = { fg = M.sc.f.cyan },
 
     flexible = 2,
@@ -129,6 +137,11 @@ function M.statusline()
     {
       provider = function(self)
         return vim.fn.pathshorten(self.lfilename)
+      end,
+    },
+    {
+      provider = function(self)
+        return vim.fs.basename(self.lfilename)
       end,
     },
   }
@@ -144,7 +157,7 @@ function M.statusline()
     },
   }
 
-  local FileNameModifer = {
+  local FileNameModifier = {
     hl = function()
       if vim.bo.modified then
         --- use `force` because we need to override the child's hl foreground
@@ -155,10 +168,10 @@ function M.statusline()
 
   FileNameBlock = utils.insert( --- let's add the children to our FileNameBlock component
     FileNameBlock,
+    { provider = '%<' }, -- this means that the statusline is cut here when there's not enough space
     FileIcon,
-    utils.insert(FileNameModifer, FileName), -- a new table where FileName is a child of FileNameModifier
-    unpack(FileFlags) -- A small optimisation, since their parent does nothing
-    -- { provider = '%<' } -- this means that the statusline is cut here when there's not enough space
+    utils.insert(FileNameModifier, FileName), -- a new table where FileName is a child of FileNameModifier
+    unpack(FileFlags) -- A small optimization, since their parent does nothing
   )
 
   local FileType = {
@@ -403,14 +416,10 @@ function M.statusline()
     init = function(self)
       local ico = ' ' --  
       self.icon = ico .. (vim.fn.haslocaldir(0) == 1 and 'l' or 'g') .. ':'
-      -- self.icon = ico .. (vim.fn.haslocaldir(0) == 1 and 'l' or 'g') .. M.sd.sl_f
       local cwd = vim.fn.getcwd(0)
-      self.cwd = vim.fn.fnamemodify(cwd, ':~')
-      if not conditions.width_percent_below(#self.cwd, 0.27) then
-        self.cwd = vim.fn.pathshorten(self.cwd)
-      end
+      self.cwd  = vim.fn.fnamemodify(cwd, ':~')
     end,
-    hl = { fg = M.sc.f.red, bold = false },
+    hl = { fg = M.sc.f.bg },
 
     flexible = 1,
     {
@@ -433,32 +442,37 @@ function M.statusline()
         return self.icon .. cwd .. trail
       end,
     },
-    {
-      provider = '',
-    },
   }
 
-  local HelpFilename = {
+  local HelpName = {
     condition = function()
       return vim.bo.filetype == 'help'
     end,
-    provider = function()
-      local filename = vim.api.nvim_buf_get_name(0)
-      return vim.fn.fnamemodify(filename, ':t')
+    init = function(self)
+      self.filename = vim.api.nvim_buf_get_name(0)
+      self.lfilename = vim.fn.fnamemodify(self.filename, ':t')
+      self.ico = ' '
     end,
-    hl = { fg = M.sc.f.blue },
+    provider = function(self) -- i.e. HELP
+      return self.ico .. self.lfilename
+    end,
+    -- hl = { fg = M.sc.f.blue },
+    hl = { fg = M.sc.f.red }, -- XXX
   }
 
-  local TerminalName = {
-    -- condition = function()
-    --     return vim.bo.buftype == 'terminal'
-    -- end,
-    -- icon = ' ', -- 
-    provider = function()
-      -- local tname, _ = vim.api.nvim_buf_get_name(0):gsub('.*:', '')
-      -- replace: '/home/user' -> '~'
-      local tname, _ = vim.api.nvim_buf_get_name(0):gsub('.*:', ''):gsub('/home/%w+', '~')
-      return ' ' .. tname
+  local ShellName = {
+    condition = function()
+      return vim.bo.buftype == 'terminal'
+    end,
+    init = function(self)
+      self.filename = vim.api.nvim_buf_get_name(0)
+      self.home = vim.fn.getenv('HOME') --- to replace: '/home/user' -> '~'
+      self.lfilename = vim.fn.fnamemodify(self.filename, ':.'):gsub(self.home, '~')
+        :gsub('//.*//', '') --- replace cwd, :term PID is left untouched
+      self.ico = ' '
+    end,
+    provider = function(self) -- i.e. /bin/bash
+      return self.ico .. self.lfilename
     end,
     hl = { fg = M.sc.f.blue, bold = true },
   }
@@ -493,15 +507,23 @@ function M.statusline()
     Git,
   }
 
+  local LSE = {
+    Space_s,
+    Space_l,
+    Align,
+    -- { provider = '%<' },
+  }
+
   local RS = {
     FileType,
     Space_r,
     Ruler,
   }
 
-  -- right side of inactive & other statuslines
-  local RSO = {
+  local RSO = { --- right side of other statuslines
     Align,
+    Space_r,
+    Space_s,
     ShowCMD,
     RS,
     Space_r, -- for the same indent from right as with RSD in DefaultStatusline
@@ -535,7 +557,7 @@ function M.statusline()
     Spell,
     C_WD,
     FileNameBlock,
-    { provider = '%<' },
+    LSE,
     RSO,
   }
 
@@ -552,12 +574,14 @@ function M.statusline()
     condition = function()
       return conditions.buffer_matches({
         buftype  = { 'prompt', 'quickfix' },
-        filetype = { '^git.*', 'fugitive', 'magit' },
+        filetype = { '^git.*', 'fugitive', 'help', 'magit' },
       })
     end,
+    { condition = conditions.is_active, Mode },
     Spell,
     C_WD,
-    HelpFilename,
+    HelpName,
+    LSE,
     RSO,
   }
 
@@ -569,9 +593,9 @@ function M.statusline()
     end,
     { condition = conditions.is_active, Mode },
     Spell,
-    FileType,
     C_WD,
-    TerminalName,
+    ShellName, -- i.e. /bin/bash
+    LSE,
     RSO,
   }
 
