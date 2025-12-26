@@ -90,86 +90,88 @@ function M.viml_buffer_local_mappings()
   ]]
 end
 
---- create buffer local mapping for ft=magit.
+--- create buffer-local mapping for ft=magit.
 --- wrapper: vim.keymap.set() - Defines a |mapping| of |keycodes| to a function or keycodes.
----@param mode  string|string[] -- Mode "short-name" (see |nvim_set_keymap()|), or a list thereof.
+---@param mode  string|string[] -- Mode 'short-name' (see |nvim_set_keymap()|), or a list thereof.
 ---@param lhs   string          -- Left-hand side  |{lhs}| of the mapping.
 ---@param rhs   string|function -- Right-hand side |{rhs}| of the mapping, can be a Lua function.
 ---@param opts? vim.keymap.set.Opts
 function M.map(mode, lhs, rhs, opts)
+  opts = opts or {}
   local def_opts = {
-    buffer=true, silent=true, nowait=true, desc = '[WNDX]',
+    buffer = opts.buffer or 0, silent = true, nowait = true, desc = '[WNDX]'
   } -- default opts if not explicitly provided
   local mrg_opts = vim.tbl_extend('force', def_opts, opts)
   mrg_opts.desc = '[WNDX] ' .. mrg_opts.desc
-  -- vim.notify(string.format("fire! %s", lhs), vim.log.levels.DEBUG)
+  -- vim.notify(string.format('fire! %s', lhs), vim.log.levels.DEBUG)
   vim.keymap.set(mode, lhs, rhs, mrg_opts)
 end
 
---- wrapper: vim.keymap.set() - Defines a |mapping| of |keycodes| to a function or keycodes.
----@param lhs  string          -- Left-hand side  |{lhs}| of the mapping.
----@param rhs  string|function -- Right-hand side |{rhs}| of the mapping, can be a Lua function.
----@param desc string
-function M.map3(lhs, rhs, desc)
-  M.map('n', lhs, rhs, {desc = desc})
-end
-
---- create buffer local mapping for ft=magit
+--- autocmd to create buffer-local mappings for ft=magit
 ---@param callback string|function
 function M.magit_buf_local_maps_aug(callback)
-  vim.api.nvim_create_autocmd({ "FileType" }, {
-    group = vim.api.nvim_create_augroup("custom_magit_mappings", { clear = true }),
-    pattern = "magit",
-    callback = function() -- function(args)
+  vim.api.nvim_create_autocmd({ 'FileType' }, {
+    group = vim.api.nvim_create_augroup('custom_magit_mappings', { clear = true }),
+    pattern = 'magit',
+    callback = function(event)
       local ft = vim.bo.filetype
-      if ft ~= "magit" then return end -- guard
+      if ft ~= 'magit' then return end -- guard
       vim.fn.setreg('f', {}) -- clean reg
-      callback()
+      callback(event)
     end
   })
 end
 
-function M.magit_buf_local_maps()
+--- @param event any (string|array) Event(s) that will trigger the handler (`callback` or `command`).
+function M.magit_buf_local_maps(event)
   --- reusable macro cmd:
-  local _gg = "<cmd>exe 'normal gg'<CR>" -- go to gg
-  local _nohls = "<cmd>silent nohlsearch<CR>" -- tmp stop search highlighting
-  local _nl = _nohls .. "<cmd>exe 'normal }'<CR>"  -- go to next empty line
+  local _gg = '<cmd>exe "normal gg"<CR>' -- go to gg
+  local _nohls = '<cmd>silent nohlsearch<CR>' -- tmp stop search highlighting
+  local _nl = _nohls .. '<cmd>exe "normal }"<CR>'  -- go to next empty line
   --- regex:
   local fpath_re = [[[/|a-z|A-Z|\-|_|\.]\+]]
   local magit_item_re = [[^[a-z]\+: \(]]..fpath_re..[[\)$]] -- perfect
-  --- buffer local keymaps:
+  --- buffer-local keymaps:
   local _go_ni = 'gsn'
   local _go_ne = 'gse'
-  local _go_cm, _cm = 'gsc', "Commit message"
-  local _go_sc, _sc = 'gss', "Staged changes"
-  local _go_uc, _uc = 'gsu', "Unstaged changes"
+  local _go_cm, _cm = 'gsc', 'Commit message'
+  local _go_sc, _sc = 'gss', 'Staged changes'
+  local _go_uc, _uc = 'gsu', 'Unstaged changes'
   local _go_gh = 'gsh'
 
-  ---@see mark__jump_hunk
-  M.map3("<C-n>", "<cmd>call magit#jump_hunk('N')<CR><cmd>normal zz<CR>", "go to next hunk and center line")
-  M.map3("<C-e>", "<cmd>call magit#jump_hunk('P')<CR><cmd>normal zz<CR>", "go to prev hunk and center line")
+  --- wrapper: vim.keymap.set() - Defines a |mapping| of |keycodes| to a function or keycodes.
+  ---@param lhs  string          -- Left-hand side  |{lhs}| of the mapping.
+  ---@param rhs  string|function -- Right-hand side |{rhs}| of the mapping, can be a Lua function.
+  ---@param desc string
+  local map3 = function(lhs, rhs, desc)
+    M.map('n', lhs, rhs, { buffer = event.buf, desc = desc })
+  end
 
-  M.map3(_go_ni, function()
+  ---@see mark__jump_hunk
+  map3('<C-n>', '<cmd>call magit#jump_hunk("N")<CR><cmd>normal zz<CR>', 'go to next hunk and center line')
+  map3('<C-e>', '<cmd>call magit#jump_hunk("P")<CR><cmd>normal zz<CR>', 'go to prev hunk and center line')
+
+  map3(_go_ni, function()
       local ln, col = vim.fn.searchpos(magit_item_re, 'wn')
       vim.fn.cursor(ln, col)
     end,
-    "go to next magit item (without folding/unfolding of a hunk)"
+    'go to next magit item (without folding/unfolding of a hunk)'
   )
-  M.map3(_go_ne, function()
+  map3(_go_ne, function()
       local ln, col = vim.fn.searchpos(magit_item_re, 'wne')
       vim.fn.cursor(ln, col)
     end,
-    "go to next magit item end (without folding/unfolding of a hunk)"
+    'go to next magit item end (without folding/unfolding of a hunk)'
   )
 
-  M.map3(_go_cm, _gg .. "<cmd>/" .. _cm .. "<CR>" .. _nl, "go to " .. _cm)
-  M.map3(_go_sc, _gg .. "<cmd>/" .. _sc .. "<CR>" .. _nl, "go to " .. _sc)
-  M.map3(_go_uc, _gg .. "<cmd>/" .. _uc .. "<CR>" .. _nl, "go to " .. _uc)
-  M.map3(_go_gh, _gg .. "<cmd>/Head:<CR>" .. _nohls .. "<cmd>exe 'normal 2W'<CR>",
-    "go to Head: line in Info and put cursor at the beginning of commit message"
+  map3(_go_cm, _gg .. '<cmd>/' .. _cm .. '<CR>' .. _nl, 'go to ' .. _cm)
+  map3(_go_sc, _gg .. '<cmd>/' .. _sc .. '<CR>' .. _nl, 'go to ' .. _sc)
+  map3(_go_uc, _gg .. '<cmd>/' .. _uc .. '<CR>' .. _nl, 'go to ' .. _uc)
+  map3(_go_gh, _gg .. '<cmd>/Head:<CR>' .. _nohls .. '<cmd>exe "normal 2W"<CR>',
+    'go to Head: line in Info and put cursor at the beginning of commit message'
   )
 
-  M.map3("gf", function()
+  map3('gf', function()
     local reg_f = 'f'
     local fpath_sep_re = '[/|\\| ]'
     vim.fn.setreg(reg_f, {}) -- clean reg
@@ -184,18 +186,18 @@ function M.magit_buf_local_maps()
       vim.api.nvim_put({str_res}, 'l', false, false)
     end, 20)
     end,
-    "go to next magit file/item, yank and paste [filename] in git commit message"
+    'go to next magit file/item, yank and paste [filename] in git commit message'
   )
 end
 
 function M.map_keys()
-  vim.keymap.set("n", "<leader>M", "", { desc = "Magit" }) -- group annotation
-  vim.keymap.set("n", "<leader>Mh", "<cmd>call magit#show_magit('h')<CR>", { desc = "hrz"  })
-  vim.keymap.set("n", "<leader>Mo", "<cmd>call magit#show_magit('c')<CR>", { desc = "only" })
-  vim.keymap.set("n", "<leader>Mv", "<cmd>call magit#show_magit('v')<CR>", { desc = "vrt"  })
+  vim.keymap.set('n', '<leader>M', '', { desc = 'Magit' }) -- group annotation
+  vim.keymap.set('n', '<leader>Mh', '<cmd>call magit#show_magit("h")<CR>', { desc = 'hrz'  })
+  vim.keymap.set('n', '<leader>Mo', '<cmd>call magit#show_magit("c")<CR>', { desc = 'only' })
+  vim.keymap.set('n', '<leader>Mv', '<cmd>call magit#show_magit("v")<CR>', { desc = 'vrt'  })
 end
 
-M.spec = {
+return {
   'jreybert/vimagit', -- simple: diff, stage, commit msg
   enabled = true,
   lazy = false,
@@ -206,5 +208,3 @@ M.spec = {
     M.map_keys()
   end,
 }
-
-return M.spec
