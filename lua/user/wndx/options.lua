@@ -52,6 +52,7 @@ vim.opt.joinspaces  = true  -- Use one space, not two, after punctuation etc
 vim.opt.timeout     = false -- disable timeout -> fixes 'q:' '<nop>' rebind!
 vim.opt.timeoutlen  = 250   -- timeout before something
 vim.opt.undolevels  = 1000  -- Number of undo levels
+vim.opt.updatetime  = 500   -- |CursorHold| autocmd event (4000 ms default)
 
 vim.opt.scrolloff     = 5   -- Show next 5 lines   while      scrolling
 vim.opt.sidescrolloff = 5   -- Show next 5 columns while side-scrolling

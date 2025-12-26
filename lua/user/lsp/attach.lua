@@ -40,14 +40,15 @@ function M.map(lhs, rhs, opts, mode)
   vim.keymap.set(mode, lhs, rhs, mrg_opts)
 end
 
---- highlight references of the word under cursor when cursor rests there for a little while.
+--- highlight references of the word under cursor when cursor rests there for updatetime.
+--- @see vim.opt.updatetime = 500 -- |CursorHold| autocmd event (4000 ms default)
 --- @param event any (string|array) Event(s) that will trigger the handler (`callback` or `command`).
 local function hi_cursor_refs(event)
   local lsp_b = vim.lsp.buf
   local client = vim.lsp.get_client_by_id(event.data.client_id)
   local doc_hi = vim.lsp.protocol.Methods.textDocument_documentHighlight
   if client and M.client_supports_method(client, doc_hi, event.buf) then
-    local highlight_augroup = vim.api.nvim_create_augroup('hi_cursor_refs', { clear = false })
+    local highlight_augroup = vim.api.nvim_create_augroup('hi_cursor_refs', { clear = true })
     vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
       buffer = event.buf,
       group = highlight_augroup,
@@ -147,7 +148,7 @@ function M.lsp_attach()
       -- l_map('<leader>ls', lsp_b.signature_help, 'signature help', { 'n' })
       -- l_map('gK',         lsp_b.signature_help, 'signature help', { 'n' })
 
-      hi_cursor_refs(event) -- XXX
+      hi_cursor_refs(event)
     end,
   })
 end
