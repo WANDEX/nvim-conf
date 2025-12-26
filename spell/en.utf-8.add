@@ -365,3 +365,5 @@ desc
 dap
 ui
 dropdown
+statusline
+modeline
