@@ -17,6 +17,18 @@ local M = {
   sd = _static.static.d,
 }
 
+function M.file_name_init(self)
+  self = self or {}
+  self.filename = vim.api.nvim_buf_get_name(0)
+  self.home = vim.fn.getenv('HOME') --- to replace: '/home/user' -> '~'
+  if self.filename == '' then
+    self.lfilename = '[NONAME]'
+  else
+    self.lfilename = vim.fn.fnamemodify(self.filename, ':.'):gsub(self.home, '~')
+  end
+  return self
+end
+
 --- dynamically adjust component width respecting amount of free space in percents.
 ---@param short string
 ---@param long string
@@ -28,6 +40,18 @@ function M.dyn_width(short, long, thresh)
     return short
   end
   return long
+end
+
+function M.git_has_changes(self)
+  self = self or {}
+  self.gsd = vim.b.gitsigns_status_dict
+  self.gsd.changed = self.gsd.changed or 0 -- fix against nil value
+  self.gsd.added   = self.gsd.added   or 0
+  self.gsd.removed = self.gsd.removed or 0
+  return
+    self.gsd.changed ~= 0 or
+    self.gsd.added   ~= 0 or
+    self.gsd.removed ~= 0
 end
 
 function M.lsp_attached()
@@ -76,6 +100,7 @@ function M.statusline()
   local Space_l = { provider = M.sd.sl_f }
   local Space_r = { provider = M.sd.sl_b }
   local Align   = { provider = '%=' }
+  local Cut     = { provider = '%<' } -- cut when there is not enough space
 
   local ViMode = {
     --- get vim current mode, this information will be required by the provider
@@ -94,13 +119,16 @@ function M.statusline()
     end,
   }
 
-  local FileNameBlock = { --- let's first set up some attributes needed by this component and it's children
-    init = function(self)
-      self.filename = vim.api.nvim_buf_get_name(0)
-      self.home = vim.fn.getenv('HOME') --- to replace: '/home/user' -> '~'
-      self.lfilename = vim.fn.fnamemodify(self.filename, ':.'):gsub(self.home, '~')
-    end,
-  } --- We can now define some children separately and add them later
+  local FileFlags = { -- unpack(FileFlags) -> A small optimization (if parent does nothing)
+    {
+      provider = function()
+        if not vim.bo.modifiable or vim.bo.readonly then
+          return '  '
+        end
+      end,
+      hl = { fg = M.sc.f.red },
+    },
+  }
 
   local FileIcon = {
     init = function(self)
@@ -120,14 +148,48 @@ function M.statusline()
     end,
   }
 
-  local FileName = {
+  local HelpName = {
+    condition = function()
+      return vim.bo.filetype == 'help'
+    end,
     init = function(self)
-      if self.lfilename == '' then
-        self.lfilename = '[NONAME]'
-      end
-end,
-    hl = { fg = M.sc.f.cyan },
+      self.filename = vim.api.nvim_buf_get_name(0)
+      self.lfilename = vim.fn.fnamemodify(self.filename, ':t')
+      self.ico = ' '
+    end,
+    provider = function(self) -- i.e. HELP
+      return self.ico .. self.lfilename
+    end,
+    hl = { fg = M.sc.f.red },
+    FileFlags
+  }
 
+  local ShellName = {
+    condition = function()
+      return vim.bo.buftype == 'terminal'
+    end,
+    init = function(self)
+      M.file_name_init(self)
+      self.lfilename = self.lfilename:gsub('//.*//', '') -- replace cwd, :term PID is left untouched
+      self.ico = ' '
+    end,
+    provider = function(self) -- i.e. /bin/bash
+      return self.ico .. self.lfilename
+    end,
+    hl = { fg = M.sc.f.blue, bold = true },
+  }
+
+  local FileNameModifier = {
+    hl = function()
+      if vim.bo.modified then -- force - to override the child's hl
+        return { bold = true, force = true }
+      end
+    end,
+  }
+
+  local FileName = {
+    init = M.file_name_init,
+    hl = { fg = M.sc.f.cyan },
     flexible = 2,
     {
       provider = function(self)
@@ -146,33 +208,13 @@ end,
     },
   }
 
-  local FileFlags = {
-    {
-      provider = function()
-        if not vim.bo.modifiable or vim.bo.readonly then
-          return '  '
-        end
-      end,
-      hl = { fg = M.sc.f.red },
-    },
-  }
-
-  local FileNameModifier = {
-    hl = function()
-      if vim.bo.modified then
-        --- use `force` because we need to override the child's hl foreground
-        return { fg = M.sc.f.cyan, bold = true, force = true }
-      end
-    end,
-  }
-
-  FileNameBlock = utils.insert( --- let's add the children to our FileNameBlock component
-    FileNameBlock,
-    { provider = '%<' }, -- this means that the statusline is cut here when there's not enough space
+  local FileNameBlock = {
     FileIcon,
+    HelpName,
+    ShellName,
     utils.insert(FileNameModifier, FileName), -- a new table where FileName is a child of FileNameModifier
-    unpack(FileFlags) -- A small optimization, since their parent does nothing
-  )
+    FileFlags,
+  }
 
   local FileType = {
     provider = function()
@@ -210,7 +252,6 @@ end,
   }
 
   local FileLastModified = {
-    -- did you know? Vim is full of functions!
     provider = function()
       local ftime = vim.fn.getftime(vim.api.nvim_buf_get_name(0))
       return (ftime > 0) and os.date('%c', ftime)
@@ -296,21 +337,18 @@ end,
 
   local Diagnostics = {
     condition = conditions.has_diagnostics,
-
     static = {
       erro_sign  =  vim.diagnostic.config().signs.text[vim.diagnostic.severity.ERROR],
       warn_sign  =  vim.diagnostic.config().signs.text[vim.diagnostic.severity.WARN],
       info_sign  =  vim.diagnostic.config().signs.text[vim.diagnostic.severity.INFO],
       hint_sign  =  vim.diagnostic.config().signs.text[vim.diagnostic.severity.HINT],
     },
-
     init = function(self)
       self.erroc = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
       self.warnc = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
       self.infoc = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
       self.hintc = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
     end,
-
     {
       provider = function(self)
         return self.erroc > 0 and (' ' .. self.erro_sign .. self.erroc)
@@ -339,56 +377,49 @@ end,
 
   local Git = {
     condition = conditions.is_git_repo,
-
     init = function(self)
-      self.status_dict = vim.b.gitsigns_status_dict
-      self.has_changes = self.status_dict.added ~= 0
-      or self.status_dict.removed ~= 0
-      or self.status_dict.changed ~= 0
+      M.git_has_changes(self) -- gsd
     end,
-
     {
-      provider = '󰊢', --  
+      provider = vim.g.NF and ' ' or '', --  
       hl = { fg = M.sc.f.orange },
     },
     {
       provider = function(self)
-        return self.status_dict.head
+        return self.gsd.head
       end,
       hl = { bold = true },
     },
     {
-      condition = function(self)
-        return self.has_changes
+      provider = function(self)
+        return M.git_has_changes(self) and '(' or ''
       end,
-      provider = '(',
     },
     {
       provider = function(self)
-        local count = self.status_dict.added or 0
+        local  count = self.gsd.added or 0
         return count > 0 and ('+' .. count)
       end,
       hl = { fg = M.sc.git_add },
     },
     {
       provider = function(self)
-        local count = self.status_dict.removed or 0
+        local  count = self.gsd.removed or 0
         return count > 0 and ('-' .. count)
       end,
       hl = { fg = M.sc.git_del },
     },
     {
       provider = function(self)
-        local count = self.status_dict.changed or 0
+        local  count = self.gsd.changed or 0
         return count > 0 and ('~' .. count)
       end,
       hl = { fg = M.sc.git_change },
     },
     {
-      condition = function(self)
-        return self.has_changes
+      provider = function(self)
+        return M.git_has_changes(self) and ')' or ''
       end,
-      provider = ')',
     },
   }
 
@@ -420,7 +451,6 @@ end,
       self.cwd  = vim.fn.fnamemodify(cwd, ':~')
     end,
     hl = { fg = M.sc.f.bg },
-
     flexible = 1,
     {
       provider = function(self)
@@ -442,39 +472,6 @@ end,
         return self.icon .. cwd .. trail
       end,
     },
-  }
-
-  local HelpName = {
-    condition = function()
-      return vim.bo.filetype == 'help'
-    end,
-    init = function(self)
-      self.filename = vim.api.nvim_buf_get_name(0)
-      self.lfilename = vim.fn.fnamemodify(self.filename, ':t')
-      self.ico = ' '
-    end,
-    provider = function(self) -- i.e. HELP
-      return self.ico .. self.lfilename
-    end,
-    -- hl = { fg = M.sc.f.blue },
-    hl = { fg = M.sc.f.red }, -- XXX
-  }
-
-  local ShellName = {
-    condition = function()
-      return vim.bo.buftype == 'terminal'
-    end,
-    init = function(self)
-      self.filename = vim.api.nvim_buf_get_name(0)
-      self.home = vim.fn.getenv('HOME') --- to replace: '/home/user' -> '~'
-      self.lfilename = vim.fn.fnamemodify(self.filename, ':.'):gsub(self.home, '~')
-        :gsub('//.*//', '') --- replace cwd, :term PID is left untouched
-      self.ico = ' '
-    end,
-    provider = function(self) -- i.e. /bin/bash
-      return self.ico .. self.lfilename
-    end,
-    hl = { fg = M.sc.f.blue, bold = true },
   }
 
   local Spell = {
@@ -503,7 +500,6 @@ end,
     C_WD,
     FileNameBlock,
     Space_l,
-    { provider = '%<' },
     Git,
   }
 
@@ -511,7 +507,6 @@ end,
     Space_s,
     Space_l,
     Align,
-    -- { provider = '%<' },
   }
 
   local RS = {
@@ -532,6 +527,8 @@ end,
   local Mode = utils.surround({ M.sd.t_lr, M.sd.t_ul }, M.sc.f.black, { ViMode })
   local LSD  = utils.surround({ M.sd.t_lr, M.sd.t_ul }, M.sc.f.black, { LS })
   local RSD  = utils.surround({ M.sd.t_ur, M.sd.t_ll }, M.sc.f.black, { RS })
+
+  Mode = utils.insert(Mode, Cut) -- cut after mode and surround chars
 
   local DefaultStatusline = {
     Mode,
