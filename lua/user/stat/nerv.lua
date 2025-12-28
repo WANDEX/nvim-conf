@@ -17,6 +17,58 @@ local M = {
   sd = _static.static.d,
 }
 
+M.git = {
+  ico = {
+    {
+      provider = vim.g.NF and ' ' or '', --  
+      hl = { fg = M.sc.f.orange },
+    },
+  },
+  head = {
+    {
+      provider = function(self)
+        return self.gsd.head
+      end,
+      hl = { bold = true },
+    },
+  },
+  stat = {
+    {
+      provider = function(self)
+        return M.git_has_changes(self) and '(' or ''
+      end,
+    },
+    {
+      {
+        provider = function(self)
+          local  count = self.gsd.added or 0
+          return count > 0 and ('+' .. count)
+        end,
+        hl = { fg = M.sc.git_add },
+      },
+      {
+        provider = function(self)
+          local  count = self.gsd.removed or 0
+          return count > 0 and ('-' .. count)
+        end,
+        hl = { fg = M.sc.git_del },
+      },
+      {
+        provider = function(self)
+          local  count = self.gsd.changed or 0
+          return count > 0 and ('~' .. count)
+        end,
+        hl = { fg = M.sc.git_change },
+      },
+    },
+    {
+      provider = function(self)
+        return M.git_has_changes(self) and ')' or ''
+      end,
+    },
+  },
+}
+
 function M.file_name_init(self)
   self = self or {}
   self.filename = vim.api.nvim_buf_get_name(0)
@@ -190,7 +242,7 @@ function M.statusline()
   local FileName = {
     init = M.file_name_init,
     hl = { fg = M.sc.f.cyan },
-    flexible = 2,
+    flexible = 4,
     {
       provider = function(self)
         return self.lfilename
@@ -381,45 +433,10 @@ function M.statusline()
       M.git_has_changes(self) -- gsd
     end,
     {
-      provider = vim.g.NF and ' ' or '', --  
-      hl = { fg = M.sc.f.orange },
-    },
-    {
-      provider = function(self)
-        return self.gsd.head
-      end,
-      hl = { bold = true },
-    },
-    {
-      provider = function(self)
-        return M.git_has_changes(self) and '(' or ''
-      end,
-    },
-    {
-      provider = function(self)
-        local  count = self.gsd.added or 0
-        return count > 0 and ('+' .. count)
-      end,
-      hl = { fg = M.sc.git_add },
-    },
-    {
-      provider = function(self)
-        local  count = self.gsd.removed or 0
-        return count > 0 and ('-' .. count)
-      end,
-      hl = { fg = M.sc.git_del },
-    },
-    {
-      provider = function(self)
-        local  count = self.gsd.changed or 0
-        return count > 0 and ('~' .. count)
-      end,
-      hl = { fg = M.sc.git_change },
-    },
-    {
-      provider = function(self)
-        return M.git_has_changes(self) and ')' or ''
-      end,
+      flexible = 8,
+      { M.git.ico, M.git.head, M.git.stat },
+      { M.git.ico, M.git.head },
+      -- { M.git.ico },
     },
   }
 
