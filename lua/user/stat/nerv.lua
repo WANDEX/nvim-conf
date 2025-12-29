@@ -69,6 +69,47 @@ M.git = {
   },
 }
 
+---@nodiscard
+---@param delimiters string[]
+---@param color string|function|nil
+---@param component table
+---@return table
+--- alternative to utils.surround().
+function M.surround(delimiters, color, component)
+  return {
+    { hl = { fg = color }, provider = delimiters[1] },
+    { hl = { bg = color }, component },
+    { hl = { fg = color }, provider = delimiters[2] },
+  }
+end
+
+---@nodiscard
+---@param delimiters string[]
+---@param color string|function|nil
+---@param component table
+---@return table
+--- alternative to utils.surround() - active and inactive.
+function M.surround_ai(delimiters, color, component)
+  local conditions = require('heirline.conditions')
+  local defbg = require('heirline.utils').get_highlight('StatusLineNC').bg
+  return {
+    { condition = conditions.is_active,
+      {
+        { hl = { fg = color }, provider = delimiters[1] },
+        { hl = { bg = color }, component },
+        { hl = { fg = color }, provider = delimiters[2] },
+      },
+    },
+    { condition = conditions.is_not_active,
+      {
+        { hl = { fg = defbg }, provider = delimiters[1] },
+        { hl = { bg = defbg }, component },
+        { hl = { fg = defbg }, provider = delimiters[2] },
+      },
+    },
+  }
+end
+
 function M.file_name_init(self)
   self = self or {}
   self.filename = vim.api.nvim_buf_get_name(0)
@@ -160,14 +201,23 @@ function M.statusline()
     --- evaluation and store it as a component attribute
     init = function(self)
       self.mode = vim.fn.mode(1) -- :h mode()
+      self.ico = vim.g.NF and ' 󰣙' or '   ' --     󰣘 󰣙
     end,
     static = M.s,
-    provider = function(self)
-      return self.mode_names[self.mode]
+    provider = function(self) --- NOTE: equal spacing in active and inactive status lines
+      if conditions.is_not_active() then
+        return self.ico
+      else
+        return self.mode_names[self.mode]
+      end
     end,
     hl = function(self)
-      local mode = self.mode:sub(1, 1) -- get only the first mode character
-      return { fg = self.mode_fcolors[mode], bold = true }
+      if conditions.is_not_active() then
+        return { fg = '#666666' } -- death star
+      else
+        local mode = self.mode:sub(1, 1) -- get only the first mode character
+        return { fg = self.mode_fcolors[mode], bold = true }
+      end
     end,
   }
 
@@ -310,13 +360,12 @@ function M.statusline()
     end,
   }
 
+  --- TODO: instead of this - cmd print right-justified as ShowSearchIndexes()
   local ShowCMD = { --- req: showcmdloc='statusline'
     init = function(self)
       self.mode = vim.fn.mode(1) -- :h mode()
     end,
-    conditions = function()
-      return conditions.is_active()
-    end,
+    conditions = conditions.is_active,
     provider = function(self)
       if not M.mode_is_v(self.mode) then
         return -- guard - show only if current mode is one of the visual modes
@@ -336,55 +385,73 @@ function M.statusline()
 
   local FormattersActive = {
     condition = M.formatters_attached,
-    provider = function()
-      local bufnr = vim.api.nvim_get_current_buf()
-      local formatters = require('conform').list_formatters_for_buffer(bufnr)
-      local sico = ' ' --  
-      if vim.g.autoformat then -- autoformat on save is enabled
-        sico = sico .. '󱡝 ' -- indicator: global
-      end
-      if vim.b[bufnr].autoformat then
-        sico = sico .. '󰚤 ' -- indicator: buffer-local
-      end
-      return sico .. table.concat(formatters, ' ') .. ' '
-    end,
-    hl = { fg = M.sc.f.orange, bold = false },
+    { -- separate from the preceding component
+      conditions = conditions.is_active,
+      {
+        Space_r,
+        Space_s,
+      },
+    },
+    {
+      init = function(self)
+        self.ico   = vim.g.NF and ' ' or 'S:' --  
+        self.ico_g = vim.g.NF and '󱡝' or 'g ' -- indicator: global
+        self.ico_l = vim.g.NF and '󰚤' or 'l ' -- indicator: buffer-local
+      end,
+      provider = function(self)
+        if conditions.is_not_active() then return end
+        local bufnr = vim.api.nvim_get_current_buf()
+        local formatters = require('conform').list_formatters_for_buffer(bufnr)
+        local sico = self.ico
+        if vim.g.autoformat then -- autoformat on save is enabled
+          sico = sico .. self.ico_g
+        end
+        if vim.b[bufnr].autoformat then
+          sico = sico .. self.ico_l
+        end
+        return sico .. table.concat(formatters, ' ') .. ' '
+      end,
+      hl = { fg = M.sc.f.orange },
+    },
   }
 
   local LintersActive = {
     condition = M.linters_attached,
-    provider = function()
-      local bufnr = vim.api.nvim_get_current_buf()
-      local linters = require('lint').get_running(bufnr) ---@type string[]
-      if #linters == 0 then
-        return '󰦕 '
-      end
-      return '󰦕 ' .. table.concat(linters, ' ') .. ' '
-    end,
-    hl = { fg = M.sc.f.fg_green, bold = false },
+    {
+      init = function(self)
+        self.ico = vim.g.NF and '󰦕 ' or 'l:'
+      end,
+      provider = function(self)
+        if conditions.is_not_active() then return end
+        local bufnr = vim.api.nvim_get_current_buf()
+        local linters = require('lint').get_running(bufnr) ---@type string[]
+        if #linters == 0 then
+          return self.ico
+        end
+        return self.ico .. table.concat(linters, ' ') .. ' '
+      end,
+      hl = { fg = M.sc.f.fg_green },
+    },
   }
 
   local LSPActive = {
     condition = M.lsp_attached,
-    provider = function()
-      local bufnr = vim.api.nvim_get_current_buf()
-      local names = {}
-      local clients = vim.lsp.get_clients({bufnr = bufnr}) ---@class vim.lsp.Client
-      for _, client in ipairs(clients) do
-        if not client.config then
-          table.insert(names, '💀') -- unexpected!
-          goto continue -- config structure not exist!
+    {
+      init = function(self)
+        self.ico = vim.g.NF and ' ' or 'L:'
+      end,
+      provider = function(self)
+        if conditions.is_not_active() then return end
+        local bufnr = vim.api.nvim_get_current_buf()
+        local names = {}
+        local clients = vim.lsp.get_clients({bufnr = bufnr}) ---@class vim.lsp.Client
+        for _, client in ipairs(clients) do
+          table.insert(names, client.config.name)
         end
-        if not client.config.name then
-          table.insert(names, '☠️') -- unexpected!
-          goto continue -- name string not exist!
-        end
-        table.insert(names, client.config.name)
-        ::continue::
-      end
-      return ' ' .. table.concat(names, ' ') .. ' '
-    end,
-    hl = { fg = M.sc.f.green, bold = false },
+        return self.ico .. table.concat(names, ' ') .. ' '
+      end,
+      hl = { fg = M.sc.f.green },
+    },
   }
 
   local Diagnostics = {
@@ -402,28 +469,35 @@ function M.statusline()
       self.hintc = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
     end,
     {
-      provider = function(self)
-        return self.erroc > 0 and (' ' .. self.erro_sign .. self.erroc)
-      end,
-      hl = { fg = M.sc.diag_error },
-    },
-    {
-      provider = function(self)
-        return self.warnc > 0 and (' ' .. self.warn_sign .. self.warnc)
-      end,
-      hl = { fg = M.sc.diag_warn },
-    },
-    {
-      provider = function(self)
-        return self.infoc > 0 and (' ' .. self.info_sign .. self.infoc)
-      end,
-      hl = { fg = M.sc.diag_info },
-    },
-    {
-      provider = function(self)
-        return self.hintc > 0 and (' ' .. self.hint_sign .. self.hintc)
-      end,
-      hl = { fg = M.sc.diag_hint },
+      condition = conditions.is_active,
+      {
+        provider = function(self)
+          return self.erroc > 0 and (' ' .. self.erro_sign .. self.erroc)
+        end,
+        hl = { fg = M.sc.diag_error },
+      },
+      {
+        provider = function(self)
+          return self.warnc > 0 and (' ' .. self.warn_sign .. self.warnc)
+        end,
+        hl = { fg = M.sc.diag_warn },
+      },
+      {
+        provider = function(self)
+          return self.infoc > 0 and (' ' .. self.info_sign .. self.infoc)
+        end,
+        hl = { fg = M.sc.diag_info },
+      },
+      {
+        provider = function(self)
+          return self.hintc > 0 and (' ' .. self.hint_sign .. self.hintc)
+        end,
+        hl = { fg = M.sc.diag_hint },
+      },
+      { -- separate from the following component
+        Space_s,
+        Space_l,
+      },
     },
   }
 
@@ -508,7 +582,6 @@ function M.statusline()
   }
 
   local C_WD = {
-    Space_l,
     WorkDir,
     Space_l,
   }
@@ -521,7 +594,7 @@ function M.statusline()
   }
 
   local LSE = {
-    Space_s,
+    -- Space_s,
     Space_l,
     Align,
   }
@@ -535,15 +608,32 @@ function M.statusline()
   local RSO = { --- right side of other statuslines
     Align,
     Space_r,
-    Space_s,
+    -- Space_s,
     ShowCMD,
     RS,
     Space_r, -- for the same indent from right as with RSD in DefaultStatusline
   }
 
-  local Mode = utils.surround({ M.sd.t_lr, M.sd.t_ul }, M.sc.f.black, { ViMode })
-  local LSD  = utils.surround({ M.sd.t_lr, M.sd.t_ul }, M.sc.f.black, { LS })
-  local RSD  = utils.surround({ M.sd.t_ur, M.sd.t_ll }, M.sc.f.black, { RS })
+  ---@nodiscard
+  ---@param component table
+  ---@param right? boolean toggle the pair of surrounding chars.
+  ---@param color? string|function|nil
+  ---@return table
+  --- wrapper function to avoid repetitiveness & right/left delimiter pairs.
+  local surround = function(component, right, color)
+    right = right or false
+    color = color or M.sc.f.black
+    local delimiters = right and { M.sd.t_ur, M.sd.t_ll } or { M.sd.t_lr, M.sd.t_ul }
+    return M.surround_ai(delimiters, color, component)
+  end
+
+  local Mode = { ViMode }
+  local LSD  = { LS }
+  local RSD  = { RS }
+
+  Mode = surround(Mode)
+  LSD  = surround(LSD)
+  RSD  = surround(RSD, true)
 
   Mode = utils.insert(Mode, Cut) -- cut after mode and surround chars
 
@@ -565,9 +655,7 @@ function M.statusline()
   }
 
   local InactiveStatusline = {
-    condition = function()
-      return not conditions.is_active()
-    end,
+    condition = conditions.is_not_active,
     Spell,
     C_WD,
     FileNameBlock,
