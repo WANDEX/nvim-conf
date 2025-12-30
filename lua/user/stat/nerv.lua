@@ -234,13 +234,26 @@ function M.statusline()
 
   local FileIcon = {
     init = function(self)
-      local filename = self.filename
+      local filename = vim.api.nvim_buf_get_name(0)
       local extension = vim.fn.fnamemodify(filename, ':e')
-      self.icon, self.icon_color = require('nvim-web-devicons').get_icon_color(
-        filename,
-        extension,
-        { default = true }
-      )
+      local devicons = require('nvim-web-devicons')
+      local def = devicons.get_default_icon() or
+        { color = '#6d8086', cterm_color = '66', icon = '', name = 'Default' }
+      local opts = { default = true }
+      local bt = vim.bo.buftype
+      local ft = vim.bo.filetype
+      self.icon, self.icon_color = devicons.get_icon_color(filename, extension, opts)
+      if self.icon == def.icon or self.icon == '󰈙' then -- txt/text
+        if bt == 'terminal' then --   
+          self.icon, self.icon_color = vim.g.NF and '' or '', M.sc.f.fg
+        elseif ft == 'text' then -- override default: 󰈙|  
+          self.icon, self.icon_color = vim.g.NF and '' or '', M.sc.f.fg_green
+        elseif ft == 'help' then --   
+          self.icon, self.icon_color = vim.g.NF and '' or '', M.sc.f.green
+        else
+          self.icon, self.icon_color = devicons.get_icon_color_by_filetype(ft, opts)
+        end
+      end
     end,
     provider = function(self)
       return self.icon and (self.icon .. ' ')
@@ -257,13 +270,11 @@ function M.statusline()
     init = function(self)
       self.filename = vim.api.nvim_buf_get_name(0)
       self.lfilename = vim.fn.fnamemodify(self.filename, ':t')
-      self.ico = ' '
     end,
     provider = function(self) -- i.e. HELP
-      return self.ico .. self.lfilename
+      return self.lfilename
     end,
-    hl = { fg = M.sc.f.red },
-    FileFlags
+    hl = { fg = M.sc.f.green },
   }
 
   local ShellName = {
@@ -273,10 +284,9 @@ function M.statusline()
     init = function(self)
       M.file_name_init(self)
       self.lfilename = self.lfilename:gsub('//.*//', '') -- replace cwd, :term PID is left untouched
-      self.ico = ' '
     end,
     provider = function(self) -- i.e. /bin/bash
-      return self.ico .. self.lfilename
+      return self.lfilename
     end,
     hl = { fg = M.sc.f.blue, bold = true },
   }
@@ -290,6 +300,10 @@ function M.statusline()
   }
 
   local FileName = {
+    condition = function()
+      return not  HelpName.condition() and
+             not ShellName.condition()
+    end,
     init = M.file_name_init,
     hl = { fg = M.sc.f.cyan },
     flexible = 4,
@@ -319,45 +333,77 @@ function M.statusline()
   }
 
   local FileType = {
-    provider = function()
-      return string.upper(vim.bo.filetype)
+    init = function(self)
+      self.ico = vim.g.NF and '󰱯' or 'NULL' -- 󰇴
+      local ft = vim.bo.filetype
+      self.ft = (ft ~= '' and ft) or self.ico
+    end,
+    provider = function(self)
+      return self.ft:upper()
     end,
     hl = { bold = true },
   }
 
   local FileEncoding = {
-    provider = function()
-      local enc = (vim.bo.fenc ~= '' and vim.bo.fenc) or vim.o.enc -- :h 'enc'
-      return enc ~= 'utf-8' and enc:upper()
+    init = function(self)
+      local fenc = vim.bo.fenc
+      self.enc = (fenc ~= '' and fenc) or vim.o.enc -- :h 'enc'
     end,
+    condition = function(self)
+      return self.enc ~= 'utf-8'
+    end,
+    Space_r,
+    {
+      provider = function(self)
+        return self.enc:upper()
+      end,
+    },
   }
 
   local FileFormat = {
-    provider = function()
-      local fmt = vim.bo.fileformat
-      return fmt ~= 'unix' and fmt:upper()
+    init = function(self)
+      self.fmt = vim.bo.fileformat
     end,
+    condition = function(self)
+      return self.fmt ~= 'unix'
+    end,
+    Space_r,
+    {
+      provider = function(self)
+        return self.fmt:upper()
+      end,
+    },
   }
 
   local FileSize = {
-    provider = function()
-      -- stackoverflow, compute human readable file size
-      local suffix = { 'b', 'k', 'M', 'G', 'T', 'P', 'E' }
-      local fsize = vim.fn.getfsize(vim.api.nvim_buf_get_name(0))
-      fsize = (fsize < 0 and 0) or fsize
-      if fsize <= 0 then
-        return '0' .. suffix[1]
-      end
-      local i = math.floor((math.log(fsize) / math.log(1024)))
-      return string.format('%.2g%s', fsize / math.pow(1024, i), suffix[i])
+    condition = function()
+      return not conditions.buffer_matches({
+        buftype = { 'terminal' }
+      })
     end,
+    Space_r,
+    {
+      provider = function() --- stackoverflow, compute human readable file size
+        local suffix = { 'B', 'K', 'M', 'G', 'T', 'P', 'E' }
+        local bytes = vim.fn.getfsize(vim.api.nvim_buf_get_name(0))
+        bytes = (bytes < 0 and 0) or bytes
+        if bytes <= 0 then
+          return '0' .. suffix[1]
+        end
+        local i = math.floor(math.log(bytes) / math.log(1024))
+        return string.format('%.1f%s', bytes / math.pow(1024, i), suffix[i + 1])
+      end,
+    },
   }
 
   local FileLastModified = {
-    provider = function()
-      local ftime = vim.fn.getftime(vim.api.nvim_buf_get_name(0))
-      return (ftime > 0) and os.date('%c', ftime)
-    end,
+    Space_r,
+    {
+      provider = function()
+        local ftime = vim.fn.getftime(vim.api.nvim_buf_get_name(0))
+        return (ftime > 0) and os.date('%c', ftime)
+      end,
+    },
   }
 
   --- TODO: instead of this - cmd print right-justified as ShowSearchIndexes()
@@ -365,7 +411,7 @@ function M.statusline()
     init = function(self)
       self.mode = vim.fn.mode(1) -- :h mode()
     end,
-    conditions = conditions.is_active,
+    condition = conditions.is_active,
     provider = function(self)
       if not M.mode_is_v(self.mode) then
         return -- guard - show only if current mode is one of the visual modes
@@ -386,11 +432,9 @@ function M.statusline()
   local FormattersActive = {
     condition = M.formatters_attached,
     { -- separate from the preceding component
-      conditions = conditions.is_active,
-      {
-        Space_r,
-        Space_s,
-      },
+      condition = conditions.is_active,
+      Space_r,
+      Space_s,
     },
     {
       init = function(self)
@@ -506,6 +550,7 @@ function M.statusline()
     init = function(self)
       M.git_has_changes(self) -- gsd
     end,
+    Space_l,
     {
       flexible = 8,
       { M.git.ico, M.git.head, M.git.stat },
@@ -573,6 +618,12 @@ function M.statusline()
     hl = { fg = M.sc.f.red, bold = true },
   }
 
+  local FileDetails = {
+    FileFormat,
+    FileEncoding,
+    FileSize,
+  }
+
   local narrow_FT_ruler = {
     Space_r,
     FileType,
@@ -589,12 +640,10 @@ function M.statusline()
   local LS = {
     C_WD,
     FileNameBlock,
-    Space_l,
     Git,
   }
 
   local LSE = {
-    -- Space_s,
     Space_l,
     Align,
   }
@@ -605,13 +654,13 @@ function M.statusline()
     Ruler,
   }
 
-  local RSO = { --- right side of other statuslines
+  local RSO = { --- right side
     Align,
-    Space_r,
-    -- Space_s,
-    ShowCMD,
-    RS,
-    Space_r, -- for the same indent from right as with RSD in DefaultStatusline
+    -- ShowCMD,
+    FormattersActive,
+    LintersActive,
+    LSPActive,
+    FileDetails,
   }
 
   ---@nodiscard
@@ -645,12 +694,7 @@ function M.statusline()
     Diagnostics,
     Align,
     DAPMessages,
-    Align,
-    ShowCMD,
-    FormattersActive,
-    LintersActive,
-    LSPActive,
-    Space_r,
+    RSO,
     RSD,
   }
 
@@ -661,6 +705,7 @@ function M.statusline()
     FileNameBlock,
     LSE,
     RSO,
+    RSD,
   }
 
   local NarrowStatusline = {
@@ -685,6 +730,7 @@ function M.statusline()
     HelpName,
     LSE,
     RSO,
+    RSD,
   }
 
   local TerminalStatusline = {
@@ -699,6 +745,7 @@ function M.statusline()
     ShellName, -- i.e. /bin/bash
     LSE,
     RSO,
+    RSD,
   }
 
   local StatusLines = {
@@ -718,9 +765,9 @@ function M.statusline()
     fallthrough = false,
 
     NarrowStatusline,
-    SpecialStatusline,
-    TerminalStatusline,
-    InactiveStatusline,
+    -- SpecialStatusline,
+    -- TerminalStatusline,
+    -- InactiveStatusline,
     DefaultStatusline,
   }
 
