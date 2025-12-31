@@ -27,7 +27,8 @@ function M.ensure_installed_tbl()
     --- DAP:
     --- linters:
     'cmakelint',
-    'cpplint',
+    -- 'cpplint',
+    -- 'clangtidy', -- comes with the clang toolchain (not exist in Mason!)
     'ruff',
     'shellcheck',
     --- formatters:

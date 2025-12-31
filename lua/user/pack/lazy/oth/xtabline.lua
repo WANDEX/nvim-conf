@@ -4,11 +4,14 @@
 local M = {}
 
 function M.opts()
-  vim.g.xtabline_settings = vim.g.xtabline_settings or {}
-  vim.g.xtabline_settings = {
+  vim.g.xtabline_settings = vim.tbl_deep_extend('force', vim.g.xtabline_settings or {}, {
     enable_mappings = 0,
-    -- buffers mode by default, without arglist mode
-    tabline_modes = { 'buffers', 'tabs' },
+    buffer_filtering = 1,
+    buffers_paths = 1,
+    current_tab_paths = -8,
+    other_tabs_paths = 0,
+    show_right_corner = 1,
+    tabline_modes = { 'buffers', 'tabs', }, -- buffers mode by default, without arglist mode
     tab_number_in_left_corner = 0,
     last_open_first = 1,
     recent_buffers = 14,
@@ -40,8 +43,7 @@ function M.opts()
       windows=' ',
       wrench='󰖷 ',
     },
-  }
-  return vim.g.xtabline_settings
+  })
 end
 
 M.spec = {
@@ -49,9 +51,8 @@ M.spec = {
   enabled = true,
   lazy = false,
   init = function()
-    -- vim.cmd('silent! XTablineInit')
     vim.g.xtabline_lazy = 0
-    return M.opts()
+    M.opts()
   end,
   -- keys = {
   --   { mode = "n", "<leader>x",  "", desc = "xtab" }, -- group annotation

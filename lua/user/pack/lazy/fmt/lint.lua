@@ -5,14 +5,15 @@
 
 return {
   'mfussenegger/nvim-lint',
-  lazy = false,
+  -- lazy = false,
+  lazy = { 'VeryLazy' },
   opts = {
     ---@type table<string, string[]>
     linters_by_ft = {
       -- c           = { 'cpplint' },
       cmake       = { 'cmakelint' },
-      -- cpp         = { 'clangtidy', 'cpplint' },
-      cpp         = { 'clangtidy' },
+      -- cpp         = { 'clang-tidy', 'cpplint' },
+      cpp         = { 'clang-tidy' }, -- the right executable name (at least on arch)
       bash        = { 'shellcheck' },
       sh          = { 'shellcheck' },
       python      = { 'ruff' },
