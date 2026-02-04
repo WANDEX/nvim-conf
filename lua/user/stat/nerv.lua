@@ -625,11 +625,9 @@ function M.statusline()
   }
 
   local narrow_FT_ruler = {
-    Space_r,
-    FileType,
+    utils.surround({'[', ']'}, nil, FileType),
     Align,
-    Ruler,
-    Space_r,
+    utils.surround({'[', ']'}, nil, Ruler),
   }
 
   local C_WD = {
@@ -711,7 +709,7 @@ function M.statusline()
   local NarrowStatusline = {
     condition = function()
       return conditions.buffer_matches({
-        filetype = { 'NvimTree' },
+        filetype = { 'NvimTree', 'dap*' },
       })
     end,
     narrow_FT_ruler,
