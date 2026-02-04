@@ -2,18 +2,23 @@
 -- spec 'saghen/blink.cmp'
 
 return {
-  { -- neovim api, docs support, module annotations | properly configures LuaLS for editing Neovim config.
+  { --- neovim api, docs support, module annotations | properly configures LuaLS for editing Neovim config.
     'folke/lazydev.nvim', -- :LazyDev debug | :LazyDev lsp - settings for attached LSP servers.
     ft = 'lua', -- only load on lua files
     dependencies = {
       { 'LelouchHe/xmake-luals-addon' }, -- xmake.lua
+      {
+        'rcarriga/nvim-dap-ui',
+        dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
+      },
     },
     opts = {
       library = {
-        -- Load luvit types when the 'vim.uv' word is found
+        --- Load luvit types when the 'vim.uv' word is found
         { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-        -- Load the xmake types when opening file named 'xmake.lua'
+        --- Load the xmake types when opening file named 'xmake.lua'
         { path = 'xmake-luals-addon/library', files = { 'xmake.lua' } },
+        'nvim-dap-ui',
       },
     },
   },
