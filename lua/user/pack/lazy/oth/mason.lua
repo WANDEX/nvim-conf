@@ -25,6 +25,7 @@ function M.ensure_installed_tbl()
   local tbl = vim.tbl_keys(require('user.lsp.serv').servers() or {})
   vim.list_extend(tbl, {
     --- DAP:
+    'codelldb', -- C, C++, Rust, Zig
     --- linters:
     'cmakelint',
     -- 'cpplint',
