@@ -1,121 +1,97 @@
--- debug.lua
+-- AUTHOR: 'WANDEX/nvim-conf'
+-- spec 'mfussenegger/nvim-dap'
 --
--- Shows how to use the DAP plugin to debug your code.
---
--- Primarily focused on configuring the debugger for Go, but can
--- be extended to other languages as well. That's why it's called
--- kickstart.nvim and not kitchen-sink.nvim ;)
---
--- look into ref:
+-- ref:
 -- https://github.com/nvim-lua/kickstart.nvim/blob/3338d3920620861f8313a2745fd5d2be39f39534/lua/kickstart/plugins/debug.lua#L11
 
 return {
-  -- NOTE: Yes, you can install new plugins here!
   'mfussenegger/nvim-dap',
-  -- NOTE: And you can specify dependencies as well
   dependencies = {
-    -- Creates a beautiful debugger UI
-    'rcarriga/nvim-dap-ui',
-
-    -- Required dependency for nvim-dap-ui
-    'nvim-neotest/nvim-nio',
-
-    -- Installs the debug adapters for you
+    {
+      'rcarriga/nvim-dap-ui',
+      dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
+    },
     'mason-org/mason.nvim',
     'jay-babu/mason-nvim-dap.nvim',
-
-    -- Add your own debuggers here
+    'Jorenar/nvim-dap-disasm', -- :DapDisasm
+    --- Add debuggers here:
     -- 'leoluz/nvim-dap-go',
   },
   keys = {
-    -- Basic debugging keymaps, feel free to change to your liking!
     {
-      '<F5>',
-      function()
+      '<F5>', function()
         require('dap').continue()
       end,
       desc = 'Debug: Start/Continue',
     },
     {
-      '<F1>',
-      function()
-        require('dap').step_into()
+      '<F17>', function() -- S-F5
+        require('dap').stop()
       end,
-      desc = 'Debug: Step Into',
+      desc = 'Debug: Start/Continue',
+    },
+    { --- last session result, see session output in case of unhandled exception.
+      '<F7>', function()
+        require('dapui').toggle()
+      end,
+      desc = 'Debug: See last session result.',
     },
     {
-      '<F2>',
-      function()
-        require('dap').step_over()
-      end,
-      desc = 'Debug: Step Over',
-    },
-    {
-      '<F3>',
-      function()
-        require('dap').step_out()
-      end,
-      desc = 'Debug: Step Out',
-    },
-    {
-      '<leader>b',
-      function()
+      '<leader>ab', function()
         require('dap').toggle_breakpoint()
       end,
       desc = 'Debug: Toggle Breakpoint',
     },
     {
-      '<leader>B',
-      function()
+      '<F9>', function()
+        require('dap').toggle_breakpoint()
+      end,
+      desc = 'Debug: Toggle Breakpoint',
+    },
+    {
+      '<F21>', function() -- S-F9
         require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
       end,
       desc = 'Debug: Set Breakpoint',
     },
-    -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
     {
-      '<F7>',
-      function()
-        require('dapui').toggle()
+      '<F10>', function()
+        require('dap').step_over()
       end,
-      desc = 'Debug: See last session result.',
+      desc = 'Debug: Step Over',
+    },
+    {
+      '<F11>', function()
+        require('dap').step_into()
+      end,
+      desc = 'Debug: Step Into',
+    },
+    {
+      '<F23>', function() -- S-F11
+        require('dap').step_out()
+      end,
+      desc = 'Debug: Step Out',
     },
   },
   config = function()
-    local dap = require 'dap'
+    local dap   = require 'dap'
     local dapui = require 'dapui'
 
     require('mason-nvim-dap').setup {
-      -- Makes a best effort to setup the various debuggers with
-      -- reasonable debug configurations
+      --- Makes a best effort to setup the various debuggers with reasonable debug configurations.
       automatic_installation = true,
-
-      -- You can provide additional configuration to the handlers,
-      -- see mason-nvim-dap README for more information
+      --- provide additional configuration to the handlers, see mason-nvim-dap README for more info.
       handlers = {},
-
       --- Explicitly set to an empty table (installed in/via mason-tool-installer)
       ensure_installed = {},
-
-      -- You'll need to check that you have the required things installed
-      -- online, please don't ask me how to install them :)
-      -- ensure_installed = {
-      --   -- Update this to ensure that you have the debuggers for the langs you want
-      --   'delve', -- debugger for the Go programming language.
-      -- },
     }
 
-    -- Dap UI setup
-    -- For more information, see |:help nvim-dap-ui|
+    --- Dap UI setup -- For more information, see |:help nvim-dap-ui|
+    ---@diagnostic disable-next-line: missing-fields
     dapui.setup {
-      -- Set icons to characters that are more likely to work in every terminal.
-      --    Feel free to remove or use ones that you like more! :)
-      --    Don't feel like these are good choices.
-      icons = { -- codicons
-        expanded      = ' ', -- '▾'
-        collapsed     = ' ', -- '▸'
-        current_frame = ' ', -- '*', '', ''
-      },
       controls = {
+        element = 'repl',
+        enabled = true,
         icons = {
           pause       = ' ', -- '⏸ 󰏧'
           play        = ' ', -- '▶  '
@@ -123,24 +99,77 @@ return {
           step_over   = ' ', -- '⏭ '
           step_out    = ' ', -- '⏮ '
           step_back   = ' ', -- 'b'
-          run_last    = ' ', -- '▶▶', ''
+          run_last    = ' ', -- '', '▶▶', ''
           terminate   = ' ', -- '⏹ '
           disconnect  = ' ', -- '⏏ '
         },
       },
+      element_mappings = {},
+      expand_lines = true,
+      floating = {
+        border = 'single',
+        mappings = {
+          close = { 'q', '<Esc>' },
+        },
+      },
+      force_buffers = true,
+      icons = { -- codicons
+        expanded      = ' ', -- ' ', '', '▾'
+        collapsed     = ' ', -- ' ', '', '▸'
+        current_frame = ' ', -- ' ', '', '*', '', ''
+      },
+      layouts = { {
+        elements = { {
+          id = "scopes",
+          size = 0.25,
+        }, {
+          id = "breakpoints",
+          size = 0.25,
+        }, {
+          id = "stacks",
+          size = 0.25,
+        }, {
+          id = "watches",
+          size = 0.25,
+        }, },
+        position = "left",
+        size = 60,
+      }, {
+        elements = { {
+          id = "repl",
+          size = 0.5,
+        }, {
+          id = "console",
+          size = 0.5,
+        }, },
+        position = "bottom",
+        size = 10,
+      }, },
+      mappings = {
+        edit   = 'k', -- 'e'
+        expand = { '<CR>', '<2-LeftMouse>' },
+        open   = 'o',
+        remove = 'd',
+        repl   = 'r',
+        toggle = 't',
+      },
+      render = {
+        indent = 1,
+        max_value_lines = 100,
+      },
     }
 
-    -- Change breakpoint icons
-    -- vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
-    -- vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
-    -- local breakpoint_icons = vim.g.NF
-    --     and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
-    --   or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
-    -- for type, icon in pairs(breakpoint_icons) do
-    --   local tp = 'Dap' .. type
-    --   local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
-    --   vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
-    -- end
+    --- change breakpoint icons
+    vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
+    vim.api.nvim_set_hl(0, 'DapStop',  { fg = '#ffcc00' })
+    local breakpoint_icons = vim.g.NF
+      and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
+      or  { Breakpoint = 'b', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
+    for type, icon in pairs(breakpoint_icons) do
+      local tp = 'Dap' .. type
+      local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
+      vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
+    end
 
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
@@ -155,6 +184,8 @@ return {
       },
     }
     --]]
+
+    -- FIXME: build/ dir is ignored and cannot be used as path in cmd mode autocompletion.
 
   end,
 }
