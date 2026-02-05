@@ -22,6 +22,17 @@ function M.path.concat(path_components)
     return vim.fs.normalize(table.concat(path_components, '/'))
 end
 
+function M.path.root_dir()
+  local cwd = vim.fn.getcwd()
+  local path_found = vim.fs.find(
+    { '.git', 'cmake', 'build', '.editorconfig' },
+    { path = cwd, upward = true }
+  )[1]
+  local path = vim.fs.abspath(path_found)
+  path = vim.fs.dirname(path) -- parent dir instead of .git etc.
+  return path
+end
+
 --- write file preserving old modification time.
 function M.wfpmt()
   local fpath = vim.api.nvim_buf_get_name(0) -- current buffer file full path

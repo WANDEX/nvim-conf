@@ -65,15 +65,7 @@ end
 --- (field) vim.lsp.Config.root_dir: (string|fun(bufnr: integer, on_dir: fun(root_dir?: string)))?
 --- function (bufnr: integer, on_dir: fun(root_dir?: string))
 function M.root_dir(bufnr, on_dir) ---@diagnostic disable-line: unused-local
-  local cwd = vim.fn.getcwd()
-  local path_found = vim.fs.find(
-    { '.git', 'cmake', 'build', '.editorconfig' },
-    { path = cwd, upward = true }
-  )[1]
-  local path = vim.fs.abspath(path_found)
-  if not vim.fn.isdirectory(path) then
-    path = vim.fs.dirname(path)
-  end
+  local  path = require('user.lib.fn').path.root_dir()
   on_dir(path)
 end
 
