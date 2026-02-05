@@ -102,7 +102,7 @@ return {
       map('n', '<leader>hq', gs.setqflist, {desc='gs.setqflist'})
 
       -- Toggles
-      map('n', '<leader>ab', gs.toggle_current_line_blame, {desc='gs.toggle_current_line_blame'})
+      map('n', '<leader>aB', gs.toggle_current_line_blame, {desc='gs.toggle_current_line_blame'})
       map('n', '<leader>aw', gs.toggle_word_diff, {desc='gs.toggle_word_diff'})
 
       -- Text object (with greedy=false behavior is strange - feels useless!)
