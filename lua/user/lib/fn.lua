@@ -33,6 +33,14 @@ function M.path.root_dir()
   return path
 end
 
+function M.path.wndx_cmake_build()
+  local script = './scripts/wndx_cmake_build.sh'
+  local pdir = require('user.lib.fn').path.root_dir()
+  local cmd  = script .. ' --get_build_dir'
+  local bdir = vim.fn.system('cd ' .. pdir .. ' && ' .. cmd)
+  return bdir
+end
+
 --- write file preserving old modification time.
 function M.wfpmt()
   local fpath = vim.api.nvim_buf_get_name(0) -- current buffer file full path
