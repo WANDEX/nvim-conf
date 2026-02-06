@@ -58,6 +58,37 @@ M.dap_disasm_opts = {
   },
 }
 
+--- A callback that determines how a variable is displayed or whether it should be omitted
+---x@param variable Variable https://microsoft.github.io/debug-adapter-protocol/specification#Types_Variable
+--- @param buf number
+--- @param stackframe dap.StackFrame https://microsoft.github.io/debug-adapter-protocol/specification#Types_StackFrame
+--- @param node userdata tree-sitter node identified as variable definition of reference (see `:h tsnode`)
+---x@param options nvim_dap_virtual_text_options Current options for nvim-dap-virtual-text
+--- @return string|nil A text how the virtual text should be displayed or nil, if this variable shouldn't be displayed
+--- @diagnostic disable-next-line: unused-local
+function M.dap_virtual_text_display(variable, buf, stackframe, node, options)
+  --- by default, strip out new line characters
+  if options.virt_text_pos == 'inline' then
+    return ' = ' .. variable.value:gsub("%s+", " ")
+  else
+    return variable.name .. ' = ' .. variable.value:gsub("%s+", " ")
+  end
+end
+
+M.dap_virtual_text_opts = {
+  enabled = true,                        -- enable this plugin (the default)
+  enabled_commands = true,               -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
+  highlight_changed_variables = false,   -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
+  highlight_new_as_changed = true,       -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
+  show_stop_reason = true,               -- show stop reason when stopped for exceptions
+  commented = false,                     -- prefix virtual text with comment string
+  only_first_definition = true,          -- only show virtual text at first definition (if there are multiple)
+  all_references = false,                -- show virtual text on all all references of the variable (not only definitions)
+  clear_on_continue = false,             -- clear virtual text on "continue" (might cause flickering when stepping)
+  display_callback = M.dap_virtual_text_display,
+  virt_text_pos = 'eol_right_align', -- inline, eol, eol_right_align
+}
+
 --- NOTE: I manually changed keymap in lua/dap-view/views/keymaps/views.lua
 ---       'keymap("e", function()' -> 'keymap("a", function()'
 ---       Currently there is no way to change mappings defined in views.lua
@@ -331,7 +362,7 @@ M.spec = {
       },
     },
     {
-      'theHamsta/nvim-dap-virtual-text',
+      'theHamsta/nvim-dap-virtual-text', opts = M.dap_virtual_text_opts,
       dependencies = { 'mfussenegger/nvim-dap', 'nvim-treesitter/nvim-treesitter' },
     },
     {
