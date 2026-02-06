@@ -245,6 +245,9 @@ function M.highlights()
   --- |hl-Whitespace| for 'nbsp', 'space', 'tab', 'multispace', 'lead' and 'trail'.
   M.mod_hl('Whitespace', { link='IndentGuidesEven' })
 
+  M.mod_hl('NvimDapVirtualText',        { link='IndentGuidesEven' })
+  M.mod_hl('NvimDapVirtualTextChanged', { link='IndentGuidesOdd' }) -- XXX bad color for this!
+
   M.mod_hl('DRED',  M.te(nobg, w.dred, rvrs))
   M.mod_hl('LRED',  M.te(nobg, w.lred, rvrs))
 
