@@ -155,6 +155,13 @@ M.dapui_opts = { --- Dap UI setup -- For more information, see |:help nvim-dap-u
     }, },
     position = 'bottom',
     size = 10,
+  }, {
+    elements = { {
+      id = 'disassembly',
+      size = 1.0,
+    } },
+    position = 'bottom',
+    size = 0.1,
   }, },
   mappings = {
     edit   = 'k', -- 'e'
@@ -354,7 +361,8 @@ M.spec = {
       desc = 'Debug: Reverse Continue',
     },
     {
-      '<F7>', function()
+      '<F7>', function()  --   F7 mutually exclusive layouts: dap-view & dapui
+        require('dap-view').close(true) -- close to not break layout
         require('dapui').toggle()
       end,
       desc = 'Debug: Toggle last session view ui',
@@ -366,7 +374,8 @@ M.spec = {
       desc = 'Debug: Run Last session again',
     },
     {
-      '<F55>', function() -- M-F7
+      '<F55>', function() -- M-F7 mutually exclusive layouts: dap-view & dapui
+        require('dapui').close() -- close to not break layout
         require('dap-view').toggle(true)
       end,
       desc = 'Debug: Toggle last session view min',
