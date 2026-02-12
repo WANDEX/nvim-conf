@@ -185,6 +185,15 @@ function M.mode_is_v(m)
   return M.s.mode_names[m]:upper():match('V')
 end
 
+---@nodiscard
+---@return boolean current buftype or filetype is special.
+function M.special_bt_ft()
+  return require('heirline.conditions').buffer_matches({
+    buftype  = { 'nofile', 'quickfix', 'prompt', 'terminal' },
+    filetype = { '^git.*', 'qf', 'fugitive', 'magit' },
+  })
+end
+
 function M.statusline()
   local conditions = require('heirline.conditions')
   local utils = require('heirline.utils')
@@ -250,6 +259,8 @@ function M.statusline()
           self.icon, self.icon_color = vim.g.NF and '' or '', M.sc.f.fg_green
         elseif ft == 'help' then --   
           self.icon, self.icon_color = vim.g.NF and '' or '', M.sc.f.green
+        elseif M.special_bt_ft() then --  󰫣  
+          self.icon, self.icon_color = vim.g.NF and '' or '', M.sc.f.orange
         else
           self.icon, self.icon_color = devicons.get_icon_color_by_filetype(ft, opts)
         end
@@ -291,6 +302,21 @@ function M.statusline()
     hl = { fg = M.sc.f.blue, bold = true },
   }
 
+  local SpecialName = {
+    condition = function()
+      return not ShellName.condition() and M.special_bt_ft()
+    end,
+    init = function(self)
+      M.file_name_init(self)
+      self.lfilename = self.lfilename:gsub('//.*//', '') -- fugitive commit hash only etc.
+      self.lfilename = self.lfilename:gsub('magit://.*', 'MAGIT') -- replace
+    end,
+    provider = function(self)
+      return self.lfilename
+    end,
+    hl = { fg = M.sc.f.fg_green },
+  }
+
   local FileNameModifier = {
     hl = function()
       if vim.bo.modified then -- force - to override the child's hl
@@ -301,8 +327,9 @@ function M.statusline()
 
   local FileName = {
     condition = function()
-      return not  HelpName.condition() and
-             not ShellName.condition()
+      return not    HelpName.condition() and
+             not   ShellName.condition() and
+             not SpecialName.condition()
     end,
     init = M.file_name_init,
     hl = { fg = M.sc.f.cyan },
@@ -328,6 +355,7 @@ function M.statusline()
     FileIcon,
     HelpName,
     ShellName,
+    SpecialName,
     utils.insert(FileNameModifier, FileName), -- a new table where FileName is a child of FileNameModifier
     FileFlags,
   }
@@ -377,9 +405,7 @@ function M.statusline()
 
   local FileSize = {
     condition = function()
-      return not conditions.buffer_matches({
-        buftype = { 'terminal' }
-      })
+      return not M.special_bt_ft()
     end,
     Space_r,
     {
@@ -406,7 +432,6 @@ function M.statusline()
     },
   }
 
-  --- TODO: instead of this - cmd print right-justified as ShowSearchIndexes()
   local ShowCMD = { --- req: showcmdloc='statusline'
     init = function(self)
       self.mode = vim.fn.mode(1) -- :h mode()
@@ -654,7 +679,6 @@ function M.statusline()
 
   local RSO = { --- right side
     Align,
-    -- ShowCMD,
     FormattersActive,
     LintersActive,
     LSPActive,
@@ -684,24 +708,28 @@ function M.statusline()
 
   Mode = utils.insert(Mode, Cut) -- cut after mode and surround chars
 
-  local DefaultStatusline = {
+  local BEG = {
     Mode,
     Spell,
     LSD,
-    Space_l,
+  }
+
+  local MID = {
+    condition = conditions.is_active,
     Diagnostics,
     Align,
     DAPMessages,
+  }
+
+  local END = {
+    LSE,
     RSO,
     RSD,
   }
 
-  local InactiveStatusline = {
-    condition = conditions.is_not_active,
-    Spell,
-    C_WD,
-    FileNameBlock,
-    LSE,
+  local DefaultStatusline = {
+    BEG,
+    MID,
     RSO,
     RSD,
   }
@@ -716,34 +744,9 @@ function M.statusline()
   }
 
   local SpecialStatusline = {
-    condition = function()
-      return conditions.buffer_matches({
-        buftype  = { 'prompt', 'quickfix' },
-        filetype = { '^git.*', 'fugitive', 'help', 'magit' },
-      })
-    end,
-    { condition = conditions.is_active, Mode },
-    Spell,
-    C_WD,
-    HelpName,
-    LSE,
-    RSO,
-    RSD,
-  }
-
-  local TerminalStatusline = {
-    condition = function()
-      return conditions.buffer_matches({
-        buftype = { 'terminal' }
-      })
-    end,
-    { condition = conditions.is_active, Mode },
-    Spell,
-    C_WD,
-    ShellName, -- i.e. /bin/bash
-    LSE,
-    RSO,
-    RSD,
+    condition = M.special_bt_ft,
+    BEG,
+    END,
   }
 
   local StatusLines = {
@@ -764,8 +767,6 @@ function M.statusline()
 
     NarrowStatusline,
     -- SpecialStatusline,
-    -- TerminalStatusline,
-    -- InactiveStatusline,
     DefaultStatusline,
   }
 
