@@ -7,6 +7,8 @@ vim.g.maplocalleader = '\\'
 
 vim.g.NF = true -- Nerd Font installed and selected in the terminal
 
+vim.env.PAGER = '' -- redefine to avoid nested PAGER call in :term (recursive)
+
 --============================================================================
 -- GENERAL
 --============================================================================
