@@ -367,3 +367,5 @@ ui
 dropdown
 statusline
 modeline
+decompositions
+disassembly
