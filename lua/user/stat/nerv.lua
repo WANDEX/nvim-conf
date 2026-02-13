@@ -333,7 +333,7 @@ function M.statusline()
     end,
     init = M.file_name_init,
     hl = { fg = M.sc.f.cyan },
-    flexible = 4,
+    flexible = 5,
     {
       provider = function(self)
         return self.lfilename
@@ -454,52 +454,73 @@ function M.statusline()
     provider = '%3l/%-3L:%2c %3p%%',
   }
 
+  local LintersActive = {
+    condition = M.linters_attached,
+    {
+      init = function(self)
+        self.ico = vim.g.NF and '󰦕' or 'l:'
+      end,
+      hl = { fg = M.sc.f.fg_green },
+      flexible = 1,
+      {
+        provider = function(self)
+          if conditions.is_not_active() then return end
+          local bufnr = vim.api.nvim_get_current_buf()
+          local linters = require('lint').get_running(bufnr) ---@type string[]
+          if #linters == 0 then
+            return self.ico
+          end
+          return self.ico .. table.concat(linters, ' ') .. ' '
+        end,
+      },
+      {
+        provider = function(self)
+          if conditions.is_not_active() then return end
+          return self.ico
+        end,
+      },
+    },
+  }
+
   local FormattersActive = {
     condition = M.formatters_attached,
-    { -- separate from the preceding component
-      condition = conditions.is_active,
-      Space_r,
-      Space_s,
-    },
     {
       init = function(self)
         self.ico   = vim.g.NF and ' ' or 'S:' --  
         self.ico_g = vim.g.NF and '󱡝' or 'g ' -- indicator: global
         self.ico_l = vim.g.NF and '󰚤' or 'l ' -- indicator: buffer-local
       end,
-      provider = function(self)
-        if conditions.is_not_active() then return end
-        local bufnr = vim.api.nvim_get_current_buf()
-        local formatters = require('conform').list_formatters_for_buffer(bufnr)
-        local sico = self.ico
-        if vim.g.autoformat then -- autoformat on save is enabled
-          sico = sico .. self.ico_g
-        end
-        if vim.b[bufnr].autoformat then
-          sico = sico .. self.ico_l
-        end
-        return sico .. table.concat(formatters, ' ') .. ' '
-      end,
       hl = { fg = M.sc.f.orange },
-    },
-  }
-
-  local LintersActive = {
-    condition = M.linters_attached,
-    {
-      init = function(self)
-        self.ico = vim.g.NF and '󰦕 ' or 'l:'
-      end,
-      provider = function(self)
-        if conditions.is_not_active() then return end
-        local bufnr = vim.api.nvim_get_current_buf()
-        local linters = require('lint').get_running(bufnr) ---@type string[]
-        if #linters == 0 then
-          return self.ico
-        end
-        return self.ico .. table.concat(linters, ' ') .. ' '
-      end,
-      hl = { fg = M.sc.f.fg_green },
+      flexible = 2,
+      {
+        provider = function(self)
+          if conditions.is_not_active() then return end
+          local bufnr = vim.api.nvim_get_current_buf()
+          local formatters = require('conform').list_formatters_for_buffer(bufnr)
+          local sico = self.ico
+          if vim.g.autoformat then -- autoformat on save is enabled
+            sico = sico .. self.ico_g
+          end
+          if vim.b[bufnr].autoformat then
+            sico = sico .. self.ico_l
+          end
+          return sico .. table.concat(formatters, ' ') .. ' '
+        end,
+      },
+      {
+        provider = function(self)
+          if conditions.is_not_active() then return end
+          local bufnr = vim.api.nvim_get_current_buf()
+          local sico = self.ico
+          if vim.g.autoformat then -- autoformat on save is enabled
+            sico = sico .. self.ico_g
+          end
+          if vim.b[bufnr].autoformat then
+            sico = sico .. self.ico_l
+          end
+          return sico
+        end,
+      },
     },
   }
 
@@ -509,17 +530,26 @@ function M.statusline()
       init = function(self)
         self.ico = vim.g.NF and ' ' or 'L:'
       end,
-      provider = function(self)
-        if conditions.is_not_active() then return end
-        local bufnr = vim.api.nvim_get_current_buf()
-        local names = {}
-        local clients = vim.lsp.get_clients({bufnr = bufnr}) ---@class vim.lsp.Client
-        for _, client in ipairs(clients) do
-          table.insert(names, client.config.name)
-        end
-        return self.ico .. table.concat(names, ' ') .. ' '
-      end,
       hl = { fg = M.sc.f.green },
+      flexible = 3,
+      {
+        provider = function(self)
+          if conditions.is_not_active() then return end
+          local bufnr = vim.api.nvim_get_current_buf()
+          local names = {}
+          local clients = vim.lsp.get_clients({bufnr = bufnr}) ---@class vim.lsp.Client
+          for _, client in ipairs(clients) do
+            table.insert(names, client.config.name)
+          end
+          return self.ico .. table.concat(names, ' ')
+        end,
+      },
+      {
+        provider = function(self)
+          if conditions.is_not_active() then return end
+          return self.ico
+        end,
+      },
     },
   }
 
@@ -612,7 +642,7 @@ function M.statusline()
       self.cwd  = vim.fn.fnamemodify(cwd, ':~')
     end,
     hl = { fg = M.sc.f.bg },
-    flexible = 1,
+    flexible = 4,
     {
       provider = function(self)
         local trail = self.cwd:sub(-1) == '/' and '' or '/'
@@ -677,11 +707,28 @@ function M.statusline()
     Ruler,
   }
 
+  local LFL = {
+    {
+      { -- separate from the preceding component
+        provider = function()
+          if conditions.is_not_active() then
+            return
+          elseif M.lsp_attached() or M.formatters_attached() or M.linters_attached() then
+            return M.sd.sl_b
+          else
+            return
+          end
+        end,
+      },
+      LintersActive,
+      FormattersActive,
+      LSPActive,
+    },
+  }
+
   local RSO = { --- right side
     Align,
-    FormattersActive,
-    LintersActive,
-    LSPActive,
+    LFL,
     FileDetails,
   }
 
