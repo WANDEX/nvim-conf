@@ -271,7 +271,16 @@ function M.other()
   }
 end
 
+function M.restore_binary_path_and_args()
+  vim.env.DBG_BINARY_PATH = vim.env.DBG_BINARY_PATH or ''
+  vim.env.DBG_BINARY_ARGS = vim.env.DBG_BINARY_ARGS or ''
+  vim.env.DBG_BINARY_ABRT = vim.env.DBG_BINARY_ABRT or false
+end
+
+---@nodiscard
+---@return string|dap.Abort|thread
 function M.pick_binary()
+  M.restore_binary_path_and_args()
   local bdir = require('user.lib.fn').path.wndx_cmake_build()
   local path = require('dap.utils').pick_file({
     path = bdir, executables = true,
@@ -281,9 +290,51 @@ function M.pick_binary()
       not vim.endswith(fpath, '.bin')     -- CMakeDetermineCompilerABI_CXX.bin
     end,
   })
-  return (path and path ~= '') and path or M.dap.ABORT
+  if (not path or path == '' or path == M.dap.ABORT or type(path) ~= 'string') then
+    return M.dap.ABORT
+  end
+  vim.env.DBG_BINARY_PATH = path
+  return path
 end
 
+---@nodiscard
+---@param path? string
+---@return string[]|dap.Abort
+function M.restore_binary_args(path)
+  M.restore_binary_path_and_args()
+  path = path or (vim.env.DBG_BINARY_PATH or 'exec_binary')
+  local uin = vim.fn.input({
+    prompt = './' .. path .. ' ',
+    default = vim.env.DBG_BINARY_ARGS
+  })
+  if (uin == M.dap.ABORT) then -- allow empty args - launch without args
+    return M.dap.ABORT
+  end
+  vim.env.DBG_BINARY_ARGS = uin or '' -- save last user args as a string
+  return require('dap.utils').splitstr(uin) or {}
+end
+
+--- if passed directly in dap.configuration.cpp = {
+---   program = M.pick_binary,      -- 2nd in the function call order
+---   args = M.restore_binary_args, -- 1st in the function call order
+--- }
+--- Thus, functions combined into one to maintain a proper function call order.
+---@nodiscard
+---@return string[]|dap.Abort
+function M.pick_binary_and_args()
+  local path = M.pick_binary()
+  if (path == M.dap.ABORT or type(path) ~= 'string') then
+    return M.dap.ABORT
+  end
+  local args = M.restore_binary_args(path)
+  if (args == M.dap.ABORT) then
+    return M.dap.ABORT
+  end
+  return args
+end
+
+---@nodiscard
+---@return string[]
 function M.gtest_tests_filter()
   vim.env.GTEST_TESTS_FILTER = vim.env.GTEST_TESTS_FILTER or '*' -- restore last input
   local input = vim.fn.input({ prompt = '--gtest_filter=', default = vim.env.GTEST_TESTS_FILTER })
@@ -313,17 +364,34 @@ function M.dap_configurations()
       initCommands = M.initCommands_codelldb,
     },
     {
-      name = 'pick binary  | codelldb |',
+      name = 'pick binary  | codelldb | (args)',
       type = 'codelldb',
       request = 'launch',
       program = '${command:pickFile}',
+      args = M.restore_binary_args,
       initCommands = M.initCommands_codelldb,
     },
     {
-      name = 'pick binary  | codelldb | wndx_cmake_build.sh |',
+      name = 'pick binary  | codelldb | wndx_cmake_build.sh',
       type = 'codelldb',
       request = 'launch',
       program = M.pick_binary,
+      initCommands = M.initCommands_codelldb,
+    },
+    --[[{
+      name = 'pick binary  | codelldb | wndx_cmake_build.sh | (args) 1st',
+      type = 'codelldb',
+      request = 'launch',
+      program = M.pick_binary,      -- 2nd in the function call order
+      args = M.restore_binary_args, -- 1st in the function call order
+      initCommands = M.initCommands_codelldb,
+    },--]]
+    {
+      name = 'pick binary  | codelldb | wndx_cmake_build.sh | (args)',
+      type = 'codelldb',
+      request = 'launch',
+      program = function() return vim.env.DBG_BINARY_PATH or '' end,
+      args = M.pick_binary_and_args,
       initCommands = M.initCommands_codelldb,
     },
     {
