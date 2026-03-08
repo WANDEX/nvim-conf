@@ -22,29 +22,21 @@ ls.filetype_extend('c', { 'cpp' }) -- to have the same snippets in ft=c
 
 return {
 
-  -- /**
-  --  * doc string
-  --  */
+  -- /// doc string
   s("doc", {
-    nl("/**"),
-    nl(" * @brief "),
-    i(1, "description"),
-    nl(" *"),
-    nl(" * @param  TODO"),
-    nl(" * @return TODO"),
-    nl(" */"),
+    nl("/// \\brief "), i(1, "description"),
+    nl("///"),
+    nl("/// \\param  TODO"),
+    nl("/// \\return TODO"),
   }), -- the same
   -- s("doc", fmt("\n\n/**\n * {}\n */", { i(1, "doc string") })),
 
 
-  -- /****************************************************************************
-  --  * description / separator
-  --  */
+  -- //////////////////////////////////////////////////////////////////
+  -- /// description / separator
   s("docl", {
-    nl("/****************************************************************************"),
-    nl(" * "),
-    i(1, "description / separator"),
-    nl(" */"),
+    nl("//////////////////////////////////////////////////////////////////"),
+    nl("/// "), i(1, "description"),
   }),
 
   -- doc string with content from clipboard.
@@ -96,7 +88,6 @@ return {
   s("ce",   { t("std::cerr << "), i(1), t(" << '\\n';") }),
 
   s("fmti", fmt([[
-  #include <fmt/core.h>
   #include <fmt/format.h>
   #include <fmt/ranges.h>         // fmt::join
   {}
