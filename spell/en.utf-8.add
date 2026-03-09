@@ -13,7 +13,7 @@ OAuth
 POSIX
 Surfingkeys
 TUI
-Unstaged
+unstaged
 VM
 Vimium
 WANDEX
@@ -369,3 +369,15 @@ statusline
 modeline
 decompositions
 disassembly
+argc
+argv
+formatter
+fmt
+pragma
+IWYU
+NOLINT
+NOLINTBEGIN
+NOLINTEND
+NOLINTNEXTLINE
+u8
+intrinsics
